@@ -1,0 +1,3 @@
+class Shoot extends Entity {
+
+}
