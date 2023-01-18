@@ -14,6 +14,7 @@ let jumpSound: p5.SoundFile;
 function preload() {
   bg = loadImage('./assets/images/bg1.png');
   jumpSound = loadSound("./assets/sounds/jump.wav");
+  // sound: jumpSound = loadSound('../assets/jump.wav');
   // bg2 = loadImage('./assets/images/bg2.png');
   // sound: p5.SoundFile = loadSound('../assets/mySound.wav');
 }
@@ -25,6 +26,7 @@ function preload() {
  * in the draw function below
  */
 function setup() {
+  jumpSound = loadSound("./assets/sounds/jump.wav")
   createCanvas(550, 720);
   // heightOnBg = 0;
   frameRate(60);
