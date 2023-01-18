@@ -23,4 +23,5 @@ class Platform extends Entity {
   public getSize(): p5.Vector {
     return this.size;
   }
+
 }

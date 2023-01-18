@@ -1,6 +1,7 @@
 //---- GLOBAL VARIABLES ----//
 let game: GameBoard;
 let bg: p5.Image;
+let jumpSound: p5.SoundFile;
 // let bg2: p5.Image;
 // let heightOnBg: number;
 // let sound: p5.SoundFile
@@ -12,6 +13,7 @@ let bg: p5.Image;
  */
 function preload() {
   bg = loadImage('./assets/images/bg1.png');
+  jumpSound = loadSound("./assets/sounds/jump.wav");
   // bg2 = loadImage('./assets/images/bg2.png');
   // sound: p5.SoundFile = loadSound('../assets/mySound.wav');
 }

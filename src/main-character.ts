@@ -8,6 +8,7 @@ class MainCharacter extends Entity {
   private img: p5.Image;
   private isJumping: boolean;
   private speed: number;
+  private jumpSound = new Audio();
 
   constructor(img: string) {
     super()
@@ -21,6 +22,8 @@ class MainCharacter extends Entity {
    this.img = loadImage(img);
    this.isJumping = true;
    this.speed = 5;
+   this.jumpSound = new Audio();
+   this.jumpSound.src = "./assets/sounds/jump.wav";
   }
   public update() {
     // check if shape is colliding with the bottom of the canvas
@@ -62,6 +65,7 @@ if (this.position.x < 0 - (this.size.x * 0.5)) {
   }
 
   public jump() {
+    this.jumpSound.play();
     this.velocity.y = -5;
     this.isJumping = true;
 }
