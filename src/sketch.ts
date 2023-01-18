@@ -1,5 +1,5 @@
 //---- GLOBAL VARIABLES ----//
-let game: Game;
+let game: GameBoard;
 // let sound: p5.SoundFile
 
 /**
@@ -18,10 +18,10 @@ function preload() {
  * in the draw function below
  */
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(550, windowHeight);
   frameRate(60);
 
-  game = new Game();
+  game = new GameBoard();
 }
 
 /**

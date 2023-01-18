@@ -1,7 +1,27 @@
 class Platform extends Entity {
   // private breakable: boolean;
   // private moveable: boolean;
-  constructor() {
-    super();
+  private position: p5.Vector
+  private size: p5.Vector
+  private color: string;
+
+  constructor(x: number, y: number, width: number, height: number) {
+    super()
+    this.position = createVector(x, y);
+    this.size = createVector(width, height);
+    this.color = "green";
+  }
+
+  public draw() {
+    fill(this.color);
+    rect(this.position.x, this.position.y, this.size.x, this.size.y);
+  }
+
+  public getPosition(): p5.Vector {
+    return this.position;
+  }
+
+  public getSize(): p5.Vector {
+    return this.size;
   }
 }
