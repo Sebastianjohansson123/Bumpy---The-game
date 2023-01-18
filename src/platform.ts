@@ -3,18 +3,17 @@ class Platform extends Entity {
   // private moveable: boolean;
   private position: p5.Vector
   private size: p5.Vector
-  private color: string;
+  private img: p5.Image
 
-  constructor(x: number, y: number, width: number, height: number) {
+  constructor(x: number, y: number, width: number, height: number, img: string) {
     super()
     this.position = createVector(x, y);
-    this.size = createVector(width, height);
-    this.color = "green";
+    this.size = createVector(width/2, height);
+    this.img = loadImage(img);
   }
 
   public draw() {
-    fill(this.color);
-    rect(this.position.x, this.position.y, this.size.x, this.size.y);
+    image(this.img, this.position.x, this.position.y, this.size.x, this.size.y);
   }
 
   public getPosition(): p5.Vector {

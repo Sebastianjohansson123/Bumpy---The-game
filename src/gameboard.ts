@@ -7,8 +7,8 @@ class GameBoard {
   private platforms: Platform[];
 
   constructor() {
-    this.shape = new MainCharacter();
-    this.platforms = [];
+    this.shape = new MainCharacter("./assets/images/bumpy.png");
+    this.platforms = [], new Platform(50, 50, 100, 100, "./assets/images/platform.png");
     this.spawnPlatforms();
   }
 
@@ -18,8 +18,8 @@ class GameBoard {
   }
 
   public draw() {
-    background('white');
     this.shape.draw();
+    this.platforms;
     this.platforms.forEach(platform => platform.draw());
   }
 
@@ -42,7 +42,7 @@ class GameBoard {
     while (y > 0) {
       // prevents the platforms from being spawned partially "out of bounds"
       let x = random(0, width - 220);
-      let platform = new Platform(x, y, 220, 20);
+      let platform = new Platform(x, y, 220, 20, "./assets/images/platform.png");
       this.platforms.push(platform);
       y -= 200;
     }

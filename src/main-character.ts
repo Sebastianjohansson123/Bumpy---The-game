@@ -5,11 +5,11 @@ class MainCharacter extends Entity {
   private velocity: p5.Vector;
   private gravity: p5.Vector;
   private size: p5.Vector;
-  private color: string;
+  private img: p5.Image;
   private isJumping: boolean;
   private speed: number;
 
-  constructor() {
+  constructor(img: string) {
     super()
    //private handleCollisions()
    //private jump()
@@ -17,8 +17,8 @@ class MainCharacter extends Entity {
    this.position = createVector(width * 0.4, height * 0.5);
    this.velocity = createVector(0, 0);
    this.gravity = createVector(0, 0.1);
-   this.size = createVector(80, 80);
-   this.color = 'black';
+   this.size = createVector(70, 80);
+   this.img = loadImage(img);
    this.isJumping = true;
    this.speed = 5;
   }
@@ -58,8 +58,7 @@ if (this.position.x < 0 - (this.size.x * 0.5)) {
   }
 
   public draw() {
-    fill(this.color);
-    rect(this.position.x, this.position.y, this.size.x, this.size.y);
+    image(this.img, this.position.x, this.position.y, this.size.x, this.size.y);
   }
 
   public jump() {

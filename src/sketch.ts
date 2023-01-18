@@ -1,5 +1,8 @@
 //---- GLOBAL VARIABLES ----//
 let game: GameBoard;
+let bg: p5.Image;
+// let bg2: p5.Image;
+// let heightOnBg: number;
 // let sound: p5.SoundFile
 
 /**
@@ -8,6 +11,8 @@ let game: GameBoard;
  * sound files, images etc...
  */
 function preload() {
+  bg = loadImage('./assets/images/bg1.png');
+  // bg2 = loadImage('./assets/images/bg2.png');
   // sound: p5.SoundFile = loadSound('../assets/mySound.wav');
 }
 
@@ -18,7 +23,8 @@ function preload() {
  * in the draw function below
  */
 function setup() {
-  createCanvas(550, windowHeight);
+  createCanvas(550, 720);
+  // heightOnBg = 0;
   frameRate(60);
 
   game = new GameBoard();
@@ -30,8 +36,17 @@ function setup() {
  * you created in the setup function above
  */
 function draw() {
+  // heightOnBg++;
+  // if (heightOnBg < 200) {
+  //   image(bg, 0, 0);
+  // } else {
+  //  image(bg2, 0, 0);
+  // }
+
+  image(bg, 0, 0);
   game.update();
   game.draw();
+  
 }
 
 /**
