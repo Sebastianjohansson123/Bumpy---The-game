@@ -32,7 +32,8 @@ class GameBoard {
       if (this.shape.getPosition().y + this.shape.getSize().y > platform.getPosition().y 
           && this.shape.getPosition().y + this.shape.getSize().y < platform.getPosition().y + platform.getSize().y
           && (this.shape.getPosition().x + this.shape.getSize().x > platform.getPosition().x 
-              && this.shape.getPosition().x < platform.getPosition().x + platform.getSize().x)) {
+              && this.shape.getPosition().x < platform.getPosition().x + platform.getSize().x)
+              && (this.shape.getVelocity().y > -1)) {
         this.shape.jump();
       }
     }
@@ -66,7 +67,7 @@ class GameBoard {
   private movePlatforms() {
     if (
       // This value controls how high you can jump before the platforms move
-      this.shape.getPosition().y < 250
+      this.shape.getPosition().y < 100
     ) {
       // a for each loop that moves the platforms down
       for (let platform of this.platforms) {

@@ -70,9 +70,9 @@ if (this.position.x < 0 - (this.size.x * 0.5)) {
     this.isJumping = true;
 }
 
-/*   public getVelocity() {
-    return this.velocity
-  } */
+  public getVelocity() {
+  return this.velocity
+  } 
 
   public getPosition() {
     return this.position
