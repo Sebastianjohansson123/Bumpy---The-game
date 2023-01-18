@@ -1,5 +1,5 @@
-class Enemy2 extends Entity {
-  constructor(){
-    super() 
-  }
-}
+// class Enemy2 extends Entity {
+//   constructor(){
+//     super() 
+//   }
+// }
