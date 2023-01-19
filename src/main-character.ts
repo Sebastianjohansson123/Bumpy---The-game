@@ -2,7 +2,8 @@ class MainCharacter extends Entity {
   // private isFalling: boolean;
   private isJumping: boolean;
   private speed: number;
-  private jumpSound = new Audio();
+  private bullets: Bullet[];
+  private canShoot:boolean | undefined;
 
   constructor(img: string) {
     super()
@@ -16,10 +17,12 @@ class MainCharacter extends Entity {
    this.img = loadImage(img);
    this.isJumping = true;
    this.speed = 5;
-   this.jumpSound = new Audio();
-   this.jumpSound.src = "./assets/sounds/jump.wav";
+   this.bullets = [];
+   this.canShoot = true;
   }
+
   public update() {
+    this.bullets.forEach(bullet => bullet.update());
     // check if shape is colliding with the bottom of the canvas
     if (this.position.y + this.size.y >= height) {
       // this.jump();
@@ -43,6 +46,13 @@ class MainCharacter extends Entity {
     if (keyIsDown(RIGHT_ARROW)) {
       this.position.x += this.speed;
     }
+    if (keyIsDown(UP_ARROW)) {
+      this.shoot();
+    }
+
+
+  
+
 // Checks if half of the size of the shape is outside of either side of the screen
 // and positions the shape on corresponding side if conditions are met
 
@@ -55,11 +65,24 @@ if (this.position.x < 0 - (this.size.x * 0.5)) {
   }
 
   public draw() {
+    this.bullets.forEach(bullet => bullet.draw())
     image(this.img, this.position.x, this.position.y, this.size.x, this.size.y);
   }
 
+  public shoot() {
+    if (this.canShoot === true) {
+      bulletSound.play();
+      let bullet = new Bullet(this);
+      this.bullets.push(bullet);
+    } else {
+      return;
+    }
+    this.canShoot = false;
+    setTimeout(() => this.canShoot = true, 500);
+  }
+
   public jump() {
-    this.jumpSound.play();
+    jumpSound.play();
     this.velocity.y = -5;
     this.isJumping = true;
 }
@@ -79,4 +102,3 @@ if (this.position.x < 0 - (this.size.x * 0.5)) {
     return this.isJumping
   }
 }
-

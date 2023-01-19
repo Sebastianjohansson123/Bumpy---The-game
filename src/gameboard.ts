@@ -2,14 +2,14 @@ class GameBoard {
   // private entities: entity [];
   // private backgrounds: Background[];
   // private isGameOver: boolean;
-  private shape: MainCharacter;
+  public mainCharacter: MainCharacter;
   private platforms: Platform[];
   private score: number;
   private scoreMultiplier: number = 1;
   private timeSinceLastMultiplierIncrease: number = 0;
 
   constructor() {
-    this.shape = new MainCharacter("./assets/images/bumpy.png");
+    this.mainCharacter = new MainCharacter("./assets/images/bumpy.png");
     this.platforms = [], new Platform(50, 50, 100, 100, "./assets/images/platform.png");
     this.score = 0;
     this.generatePlatforms();
@@ -20,7 +20,7 @@ class GameBoard {
   // git config --global user.email mail@mail.com
 
   public update() {
-    this.shape.update();
+    this.mainCharacter.update();
     this.detectCollision();
     this.movePlatforms();
     this.updatePlatforms();
@@ -28,7 +28,7 @@ class GameBoard {
 
   public draw() {
     this.drawBackground();
-    this.shape.draw();
+    this.mainCharacter.draw();
     this.getScore();
     this.platforms.forEach(platform => platform.draw());
   }
@@ -48,12 +48,12 @@ class GameBoard {
   // when it is falling and triggers an automatic jump if it is
   private detectCollision() {
     for (let platform of this.platforms) {
-      if (this.shape.getPosition().y + this.shape.getSize().y > platform.getPosition().y 
-          && this.shape.getPosition().y + this.shape.getSize().y < platform.getPosition().y + platform.getSize().y
-          && (this.shape.getPosition().x + this.shape.getSize().x  - 20 > platform.getPosition().x // added "- 20" to better adjust hitbox
-              && this.shape.getPosition().x + 20 < platform.getPosition().x + platform.getSize().x) // // added "+ 20" to better adjust hitbox
-              && (this.shape.getVelocity().y > 0.5)) { // Makes it so that the MainCharacter only jumps on the platforms if is falling at a certain velocity
-        this.shape.jump();
+      if (this.mainCharacter.getPosition().y + this.mainCharacter.getSize().y > platform.getPosition().y 
+          && this.mainCharacter.getPosition().y + this.mainCharacter.getSize().y < platform.getPosition().y + platform.getSize().y
+          && (this.mainCharacter.getPosition().x + this.mainCharacter.getSize().x  - 20 > platform.getPosition().x // added "- 20" to better adjust hitbox
+              && this.mainCharacter.getPosition().x + 20 < platform.getPosition().x + platform.getSize().x) // // added "+ 20" to better adjust hitbox
+              && (this.mainCharacter.getVelocity().y > 0.5)) { // Makes it so that the MainCharacter only jumps on the platforms if is falling at a certain velocity
+        this.mainCharacter.jump();
       }
     }
   }
@@ -93,10 +93,10 @@ class GameBoard {
 }
 
 private movePlatforms() {
-  if (this.shape.getPosition().y < height * 0.5 && this.shape.getIsJumping()) {
+  if (this.mainCharacter.getPosition().y < height * 0.5 && this.mainCharacter.getIsJumping()) {
     for (let platform of this.platforms) {
       platform.getPosition().y += 4.7;
-      this.shape.getPosition().y += 0.5;
+      this.mainCharacter.getPosition().y += 0.5;
     }
   }
 }
