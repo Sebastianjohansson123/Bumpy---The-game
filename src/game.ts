@@ -1,22 +1,24 @@
-// class Game {
-//   private gameBoard: GameBoard;
-//   // private endMenu: EndMenu;
-//   // private startMenu: StartMenu;
-//   // private activeScene: string;
-//   // private highscores: number[];
+class Game {
+  private gameBoard: GameBoard;
+  // private endMenu: EndMenu;
+  // private startMenu: StartMenu;
+  // private activeScene: string;
+  // private highscores: number[];
 
-//   constructor() {
-//     this.gameBoard();
-//   }
+  constructor() {
+    this.gameBoard = new GameBoard;
+  }
 
-//   public update() {
-    
-//   }
+  public update() {
+    this.gameBoard.update();
+  }
 
-//   public draw() {
-    
-//   }
+  public draw() {
+    this.gameBoard.draw();
+  }
 
 
+  public startGame() {
 
-// }
+  }
+}

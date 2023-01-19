@@ -1,11 +1,5 @@
 class MainCharacter extends Entity {
-  // private isJumping: boolean;
   // private isFalling: boolean;
-  private position: p5.Vector;
-  private velocity: p5.Vector;
-  private gravity: p5.Vector;
-  private size: p5.Vector;
-  private img: p5.Image;
   private isJumping: boolean;
   private speed: number;
   private jumpSound = new Audio();
@@ -28,7 +22,7 @@ class MainCharacter extends Entity {
   public update() {
     // check if shape is colliding with the bottom of the canvas
     if (this.position.y + this.size.y >= height) {
-      this.jump();
+      // this.jump();
     }
     
     if (this.isJumping) {
@@ -66,7 +60,7 @@ if (this.position.x < 0 - (this.size.x * 0.5)) {
 
   public jump() {
     this.jumpSound.play();
-    this.velocity.y = -5;
+    this.velocity.y = -4;
     this.isJumping = true;
 }
 
@@ -80,12 +74,6 @@ if (this.position.x < 0 - (this.size.x * 0.5)) {
 
    public getSize() {
     return this.size
-  }
-
-  public isCollidingWithPlatform(platform: Platform): boolean {
-    let shapeBottom = this.position.y + this.size.y;
-    let platformTop = platform.getPosition().y;
-    return shapeBottom >= platformTop;
   }
 }
 
