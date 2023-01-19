@@ -1,42 +1,34 @@
 class Game {
-  private position: p5.Vector;
-  private isCircleVisible: boolean;
+  private gameBoard: GameBoard;
+  // private endMenu: EndMenu;
+  private startMenu: StartMenu;
+  private activeScene: "start" | "play" | "end";
+  // private highscores: number[];
 
   constructor() {
-    this.position = createVector(width * 0.5, height * 0.5);
-    this.isCircleVisible = false;
+    this.gameBoard = new GameBoard();
+    this.startMenu = new StartMenu();
+    this.activeScene = "play"
   }
 
   public update() {
-    this.position.set(mouseX, mouseY);
-    this.isCircleVisible = mouseIsPressed;
+    if (this.activeScene === "play") {
+      this.gameBoard.update();
+    } else if (this.activeScene === "start") {
+      this.startMenu.update()
+    }
   }
-
+  
   public draw() {
-    background('black');
-    this.drawText();
-
-    if (this.isCircleVisible) {
-      this.drawCircle();
+    if (this.activeScene === "play") {
+      this.gameBoard.draw();
+    } else if (this.activeScene === "start") {
+      this.startMenu.draw()
     }
   }
 
-  public drawText() {
-    push();
-    fill('white');
-    textSize(width * 0.1);
-    textStyle('bold');
-    textAlign('center');
-    text('Click & Drag', width * 0.5, height * 0.5);
-    pop();
-  }
 
-  public drawCircle() {
-    push();
-    fill('green');
-    stroke('white');
-    strokeWeight(width * 0.01);
-    circle(this.position.x, this.position.y, width * 0.2);
-    pop();
+  public startGame() {
+
   }
 }

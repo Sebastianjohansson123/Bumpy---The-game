@@ -1,0 +1,3 @@
+class StarBoost extends Entity {
+
+}
