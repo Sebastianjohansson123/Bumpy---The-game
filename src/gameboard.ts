@@ -36,11 +36,13 @@ class GameBoard {
   // repeats the background image
   // can possibly be adjusted later on to include different backgrounds depending on the height
   private drawBackground() {
+    bg.resize(0, windowHeight)
     let repeatCount = height / bg.height + 1;
     for (let i = 0; i < repeatCount; i++) {
       image(bg, 0, i * bg.height);
     }
   }
+
 
   // checks if the MainCharacters gets in contact with the platform 
   // when it is falling and triggers an automatic jump if it is
@@ -50,7 +52,7 @@ class GameBoard {
           && this.shape.getPosition().y + this.shape.getSize().y < platform.getPosition().y + platform.getSize().y
           && (this.shape.getPosition().x + this.shape.getSize().x  - 20 > platform.getPosition().x // added "- 20" to better adjust hitbox
               && this.shape.getPosition().x + 20 < platform.getPosition().x + platform.getSize().x) // // added "+ 20" to better adjust hitbox
-              && (this.shape.getVelocity().y > 1)) { // Makes it so that the MainCharacter only jumps on the platforms if is falling at a certain velocity
+              && (this.shape.getVelocity().y > 0.5)) { // Makes it so that the MainCharacter only jumps on the platforms if is falling at a certain velocity
         this.shape.jump();
       }
     }
@@ -90,18 +92,15 @@ class GameBoard {
     }
 }
 
-  private movePlatforms() {
-    if (
-      // This value controls how high you can jump before the platforms move
-      this.shape.getPosition().y < 190
-    ) {
-      // a for each loop that moves the platforms down
-      for (let platform of this.platforms) {
-        platform.getPosition().y += 5;
-        // this.shape.getPosition().y += 0;
-      }
+private movePlatforms() {
+  if (this.shape.getPosition().y < height * 0.5 && this.shape.getIsJumping()) {
+    for (let platform of this.platforms) {
+      platform.getPosition().y += 4.7;
+      this.shape.getPosition().y += 0.5;
     }
   }
+}
+
 
   // Function to track the score of the current game and display it in the top-left corner
   private getScore() {

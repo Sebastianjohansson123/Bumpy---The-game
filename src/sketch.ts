@@ -62,9 +62,9 @@ function preload() {
  */
 function setup() {
   jumpSound = loadSound("./assets/sounds/jump.wav");
-  song.setVolume(0.2)
-  song.loop();
-  createCanvas(550, 720);
+  song.setVolume(0.05)
+  // song.loop();
+  createCanvas(550, windowHeight);
   // heightOnBg = 0;
   frameRate(60);
 

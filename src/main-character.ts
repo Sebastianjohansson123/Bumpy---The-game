@@ -60,7 +60,7 @@ if (this.position.x < 0 - (this.size.x * 0.5)) {
 
   public jump() {
     this.jumpSound.play();
-    this.velocity.y = -4;
+    this.velocity.y = -5;
     this.isJumping = true;
 }
 
@@ -74,6 +74,9 @@ if (this.position.x < 0 - (this.size.x * 0.5)) {
 
    public getSize() {
     return this.size
+  }
+  public getIsJumping() {
+    return this.isJumping
   }
 }
 
