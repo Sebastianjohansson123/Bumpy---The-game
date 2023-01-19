@@ -15,6 +15,10 @@ class GameBoard {
     this.generatePlatforms();
   }
 
+  // git config --global --list
+  // git config --global user.name "David Jensen"
+  // git config --global user.email mail@mail.com
+
   public update() {
     this.shape.update();
     this.detectCollision();
@@ -26,7 +30,6 @@ class GameBoard {
     this.drawBackground();
     this.shape.draw();
     this.getScore();
-    this.platforms;
     this.platforms.forEach(platform => platform.draw());
   }
 
@@ -90,7 +93,7 @@ class GameBoard {
   private movePlatforms() {
     if (
       // This value controls how high you can jump before the platforms move
-      this.shape.getPosition().y < 220
+      this.shape.getPosition().y < 190
     ) {
       // a for each loop that moves the platforms down
       for (let platform of this.platforms) {
