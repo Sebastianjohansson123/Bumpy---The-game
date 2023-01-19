@@ -72,7 +72,7 @@ if (this.position.x < 0 - (this.size.x * 0.5)) {
   public shoot() {
     if (this.canShoot === true) {
       bulletSound.play();
-      let bullet = new Bullet(this);
+      let bullet = new Bullet(this.position.x, this.position.y);
       this.bullets.push(bullet);
     } else {
       return;

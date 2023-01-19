@@ -1,13 +1,11 @@
 /// <reference path="entity.ts"  />
 class Bullet extends Entity {
   private speed: number;
-  private mainCharacter: MainCharacter;
 
 
-  constructor(mainCharacter: MainCharacter) {
+  constructor(x: number, y: number) {
     super()
-    this.mainCharacter = mainCharacter;
-    this.position = createVector(mainCharacter.getPosition().x + 25, mainCharacter.getPosition().y);
+    this.position = createVector(x + 25, y);
     this.speed = 10;
   }
 
