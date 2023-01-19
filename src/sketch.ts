@@ -1,8 +1,8 @@
 //---- GLOBAL VARIABLES ----//
-let game: GameBoard;
+let game: Game;
 let bg: p5.Image;
 let jumpSound: p5.SoundFile;
-let song: p5.SoundFile;
+// let song: p5.SoundFile;
 // let bg2: p5.Image;
 // let heightOnBg: number;
 // let sound: p5.SoundFile
@@ -15,7 +15,7 @@ let song: p5.SoundFile;
 function preload() {
   bg = loadImage("./assets/images/bg1.png");
   jumpSound = loadSound("./assets/sounds/jump.wav");
-  song = loadSound("./assets/music/bumpy.mp3");
+  // song = loadSound("./assets/music/bumpy.mp3");
   // sound: jumpSound = loadSound('../assets/jump.wav');
   // bg2 = loadImage('./assets/images/bg2.png');
   // sound: p5.SoundFile = loadSound('../assets/mySound.wav');
@@ -29,12 +29,12 @@ function preload() {
  */
 function setup() {
   jumpSound = loadSound("./assets/sounds/jump.wav");
-  song.loop();
+  // song.loop();
   createCanvas(550, 720);
   // heightOnBg = 0;
   frameRate(60);
 
-  game = new GameBoard();
+  game = new Game();
 }
 
 /**
@@ -43,14 +43,14 @@ function setup() {
  * you created in the setup function above
  */
 function draw() {
-  // heightOnBg++;
-  // if (heightOnBg < 200) {
-  //   image(bg, 0, 0);
-  // } else {
-  //  image(bg2, 0, 0);
-  // }
+  //  heightOnBg++;
+  //  if (heightOnBg < 200) {
+  //    image(bg, 0, 0);
+  //  } else {
+  //   image(bg2, 0, 0);
+  //  }
 
-  image(bg, 0, 0);
+
   game.update();
   game.draw();
 }

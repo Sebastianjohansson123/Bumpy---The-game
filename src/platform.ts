@@ -1,9 +1,6 @@
 class Platform extends Entity {
   // private breakable: boolean;
   // private moveable: boolean;
-  private position: p5.Vector
-  private size: p5.Vector
-  private img: p5.Image
 
   constructor(x: number, y: number, width: number, height: number, img: string) {
     super()
