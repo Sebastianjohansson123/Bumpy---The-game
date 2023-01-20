@@ -11,6 +11,7 @@ interface Images {
   balloon: p5.Image;
   backgrounds: p5.Image[];
   rocket: p5.Image;
+  enemy: p5.Image;
 }
 
 interface Sounds {
@@ -33,12 +34,16 @@ let sounds: Sounds;
 function preload() {
   bg = loadImage("./assets/images/bg1.png");
   jumpSound = loadSound("./assets/sounds/jump.wav");
-  
+
   images = {
-    backgrounds: [loadImage("./assets/images/bg1.png"), loadImage("./assets/images/bg2.png")],
+    backgrounds: [
+      loadImage("./assets/images/bg1.png"),
+      loadImage("./assets/images/bg2.png"),
+    ],
     balloon: loadImage("./assets/images/bg1.png"),
-    rocket: loadImage("./assets/images/bg1.png")
-  }
+    rocket: loadImage("./assets/images/bg1.png"),
+    enemy: loadImage("./assets/images/android.png"),
+  };
 
   // sounds = {
   //   music: loadSound('')
@@ -62,7 +67,7 @@ function preload() {
  */
 function setup() {
   jumpSound = loadSound("./assets/sounds/jump.wav");
-  song.setVolume(0.05)
+  song.setVolume(0.05);
   // song.loop();
   createCanvas(550, windowHeight);
   // heightOnBg = 0;
