@@ -31,7 +31,7 @@ public draw() {
       text(this.content, this.position.x, this.position.y);
    } else {
       imageMode(CENTER);
-      image(this.content, this.position.x, this.position.y, this.size.x, this.size.y);
+      image(this.content, this.position.x, this.position.y, this.size.x/1.5, this.size.y/1.5);
    }
    pop();
   }
