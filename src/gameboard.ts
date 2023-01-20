@@ -7,13 +7,13 @@ class GameBoard {
   private score: number;
   private scoreMultiplier: number = 1;
   private timeSinceLastMultiplierIncrease: number = 0;
-  private enemies: Enemy1[];
+  private enemies: Enemy[];
 
   constructor() {
     this.shape = new MainCharacter("./assets/images/bumpy.png");
     (this.platforms = []),
       new Platform(50, 50, 100, 100, "./assets/images/platform.png");
-    (this.enemies = []), new Enemy1(50, 50, 50, 50, images.enemy);
+    (this.enemies = []), new Enemy(50, 50, 50, 50, images.enemy);
     this.score = 0;
     this.generatePlatforms();
     this.generateEnemy();
@@ -28,6 +28,8 @@ class GameBoard {
     this.detectCollision();
     this.movePlatforms();
     this.updatePlatforms();
+    // this.moveEnemies();
+    this.updateEnemies();
   }
 
   public draw() {
@@ -71,11 +73,24 @@ class GameBoard {
 
   private generateEnemy() {
     let y = height;
+
     while (y > 0) {
       let x = random(0, width - 220);
-      let enemy = new Enemy1(x, y, 150, 100, images.enemy);
+      let enemy = new Enemy(x, y, 150, 100, images.enemy);
       this.enemies.push(enemy);
-      y -= 450;
+      y -= 500;
+    }
+  }
+
+  private updateEnemies() {
+    for (let i = 0; i < this.enemies.length; i++) {
+      let enemy = this.enemies[i];
+      if (enemy.getPosition().y > height) {
+        this.enemies.splice(i, 1);
+        let x = random(0, width - 220);
+        let newEnemy = new Enemy(x, 0, 150, 100, images.enemy);
+        this.enemies.push(newEnemy);
+      }
     }
   }
 
@@ -133,6 +148,10 @@ class GameBoard {
     ) {
       for (let platform of this.platforms) {
         platform.getPosition().y += 4.7;
+        this.shape.getPosition().y += 0.5;
+      }
+      for (let enemy of this.enemies) {
+        enemy.getPosition().y += 4.7;
         this.shape.getPosition().y += 0.5;
       }
     }

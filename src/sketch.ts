@@ -42,7 +42,7 @@ function preload() {
     ],
     balloon: loadImage("./assets/images/bg1.png"),
     rocket: loadImage("./assets/images/bg1.png"),
-    enemy: loadImage("./assets/images/android.png"),
+    enemy: loadImage("./assets/images/enemy.png"),
   };
 
   // sounds = {

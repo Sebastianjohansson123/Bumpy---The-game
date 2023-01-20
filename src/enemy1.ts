@@ -1,6 +1,6 @@
 /// <reference path="entity.ts"  />
 
-class Enemy1 extends Entity {
+class Enemy extends Entity {
   constructor(
     x: number,
     y: number,
