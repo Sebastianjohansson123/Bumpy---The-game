@@ -24,7 +24,7 @@ class StartMenu {
   public draw() {
     image(bg, 0, 0);
     image(talkingBubble, 150, 150);
-    talkingBubble.resize(240, 350);
+    talkingBubble.resize(249, 350);
     this.drawTitle();
     this.btnPlayGame.draw();
     this.btnHowToPlay.draw();
