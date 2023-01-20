@@ -73,9 +73,9 @@ class GameBoard {
     let y = height;
     while (y > 0) {
       let x = random(0, width - 220);
-      let enemy = new Enemy1(x, y, 220, 20, images.enemy);
+      let enemy = new Enemy1(x, y, 150, 100, images.enemy);
       this.enemies.push(enemy);
-      y -= 120;
+      y -= 450;
     }
   }
 
