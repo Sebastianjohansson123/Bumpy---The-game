@@ -2,11 +2,17 @@ class Platform extends Entity {
   // private breakable: boolean;
   // private moveable: boolean;
 
-  constructor(x: number, y: number, width: number, height: number, img: string) {
-    super()
+  constructor(
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    img: p5.Image
+  ) {
+    super();
     this.position = createVector(x, y);
-    this.size = createVector(width/2, height);
-    this.img = loadImage(img);
+    this.size = createVector(width / 2, height);
+    this.img = img;
   }
 
   public draw() {
@@ -20,5 +26,4 @@ class Platform extends Entity {
   public getSize(): p5.Vector {
     return this.size;
   }
-
 }

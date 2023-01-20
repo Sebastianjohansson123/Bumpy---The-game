@@ -10,9 +10,8 @@ class GameBoard {
   private enemies: Enemy[];
 
   constructor() {
-    this.shape = new MainCharacter("./assets/images/bumpy.png");
-    (this.platforms = []),
-      new Platform(50, 50, 100, 100, "./assets/images/platform.png");
+    this.shape = new MainCharacter();
+    (this.platforms = []), new Platform(50, 50, 100, 100, images.platform);
     (this.enemies = []), new Enemy(50, 50, 50, 50, images.enemy);
     this.score = 0;
     this.generatePlatforms();
@@ -100,13 +99,7 @@ class GameBoard {
     while (y > 0) {
       // prevents the platforms from being spawned partially "out of bounds"
       let x = random(0, width - 220);
-      let platform = new Platform(
-        x,
-        y,
-        220,
-        20,
-        "./assets/images/platform.png"
-      );
+      let platform = new Platform(x, y, 220, 20, images.platform);
       this.platforms.push(platform);
       y -= 120;
     }
@@ -122,13 +115,7 @@ class GameBoard {
       if (platform.getPosition().y > height) {
         this.platforms.splice(i, 1);
         let x = random(0, width - 220);
-        let newPlatform = new Platform(
-          x,
-          0,
-          220,
-          20,
-          "./assets/images/platform.png"
-        );
+        let newPlatform = new Platform(x, 0, 220, 20, images.platform);
         this.platforms.push(newPlatform);
         this.score += 1 * this.scoreMultiplier;
         this.timeSinceLastMultiplierIncrease += 1;
