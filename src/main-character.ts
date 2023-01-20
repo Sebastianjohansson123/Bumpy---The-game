@@ -46,6 +46,9 @@ class MainCharacter extends Entity {
     if (keyIsDown(RIGHT_ARROW)) {
       this.position.x += this.speed;
     }
+    if (keyIsDown(32)) {
+      this.shoot();
+    }
     if (keyIsDown(UP_ARROW)) {
       this.shoot();
     }
@@ -78,7 +81,7 @@ if (this.position.x < 0 - (this.size.x * 0.5)) {
       return;
     }
     this.canShoot = false;
-    setTimeout(() => this.canShoot = true, 500);
+    setTimeout(() => this.canShoot = true, 200);
   }
 
   public jump() {
