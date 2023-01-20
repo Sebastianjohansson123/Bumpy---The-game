@@ -7,6 +7,8 @@ let jumpSound: p5.SoundFile;
 let song: p5.SoundFile;
 let font: p5.Font;
 let bumpy: p5.Image;
+let upArrow: p5.Image;
+let talkingBubble: p5.Image;
 // let bg2: p5.Image;
 // let heightOnBg: number;
 // let sound: p5.SoundFile
@@ -15,10 +17,12 @@ let bumpy: p5.Image;
 interface Images {
   balloon: p5.Image;
   backgrounds: p5.Image[];
+  // talkingBubble: p5.Image;
   // bumpy: p5.Image;
   rocket: p5.Image;
   soundOn: p5.Image;
   soundOff: p5.Image;
+  upArrow: p5.Image;
 }
 
 interface Sounds {
@@ -43,13 +47,17 @@ function preload() {
   bg = loadImage("./assets/images/bg1.png");
   jumpSound = loadSound("./assets/sounds/jump.wav");
   bumpy = loadImage("./assets/images/bumpy.png");
-  
+  talkingBubble = loadImage("./assets/images/bumpy-bubble.png");
+
+
   images = {
     backgrounds: [loadImage("./assets/images/bg1.png"), loadImage("./assets/images/bg2.png")],
+    // bumpy: loadImage("./assets/images/bumpy.png"),
     balloon: loadImage("./assets/images/bg1.png"),
     rocket: loadImage("./assets/images/bg1.png"),
     soundOn: loadImage("./assets/images/sound-on.png"),
-    soundOff: loadImage("./assets/images/sound-off.png")
+    soundOff: loadImage("./assets/images/sound-off.png"),
+    upArrow: loadImage("assets/images/up-arrow.png")
   }
 
   // sounds = {
@@ -76,7 +84,7 @@ function preload() {
  */
 function setup() {
   jumpSound = loadSound("./assets/sounds/jump.wav");
-  song.setVolume(0.05)
+  song.setVolume(0.05);
   // song.loop();
   createCanvas(550, windowHeight);
   // heightOnBg = 0;

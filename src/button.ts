@@ -8,9 +8,8 @@ class Button {
      this.content = content;
      this.position = position;
      this.size = size;
-     this.radius = size.x * 0.1
+     this.radius = size.x * 0.3;
    } 
-
 
 //   public update() {
 //     // Klickade användaren på knappen?
