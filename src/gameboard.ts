@@ -28,9 +28,9 @@ class GameBoard {
 
   public draw() {
     this.drawBackground();
-    this.mainCharacter.draw();
     this.getScore();
     this.platforms.forEach(platform => platform.draw());
+    this.mainCharacter.draw();
   }
 
   // repeats the background image
