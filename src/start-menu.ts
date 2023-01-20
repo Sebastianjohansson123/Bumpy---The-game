@@ -17,11 +17,13 @@ class StartMenu {
   public update() {}
 
   public draw() {
+    image(bg, 0, 0);
     this.drawTitle();
     this.btnPlayGame.draw();
     this.btnHowToPlay.draw();
     this.btnScores.draw();
     this.btnSound.draw();
+    image(bumpy, 0, 0);
   }
 
 

@@ -6,13 +6,16 @@ let soundOff: p5.Image;
 let jumpSound: p5.SoundFile;
 let song: p5.SoundFile;
 let font: p5.Font;
+let bumpy: p5.Image;
 // let bg2: p5.Image;
 // let heightOnBg: number;
 // let sound: p5.SoundFile
 
+
 interface Images {
   balloon: p5.Image;
   backgrounds: p5.Image[];
+  // bumpy: p5.Image;
   rocket: p5.Image;
   soundOn: p5.Image;
   soundOff: p5.Image;
@@ -26,8 +29,8 @@ let images: Images;
 let sounds: Sounds;
 
 const Fonts = {
-  TitanOne: "TitanOne",
-  CevicheOne: "CevicheOne",
+  TitanOne: "Titan One",
+  CevicheOne: "Ceviche One",
   Gaegu: "Gaegu",
 } as const;
 
@@ -39,6 +42,7 @@ const Fonts = {
 function preload() {
   bg = loadImage("./assets/images/bg1.png");
   jumpSound = loadSound("./assets/sounds/jump.wav");
+  bumpy = loadImage("./assets/images/bumpy.png");
   
   images = {
     backgrounds: [loadImage("./assets/images/bg1.png"), loadImage("./assets/images/bg2.png")],

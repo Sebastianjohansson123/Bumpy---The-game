@@ -26,7 +26,7 @@ public draw() {
    // 2. rita texten
    fill("#3A1458");
    textSize(22);
-   textFont("TitanOne");
+   textFont(Fonts.TitanOne);
    if (typeof this.content === "string") {
       textAlign(CENTER, CENTER);
       text(this.content, this.position.x, this.position.y);

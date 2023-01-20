@@ -13,6 +13,7 @@ abstract class Entity {
     this.size = new p5.Vector;
     this.img = new p5.Image(0, 0);
   }  
+  
   public update(){
       
     } 
