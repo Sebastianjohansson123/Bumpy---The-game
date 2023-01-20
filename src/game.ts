@@ -8,7 +8,7 @@ class Game {
   constructor() {
     this.gameBoard = new GameBoard();
     this.startMenu = new StartMenu();
-    this.activeScene = "play"
+    this.activeScene = "start"
   }
 
   public update() {

@@ -1,8 +1,11 @@
 //---- GLOBAL VARIABLES ----//
 let game: Game;
 let bg: p5.Image;
+let soundOn: p5.Image;
+let soundOff: p5.Image;
 let jumpSound: p5.SoundFile;
 let song: p5.SoundFile;
+let font: p5.Font;
 // let bg2: p5.Image;
 // let heightOnBg: number;
 // let sound: p5.SoundFile
@@ -11,19 +14,22 @@ interface Images {
   balloon: p5.Image;
   backgrounds: p5.Image[];
   rocket: p5.Image;
+  soundOn: p5.Image;
+  soundOff: p5.Image;
 }
 
 interface Sounds {
   music: p5.SoundFile;
 }
 
-interface Fonts {
-  a: p5.Font;
-}
-
-let fonts: Fonts;
 let images: Images;
 let sounds: Sounds;
+
+const Fonts = {
+  TitanOne: "TitanOne",
+  CevicheOne: "CevicheOne",
+  Gaegu: "Gaegu",
+} as const;
 
 /**
  * Built in preload function in P5
@@ -37,16 +43,20 @@ function preload() {
   images = {
     backgrounds: [loadImage("./assets/images/bg1.png"), loadImage("./assets/images/bg2.png")],
     balloon: loadImage("./assets/images/bg1.png"),
-    rocket: loadImage("./assets/images/bg1.png")
+    rocket: loadImage("./assets/images/bg1.png"),
+    soundOn: loadImage("./assets/images/sound-on.png"),
+    soundOff: loadImage("./assets/images/sound-off.png")
   }
 
   // sounds = {
   //   music: loadSound('')
   // }
 
-  // fonts = {
-  //   a: loadFont(""),
-  // }
+  //  fonts = {
+  //   titleAndButtonsFont: loadFont("./assets/fonts/TitanOne-Regular.ttf"),
+  //   monsterFont: loadFont("./assets/fonts/CevicheOne-Regular.ttf"),
+  //   instructionsFont: loadFont("./assets/fonts/Gaegu-Regular.ttf")
+  //  }
 
   song = loadSound("./assets/music/bumpy.mp3");
   // sound: jumpSound = loadSound('../assets/jump.wav');
@@ -85,12 +95,13 @@ function draw() {
   //  }
 
   // push()
-  // textFont(fonts.a);
+  // textFont(fonts.monsterFont);
   // text("hello world", 0, 0);
   // pop()
 
   game.update();
   game.draw();
+  
 }
 
 /**
