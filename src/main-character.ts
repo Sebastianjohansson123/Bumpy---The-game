@@ -46,7 +46,7 @@ class MainCharacter extends Entity {
     if (keyIsDown(RIGHT_ARROW)) {
       this.position.x += this.speed;
     }
-    if (keyIsDown(32)) {
+    if (keyIsDown(32)) { // Key 32 is Space
       this.shoot();
     }
     if (keyIsDown(UP_ARROW)) {
