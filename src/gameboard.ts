@@ -26,9 +26,8 @@ class GameBoard {
   public update() {
     this.shape.update();
     this.detectCollision();
-    this.movePlatforms();
+    this.moveEntities();
     this.updatePlatforms();
-    // this.moveEnemies();
     this.updateEnemies();
   }
 
@@ -141,7 +140,7 @@ class GameBoard {
     }
   }
 
-  private movePlatforms() {
+  private moveEntities() {
     if (
       this.shape.getPosition().y < height * 0.5 &&
       this.shape.getIsJumping()
