@@ -1,20 +1,16 @@
+/// <reference path="entity.ts"  />
 class MainCharacter extends Entity {
   // private isFalling: boolean;
   private isJumping: boolean;
   private speed: number;
-  private bullets: Bullet[];
+  private bullets: Shoot[];
   private canShoot:boolean | undefined;
 
-  constructor(img: string) {
-    super()
+  constructor() {
+    super(createVector(width * 0.4, height * 0.5), createVector(0, 0), createVector(0, 0.1), createVector(70, 80), images.bumpy)
    //private handleCollisions()
    //private jump()
    //private shoot()
-   this.position = createVector(width * 0.4, height * 0.5);
-   this.velocity = createVector(0, 0);
-   this.gravity = createVector(0, 0.1);
-   this.size = createVector(70, 80);
-   this.img = loadImage(img);
    this.isJumping = true;
    this.speed = 5;
    this.bullets = [];
@@ -75,7 +71,8 @@ if (this.position.x < 0 - (this.size.x * 0.5)) {
   public shoot() {
     if (this.canShoot === true) {
       bulletSound.play();
-      let bullet = new Bullet(this.position.x, this.position.y);
+      let bullet = new Shoot(createVector(this.position.x + 25, this.position.y));
+      // let bullet = new Bullet(this.position.x, this.position.y);
       this.bullets.push(bullet);
     } else {
       return;

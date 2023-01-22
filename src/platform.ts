@@ -1,16 +1,10 @@
+/// <reference path="entity.ts"  />
 class Platform extends Entity {
   // private breakable: boolean;
   // private moveable: boolean;
 
-  constructor(x: number, y: number, width: number, height: number, img: string) {
-    super()
-    this.position = createVector(x, y);
-    this.size = createVector(width/2, height);
-    this.img = loadImage(img);
-  }
-
-  public draw() {
-    image(this.img, this.position.x, this.position.y, this.size.x, this.size.y);
+  constructor(x: number, y: number) {
+    super(createVector(x,y), createVector(0,0), createVector(0,0), createVector(115, 20), images.platform)
   }
 
   public getPosition(): p5.Vector {

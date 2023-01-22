@@ -6,19 +6,19 @@ abstract class Entity {
   protected size: p5.Vector;
   protected img: p5.Image;
 
-  constructor() {
-    this.position = new p5.Vector;
-    this.velocity = new p5.Vector;
-    this.gravity = new p5.Vector;
-    this.size = new p5.Vector;
-    this.img = new p5.Image(0, 0);
+  constructor(position: p5.Vector, velocity: p5.Vector, gravity: p5.Vector, size: p5.Vector, img: p5.Image) {
+    this.position = position;
+    this.velocity = velocity;
+    this.gravity = gravity;
+    this.size = size;
+    this.img = img;
   }  
   public update(){
       
     } 
     
   public draw() {
-
+    image(this.img, this.position.x, this.position.y, this.size.x, this.size.y);
     }
     
     
