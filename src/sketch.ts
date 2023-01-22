@@ -1,6 +1,5 @@
 //---- GLOBAL VARIABLES ----//
 let game: Game;
-let bg: p5.Image;
 let jumpSound: p5.SoundFile;
 let bulletSound: p5.SoundFile;
 let song: p5.SoundFile;
@@ -9,6 +8,8 @@ let song: p5.SoundFile;
 // let sound: p5.SoundFile
 
 interface Images {
+  bumpy: p5.Image;
+  platform: p5.Image;
   balloon: p5.Image;
   backgrounds: p5.Image[];
   rocket: p5.Image;
@@ -32,14 +33,15 @@ let sounds: Sounds;
  * sound files, images etc...
  */
 function preload() {
-  bg = loadImage("./assets/images/bg1.png");
   jumpSound = loadSound("./assets/sounds/jump.wav");
   bulletSound = loadSound("./assets/sounds/bullet.mp3")
   song = loadSound("./assets/music/bumpy.mp3");
 
   images = {
-    backgrounds: [loadImage("./assets/images/bg1.png"), loadImage("./assets/images/bg2.png")],
+    bumpy: loadImage("./assets/images/bumpy.png"),
+    platform: loadImage("./assets/images/platform.png"),
     balloon: loadImage("./assets/images/bg1.png"),
+    backgrounds: [loadImage("./assets/images/bg1.png"), loadImage("./assets/images/bg2.png")],
     rocket: loadImage("./assets/images/bg1.png")
   }
 
