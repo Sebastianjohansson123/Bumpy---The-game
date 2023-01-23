@@ -22,15 +22,15 @@ class StartMenu {
   public update() {}
 
   public draw() {
-    image(bg, 0, 0);
-    image(talkingBubble, 150, 150);
-    talkingBubble.resize(249, 350);
+    image(images.bg, 0, 0);
+    image(images.talkingBubble, 150, 150);
+    images.talkingBubble.resize(249, 350);
     this.drawTitle();
     this.btnPlayGame.draw();
     this.btnHowToPlay.draw();
     this.btnScores.draw();
     this.btnSound.draw();
-    image(bumpy, 50, 450);
+    image(images.bumpy, 50, 450);
     //this.btnUpArrow.draw();
   }
 
