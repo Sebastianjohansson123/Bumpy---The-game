@@ -2,7 +2,7 @@ class HowToPlay {
     private btnExit: Button;
   
     constructor() {
-      this.btnExit = new Button("x", new p5.Vector(376, 173), new p5.Vector(0, 0));
+      this.btnExit = new Button(images.xBtn, new p5.Vector(376, 173), new p5.Vector(0, 0));
     }
   
     public update() {}
@@ -13,7 +13,8 @@ class HowToPlay {
       images.talkingBubble.resize(249, 350);
       this.drawTitle();
       this.btnExit.draw();
-      image(images.howToPlayKeys, 162, 360);
+      images.xBtn.resize(11, 11);
+      image(images.howToPlayKeys, 162, 355);
       images.howToPlayKeys.resize(130, 70);
       image(images.bumpy, 50, 450);
     }
@@ -63,9 +64,9 @@ class HowToPlay {
       fill("#3A1458");
       textSize(13);
       textFont(Fonts.Gaegu);
-      text("Shoot", 262, 378);
-      text("Move to the right", 295, 406);
-      text("Move to the left", 214, 432);
+      text("Shoot", 262, 373);
+      text("Move to the right", 295, 402);
+      text("Move to the left", 214, 428);
       pop();
     }
   }
