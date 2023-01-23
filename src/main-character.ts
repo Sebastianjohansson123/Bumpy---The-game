@@ -74,7 +74,7 @@ class MainCharacter extends Entity {
 
   public shoot() {
     if (this.canShoot === true) {
-      bulletSound.play();
+      sounds.bulletSound.play();
       let bullet = new Shoot(
         createVector(this.position.x + 25, this.position.y)
       );
