@@ -2,7 +2,7 @@ class HowToPlay {
     private btnExit: Button;
   
     constructor() {
-      this.btnExit = new Button("x", new p5.Vector(372, 175), new p5.Vector(0, 0));
+      this.btnExit = new Button("x", new p5.Vector(376, 173), new p5.Vector(0, 0));
     }
   
     public update() {}
@@ -13,11 +13,10 @@ class HowToPlay {
       images.talkingBubble.resize(249, 350);
       this.drawTitle();
       this.btnExit.draw();
-      image(images.howToPlayKeys, 165, 340);
-      images.howToPlayKeys.resize(160, 80);
+      image(images.howToPlayKeys, 162, 360);
+      images.howToPlayKeys.resize(130, 70);
       image(images.bumpy, 50, 450);
     }
-  
   
     private drawTitle() {
       push();
@@ -43,18 +42,30 @@ class HowToPlay {
       pop();
       push();
       fill("#3A1458");
-      textSize(42);
+      textSize(27);
       textAlign(CENTER, CENTER);
       textFont(Fonts.TitanOne);
-      text("MENU", 275, 180);
+      text("How to play", 274, 180);
       pop();
       push();
       fill("#3A1458");
-      textSize(10);
-    //   textAlign(CENTER, CENTER);
+      textSize(15);
       textFont(Fonts.Gaegu);
-      textWrap(WORD);
-    //   text("Use the keys on the keyboard to move the monster. Use the RIGHT arrow key to move the monster to the right, and the LEFT arrow key to move the monster to the left. Use the UP key to shoot.", 120, 250);
+      text("Use the keys on the keyboard to", 160, 215);
+      text("move the monster.", 160, 235);
+      text("Use the RIGHT arrow key to move", 160, 255);
+      text("the monster to the right, and the", 160, 275);
+      text("LEFT arrow key to move the monster", 160, 295);
+      text("to the left.", 160, 315);
+      text("Use the UP key to shoot.", 160, 335);
+      pop();
+      push();
+      fill("#3A1458");
+      textSize(13);
+      textFont(Fonts.Gaegu);
+      text("Shoot", 262, 378);
+      text("Move to the right", 295, 406);
+      text("Move to the left", 214, 432);
       pop();
     }
   }
