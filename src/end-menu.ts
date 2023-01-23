@@ -13,8 +13,6 @@ class EndMenu {
 
   public draw() {
     image(images.bg, 0, 0);
-    image(images.talkingBubble, 150, 150);
-    images.talkingBubble.resize(249, 350);
     this.drawTitle();
     this.btnPlayAgain.draw();
     this.btnMenu.draw();
