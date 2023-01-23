@@ -93,7 +93,6 @@ class GameBoard {
       let enemy = new Enemy(position);
       this.enemies.push(enemy);
       this.canGenerateEnemy = false;
-      // this.scoreThreshold += 10;
     } else {
       return;
     }
@@ -158,7 +157,6 @@ class GameBoard {
         this.timeSinceLastMultiplierIncrease += 1;
         console.log(this.timeSinceLastMultiplierIncrease);
         if (this.timeSinceLastMultiplierIncrease === 10) {
-          // this.generateEnemy();
           this.canGenerateEnemy = true;
           this.scoreMultiplier += 1;
           this.timeSinceLastMultiplierIncrease = 0;
