@@ -100,14 +100,19 @@ class GameBoard {
   }
 
   private updateEnemies() {
-    for (let i = 0; i < this.enemies.length; i++) {
-      let enemy = this.enemies[i];
-      if (enemy.getPosition().y > height) {
-        this.enemies.splice(i, 1);
-        let x = random(0, width - 220);
-        let position = createVector(x, 0);
-        let newEnemy = new Enemy(position);
-        this.enemies.push(newEnemy);
+    if (this.canGenerateEnemy === true) {
+      for (let i = 0; i < this.enemies.length; i++) {
+        let enemy = this.enemies[i];
+        if (enemy.getPosition().y > height) {
+          this.enemies.splice(i, 1);
+          let x = random(0, width - 220);
+          let position = createVector(x, 0);
+          let newEnemy = new Enemy(position);
+          this.enemies.push(newEnemy);
+          this.canGenerateEnemy = false;
+        } else {
+          return;
+        }
       }
     }
   }
@@ -152,7 +157,7 @@ class GameBoard {
         this.score += 1 * this.scoreMultiplier;
         this.timeSinceLastMultiplierIncrease += 1;
         console.log(this.timeSinceLastMultiplierIncrease);
-        if (this.timeSinceLastMultiplierIncrease === 20) {
+        if (this.timeSinceLastMultiplierIncrease === 10) {
           // this.generateEnemy();
           this.canGenerateEnemy = true;
           this.scoreMultiplier += 1;
