@@ -1,13 +1,15 @@
 //---- GLOBAL VARIABLES ----//
 let game: Game;
-let bg: p5.Image;
 let jumpSound: p5.SoundFile;
+let bulletSound: p5.SoundFile;
 let song: p5.SoundFile;
 // let bg2: p5.Image;
 // let heightOnBg: number;
 // let sound: p5.SoundFile
 
 interface Images {
+  bumpy: p5.Image;
+  platform: p5.Image;
   balloon: p5.Image;
   backgrounds: p5.Image[];
   rocket: p5.Image;
@@ -31,12 +33,15 @@ let sounds: Sounds;
  * sound files, images etc...
  */
 function preload() {
-  bg = loadImage("./assets/images/bg1.png");
   jumpSound = loadSound("./assets/sounds/jump.wav");
-  
+  bulletSound = loadSound("./assets/sounds/bullet.mp3")
+  song = loadSound("./assets/music/bumpy.mp3");
+
   images = {
-    backgrounds: [loadImage("./assets/images/bg1.png"), loadImage("./assets/images/bg2.png")],
+    bumpy: loadImage("./assets/images/bumpy.png"),
+    platform: loadImage("./assets/images/platform.png"),
     balloon: loadImage("./assets/images/bg1.png"),
+    backgrounds: [loadImage("./assets/images/bg1.png"), loadImage("./assets/images/bg2.png")],
     rocket: loadImage("./assets/images/bg1.png")
   }
 
@@ -48,7 +53,7 @@ function preload() {
   //   a: loadFont(""),
   // }
 
-  song = loadSound("./assets/music/bumpy.mp3");
+  
   // sound: jumpSound = loadSound('../assets/jump.wav');
   // bg2 = loadImage('./assets/images/bg2.png');
   // sound: p5.SoundFile = loadSound('../assets/mySound.wav');
@@ -61,8 +66,11 @@ function preload() {
  * in the draw function below
  */
 function setup() {
+  bulletSound = loadSound("./assets/sounds/bullet.mp3")
+  bulletSound.setVolume(0.1)
+  jumpSound.setVolume(0.1)
   jumpSound = loadSound("./assets/sounds/jump.wav");
-  song.setVolume(0.05)
+  // song.setVolume(0.05)
   // song.loop();
   createCanvas(550, windowHeight);
   // heightOnBg = 0;

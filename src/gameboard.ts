@@ -2,25 +2,23 @@ class GameBoard {
   // private entities: entity [];
   // private backgrounds: Background[];
   // private isGameOver: boolean;
-  private shape: MainCharacter;
+  private mainCharacter: MainCharacter;
   private platforms: Platform[];
   private score: number;
   private scoreMultiplier: number = 1;
   private timeSinceLastMultiplierIncrease: number = 0;
+  private currentBackgroundIndex: number = 0;
+  private backgroundChangeScoreIncrement: number = 8;
 
   constructor() {
-    this.shape = new MainCharacter("./assets/images/bumpy.png");
-    this.platforms = [], new Platform(50, 50, 100, 100, "./assets/images/platform.png");
+    this.mainCharacter = new MainCharacter();
+    this.platforms = [];
     this.score = 0;
     this.generatePlatforms();
   }
 
-  // git config --global --list
-  // git config --global user.name "David Jensen"
-  // git config --global user.email mail@mail.com
-
   public update() {
-    this.shape.update();
+    this.mainCharacter.update();
     this.detectCollision();
     this.movePlatforms();
     this.updatePlatforms();
@@ -28,32 +26,38 @@ class GameBoard {
 
   public draw() {
     this.drawBackground();
-    this.shape.draw();
     this.getScore();
     this.platforms.forEach(platform => platform.draw());
+    this.mainCharacter.draw();
   }
 
-  // repeats the background image
-  // can possibly be adjusted later on to include different backgrounds depending on the height
+
+
+  // checks if the score is above a certain threshold
+  // then increases the backgroundindex which draws
+  // a new background image. Can be expanded with additional
+  // bgimages and added transition effects
   private drawBackground() {
-    bg.resize(0, windowHeight)
-    let repeatCount = height / bg.height + 1;
-    for (let i = 0; i < repeatCount; i++) {
-      image(bg, 0, i * bg.height);
-    }
+      if (this.score >= this.backgroundChangeScoreIncrement) {
+          this.currentBackgroundIndex = (this.currentBackgroundIndex + 1) % images.backgrounds.length;
+          this.backgroundChangeScoreIncrement += 500;
+      }
+      images.backgrounds[this.currentBackgroundIndex].resize(0, windowHeight);
+      let repeatCount = height / images.backgrounds[this.currentBackgroundIndex].height + 1;
+      for (let i = 0; i < repeatCount; i++) {
+          image(images.backgrounds[this.currentBackgroundIndex], 0, i * images.backgrounds[this.currentBackgroundIndex].height);
+      }
   }
-
-
   // checks if the MainCharacters gets in contact with the platform 
   // when it is falling and triggers an automatic jump if it is
   private detectCollision() {
     for (let platform of this.platforms) {
-      if (this.shape.getPosition().y + this.shape.getSize().y > platform.getPosition().y 
-          && this.shape.getPosition().y + this.shape.getSize().y < platform.getPosition().y + platform.getSize().y
-          && (this.shape.getPosition().x + this.shape.getSize().x  - 20 > platform.getPosition().x // added "- 20" to better adjust hitbox
-              && this.shape.getPosition().x + 20 < platform.getPosition().x + platform.getSize().x) // // added "+ 20" to better adjust hitbox
-              && (this.shape.getVelocity().y > 0.5)) { // Makes it so that the MainCharacter only jumps on the platforms if is falling at a certain velocity
-        this.shape.jump();
+      if (this.mainCharacter.getPosition().y + this.mainCharacter.getSize().y > platform.getPosition().y 
+          && this.mainCharacter.getPosition().y + this.mainCharacter.getSize().y < platform.getPosition().y + platform.getSize().y
+          && (this.mainCharacter.getPosition().x + this.mainCharacter.getSize().x  - 20 > platform.getPosition().x // added "- 20" to better adjust hitbox
+              && this.mainCharacter.getPosition().x + 20 < platform.getPosition().x + platform.getSize().x) // // added "+ 20" to better adjust hitbox
+              && (this.mainCharacter.getVelocity().y > 0.5)) { // Makes it so that the MainCharacter only jumps on the platforms if is falling at a certain velocity
+        this.mainCharacter.jump();
       }
     }
   }
@@ -64,7 +68,8 @@ class GameBoard {
     while (y > 0) {
       // prevents the platforms from being spawned partially "out of bounds"
       let x = random(0, width - 220);
-      let platform = new Platform(x, y, 220, 20, "./assets/images/platform.png");
+      let position = createVector(x, y)
+      let platform = new Platform(position);
       this.platforms.push(platform);
       y -= 120;
     }
@@ -80,7 +85,8 @@ class GameBoard {
         if (platform.getPosition().y > height) {
             this.platforms.splice(i, 1);
             let x = random(0, width - 220);
-            let newPlatform = new Platform(x, 0, 220, 20, "./assets/images/platform.png");
+            let position = createVector(x, 0)
+            let newPlatform = new Platform(position);
             this.platforms.push(newPlatform);
             this.score += 1 * this.scoreMultiplier;
             this.timeSinceLastMultiplierIncrease += 1;
@@ -93,10 +99,10 @@ class GameBoard {
 }
 
 private movePlatforms() {
-  if (this.shape.getPosition().y < height * 0.5 && this.shape.getIsJumping()) {
+  if (this.mainCharacter.getPosition().y < height * 0.5 && this.mainCharacter.getIsJumping()) {
     for (let platform of this.platforms) {
       platform.getPosition().y += 4.7;
-      this.shape.getPosition().y += 0.5;
+      this.mainCharacter.getPosition().y += 0.5;
     }
   }
 }
