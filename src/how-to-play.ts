@@ -5,7 +5,9 @@ class HowToPlay {
       this.btnExit = new Button(images.xBtn, new p5.Vector(376, 173), new p5.Vector(0, 0));
     }
   
-    public update() {}
+    public update() {
+
+    }
   
     public draw() {
       image(images.bg, 0, 0);
