@@ -10,7 +10,7 @@ class Game {
     this.startMenu = new StartMenu();
     this.activeScene = "start"
   }
-
+  
   public update() {
     if (this.activeScene === "play") {
       this.gameBoard.update();
