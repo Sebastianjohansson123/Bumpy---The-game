@@ -5,8 +5,8 @@ class EndMenu {
 
   constructor() {
     const centerX = width * 0.5;
-    this.btnPlayAgain = new Button("PLAY AGAIN", new p5.Vector(centerX, 230), new p5.Vector(200, 50));
-    this.btnMenu = new Button("MENU", new p5.Vector(centerX, 290), new p5.Vector(200, 50));
+    this.btnPlayAgain = new Button("PLAY AGAIN", new p5.Vector(centerX, 230), new p5.Vector(220, 60));
+    this.btnMenu = new Button("MENU", new p5.Vector(centerX, 290), new p5.Vector(140, 40));
   }
 
   public update() {}
@@ -25,14 +25,14 @@ class EndMenu {
     textSize(100);
     textAlign(CENTER, CENTER);
     textFont(Fonts.CevicheOne);
-    text("Game Over!", 278, 103);
+    text("Game Over!", 278, 113);
     pop();
     push();
     fill("#3A1458");
     textSize(100);
     textAlign(CENTER, CENTER);
     textFont(Fonts.CevicheOne);
-    text("Game Over!", 275, 100);
+    text("Game Over!", 275, 110);
     pop();
   }
 }
