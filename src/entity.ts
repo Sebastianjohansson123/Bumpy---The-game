@@ -13,6 +13,7 @@ abstract class Entity {
     this.size = size;
     this.img = img;
   }  
+  
   public update(){
       
     } 

@@ -88,7 +88,7 @@ class MainCharacter extends Entity {
   }
 
   public jump() {
-    jumpSound.play();
+    sounds.jumpSound.play();
     this.velocity.y = -5;
     this.isJumping = true;
   }

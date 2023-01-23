@@ -1,32 +1,45 @@
 //---- GLOBAL VARIABLES ----//
 let game: Game;
-let jumpSound: p5.SoundFile;
-let bulletSound: p5.SoundFile;
-let song: p5.SoundFile;
-// let bg2: p5.Image;
+let images: Images;
+let sounds: Sounds;
+let sound: p5.SoundFile;
+// let talkingBubble: p5.Image;
 // let heightOnBg: number;
-// let sound: p5.SoundFile
+// let bulletSound: p5.SoundFile;
+// let song: p5.SoundFile;
+// let bumpy: p5.Image;
+// let soundOn: p5.Image;
+// let soundOff: p5.Image;
+// let upArrow: p5.Image;
+// let bg: p5.Image;
+// let font: p5.Font;
 
 interface Images {
   bumpy: p5.Image;
+  bg: p5.Image;
   platform: p5.Image;
-  balloon: p5.Image;
+  // balloon: p5.Image;
   backgrounds: p5.Image[];
+  talkingBubble: p5.Image;
   // rocket: p5.Image;
   enemy: p5.Image;
+  soundOn: p5.Image;
+  soundOff: p5.Image;
+  upArrow: p5.Image;
+
 }
 
 interface Sounds {
-  music: p5.SoundFile;
+  bulletSound: p5.SoundFile;
+  song: p5.SoundFile;
+  jumpSound: p5.SoundFile;
 }
 
-interface Fonts {
-  a: p5.Font;
-}
-
-let fonts: Fonts;
-let images: Images;
-let sounds: Sounds;
+const Fonts = {
+  TitanOne: "Titan One",
+  CevicheOne: "Ceviche One",
+  Gaegu: "Gaegu",
+} as const;
 
 /**
  * Built in preload function in P5
@@ -34,32 +47,24 @@ let sounds: Sounds;
  * sound files, images etc...
  */
 function preload() {
-  jumpSound = loadSound("./assets/sounds/jump.wav");
-  bulletSound = loadSound("./assets/sounds/bullet.mp3");
-  song = loadSound("./assets/music/bumpy.mp3");
-
   images = {
-    bumpy: loadImage("./assets/images/bumpy.png"),
+    backgrounds: [loadImage("./assets/images/bg1.png"), loadImage("./assets/images/bg2.png")],
+    bg: loadImage("./assets/images/bg1.png"),
+    //balloon: loadImage(""),
+    //rocket: loadImage(""),
+    soundOn: loadImage("./assets/images/sound-on.png"),
+    soundOff: loadImage("./assets/images/sound-off.png"),
+    upArrow: loadImage("assets/images/up-arrow.png"),
     platform: loadImage("./assets/images/platform.png"),
-    balloon: loadImage("./assets/images/bg1.png"),
-    backgrounds: [
-      loadImage("./assets/images/bg1.png"),
-      loadImage("./assets/images/bg2.png"),
-    ],
-    enemy: loadImage("./assets/images/enemy.png"),
-  };
-
-  // sounds = {
-  //   music: loadSound('')
-  // }
-
-  // fonts = {
-  //   a: loadFont(""),
-  // }
-
-  // sound: jumpSound = loadSound('../assets/jump.wav');
-  // bg2 = loadImage('./assets/images/bg2.png');
-  // sound: p5.SoundFile = loadSound('../assets/mySound.wav');
+    bumpy: loadImage("./assets/images/bumpy.png"),
+    talkingBubble: loadImage("./assets/images/bumpy-bubble.png")
+  }
+  
+  sounds = {
+    bulletSound: loadSound("./assets/sounds/bullet.mp3"),
+    song: loadSound("./assets/music/bumpy.mp3"),
+    jumpSound: loadSound("./assets/sounds/jump.wav"),
+  }
 }
 
 /**
@@ -69,11 +74,11 @@ function preload() {
  * in the draw function below
  */
 function setup() {
-  bulletSound = loadSound("./assets/sounds/bullet.mp3");
-  bulletSound.setVolume(0.1);
-  jumpSound.setVolume(0.1);
-  jumpSound = loadSound("./assets/sounds/jump.wav");
-  // song.setVolume(0.05)
+  sounds.bulletSound = loadSound("./assets/sounds/bullet.mp3")
+  sounds.bulletSound.setVolume(0.1)
+  sounds.jumpSound.setVolume(0.1)
+  sounds.jumpSound = loadSound("./assets/sounds/jump.wav");
+  sounds.song.setVolume(0.05);
   // song.loop();
   createCanvas(550, windowHeight);
   // heightOnBg = 0;
@@ -96,12 +101,13 @@ function draw() {
   //  }
 
   // push()
-  // textFont(fonts.a);
+  // textFont(fonts.monsterFont);
   // text("hello world", 0, 0);
   // pop()
 
   game.update();
   game.draw();
+  
 }
 
 /**
