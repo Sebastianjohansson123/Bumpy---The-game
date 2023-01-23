@@ -22,9 +22,11 @@ interface Images {
   backgrounds: p5.Image[];
   talkingBubble: p5.Image;
   // rocket: p5.Image;
+  enemy: p5.Image;
   soundOn: p5.Image;
   soundOff: p5.Image;
   upArrow: p5.Image;
+
 }
 
 interface Sounds {
@@ -45,7 +47,6 @@ const Fonts = {
  * sound files, images etc...
  */
 function preload() {
-
   images = {
     backgrounds: [loadImage("./assets/images/bg1.png"), loadImage("./assets/images/bg2.png")],
     bg: loadImage("./assets/images/bg1.png"),
@@ -64,7 +65,6 @@ function preload() {
     song: loadSound("./assets/music/bumpy.mp3"),
     jumpSound: loadSound("./assets/sounds/jump.wav"),
   }
-
 }
 
 /**

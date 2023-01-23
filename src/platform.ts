@@ -4,7 +4,13 @@ class Platform extends Entity {
   // private moveable: boolean;
 
   constructor(position: p5.Vector) {
-    super(position, createVector(0,0), createVector(0,0), createVector(115, 20), images.platform)
+    super(
+      position,
+      createVector(0, 0),
+      createVector(0, 0),
+      createVector(115, 20),
+      images.platform
+    );
   }
 
   public getPosition(): p5.Vector {
@@ -14,5 +20,4 @@ class Platform extends Entity {
   public getSize(): p5.Vector {
     return this.size;
   }
-
 }
