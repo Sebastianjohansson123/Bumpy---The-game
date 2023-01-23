@@ -55,6 +55,7 @@ function preload() {
     soundOn: loadImage("./assets/images/sound-on.png"),
     soundOff: loadImage("./assets/images/sound-off.png"),
     upArrow: loadImage("assets/images/up-arrow.png"),
+    enemy: loadImage("./assets/images/enemy.png"),
     platform: loadImage("./assets/images/platform.png"),
     bumpy: loadImage("./assets/images/bumpy.png"),
     talkingBubble: loadImage("./assets/images/bumpy-bubble.png")
