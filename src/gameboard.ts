@@ -8,6 +8,7 @@ class GameBoard {
   private scoreMultiplier: number = 1;
   private timeSinceLastMultiplierIncrease: number = 0;
   private enemies: Enemy[];
+  private canGenerateEnemy: boolean | undefined;
   private currentBackgroundIndex: number = 0;
   private backgroundChangeScoreIncrement: number = 8;
 
@@ -17,7 +18,7 @@ class GameBoard {
     this.enemies = [];
     this.score = 0;
     this.generatePlatforms();
-    this.generateEnemy();
+    this.canGenerateEnemy = true;
   }
 
   public update() {
@@ -25,6 +26,7 @@ class GameBoard {
     this.detectCollision();
     this.moveEntities();
     this.updatePlatforms();
+    this.generateEnemy();
     this.updateEnemies();
   }
 
@@ -81,15 +83,21 @@ class GameBoard {
   }
 
   private generateEnemy() {
-    let y = height;
+    if (this.canGenerateEnemy === true) {
+      let y = height;
 
-    while (y > 0) {
-      let x = random(0, width - 220);
-      let position = createVector(x, y);
-      let enemy = new Enemy(position);
-      this.enemies.push(enemy);
-      y -= 500;
+      while (y > 0) {
+        let x = random(0, width - 220);
+        let position = createVector(x, y);
+        let enemy = new Enemy(position);
+        this.enemies.push(enemy);
+        y -= 500;
+      }
+    } else {
+      return;
     }
+    this.canGenerateEnemy = false;
+    setTimeout(() => (this.canGenerateEnemy = true), 50000);
   }
 
   private updateEnemies() {
@@ -156,20 +164,6 @@ class GameBoard {
         this.mainCharacter.getPosition().y += 0.5;
       }
     }
-
-    // if (
-    //   this.mainCharacter.getPosition().y < height * 0.5 &&
-    //   this.mainCharacter.getIsJumping()
-    // ) {
-    //   for (let platform of this.platforms) {
-    //     platform.getPosition().y += 4.7;
-    //     this.mainCharacter.getPosition().y += 0.5;
-    //   }
-    //   for (let enemy of this.enemies) {
-    //     enemy.getPosition().y += 4.7;
-    //     this.shape.getPosition().y += 0.5;
-    //   }
-    // }
   }
 
   // Function to track the score of the current game and display it in the top-left corner
