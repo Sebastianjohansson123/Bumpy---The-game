@@ -1,12 +1,14 @@
 class EndMenu {
-  // private highscore: number;
+  //private highscore: number;
+  //private score: number;
   private btnPlayAgain: Button;
   private btnMenu: Button;
 
   constructor() {
     const centerX = width * 0.5;
-    this.btnPlayAgain = new Button("PLAY AGAIN", new p5.Vector(centerX, 230), new p5.Vector(220, 60));
-    this.btnMenu = new Button("MENU", new p5.Vector(centerX, 290), new p5.Vector(140, 40));
+    //this.score = 0;
+    this.btnPlayAgain = new Button("PLAY AGAIN", new p5.Vector(centerX, 290), new p5.Vector(220, 60));
+    this.btnMenu = new Button("MENU", new p5.Vector(centerX, 350), new p5.Vector(140, 40));
   }
 
   public update() {}
@@ -16,23 +18,38 @@ class EndMenu {
     this.drawTitle();
     this.btnPlayAgain.draw();
     this.btnMenu.draw();
-    image(images.bumpy, 50, 450);
+    image(images.bumpySad, 185, 390);
+    images.bumpySad.resize(180, 238);
   }
 
   private drawTitle() {
+    push();
+    fill("#FFFFFF");
+    textSize(20);
+    textAlign(CENTER, CENTER);
+    textFont(Fonts.TitanOne);
+    text("Your score:", 278, 190);
+    pop(); 
+    push();
+    fill("#FFFFFF");
+    textSize(20);
+    textAlign(CENTER, CENTER);
+    textFont(Fonts.TitanOne);
+    text("Highscore:", 278, 220);
+    pop();
     push();
     fill("#000000");
     textSize(100);
     textAlign(CENTER, CENTER);
     textFont(Fonts.CevicheOne);
-    text("Game Over!", 278, 113);
+    text("Game Over!", 278, 103);
     pop();
     push();
     fill("#3A1458");
     textSize(100);
     textAlign(CENTER, CENTER);
     textFont(Fonts.CevicheOne);
-    text("Game Over!", 275, 110);
+    text("Game Over!", 275, 100);
     pop();
   }
 }
