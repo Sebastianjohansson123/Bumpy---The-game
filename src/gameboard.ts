@@ -68,7 +68,8 @@ class GameBoard {
     while (y > 0) {
       // prevents the platforms from being spawned partially "out of bounds"
       let x = random(0, width - 220);
-      let platform = new Platform(x, y);
+      let position = createVector(x, y)
+      let platform = new Platform(position);
       this.platforms.push(platform);
       y -= 120;
     }
@@ -84,7 +85,8 @@ class GameBoard {
         if (platform.getPosition().y > height) {
             this.platforms.splice(i, 1);
             let x = random(0, width - 220);
-            let newPlatform = new Platform(x, 0);
+            let position = createVector(x, 0)
+            let newPlatform = new Platform(position);
             this.platforms.push(newPlatform);
             this.score += 1 * this.scoreMultiplier;
             this.timeSinceLastMultiplierIncrease += 1;

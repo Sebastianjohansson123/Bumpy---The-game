@@ -3,8 +3,8 @@ class Platform extends Entity {
   // private breakable: boolean;
   // private moveable: boolean;
 
-  constructor(x: number, y: number) {
-    super(createVector(x,y), createVector(0,0), createVector(0,0), createVector(115, 20), images.platform)
+  constructor(position: p5.Vector) {
+    super(position, createVector(0,0), createVector(0,0), createVector(115, 20), images.platform)
   }
 
   public getPosition(): p5.Vector {
