@@ -70,7 +70,7 @@ if (this.position.x < 0 - (this.size.x * 0.5)) {
 
   public shoot() {
     if (this.canShoot === true) {
-      bulletSound.play();
+      sounds.bulletSound.play();
       let bullet = new Shoot(createVector(this.position.x + 25, this.position.y));
       // let bullet = new Bullet(this.position.x, this.position.y);
       this.bullets.push(bullet);
@@ -82,7 +82,7 @@ if (this.position.x < 0 - (this.size.x * 0.5)) {
   }
 
   public jump() {
-    jumpSound.play();
+    sounds.jumpSound.play();
     this.velocity.y = -5;
     this.isJumping = true;
 }
