@@ -2,16 +2,20 @@
 
 class Enemy extends Entity {
   constructor(
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-    img: p5.Image
-  ) {
-    super();
-    this.position = createVector(x, y);
-    this.size = createVector(width / 2, height);
-    this.img = img;
+    position: p5.Vector // x: number, // y: number, // width: number,
+  ) // height: number,
+  // img: p5.Image
+  {
+    super(
+      position,
+      createVector(0, 0),
+      createVector(0, 0),
+      createVector(100, 100),
+      images.enemy
+    );
+    // this.position = createVector(x, y);
+    // this.size = createVector(width * 0.5, height);
+    // this.img = img;
   }
 
   public draw() {
