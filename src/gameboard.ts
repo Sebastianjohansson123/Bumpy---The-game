@@ -11,6 +11,8 @@ class GameBoard {
   private canGenerateEnemy: boolean | undefined;
   private currentBackgroundIndex: number = 0;
   private backgroundChangeScoreIncrement: number = 8;
+  private canMoveLeft: boolean = false;
+  // private scoreThreshold: number = 10;
 
   constructor() {
     this.mainCharacter = new MainCharacter();
@@ -18,7 +20,7 @@ class GameBoard {
     this.enemies = [];
     this.score = 0;
     this.generatePlatforms();
-    this.canGenerateEnemy = true;
+    this.canGenerateEnemy = false;
   }
 
   public update() {
@@ -26,8 +28,9 @@ class GameBoard {
     this.detectCollision();
     this.moveEntities();
     this.updatePlatforms();
-    this.generateEnemy();
     this.updateEnemies();
+    this.moveEnemies();
+    this.generateEnemy();
   }
 
   public draw() {
@@ -84,20 +87,16 @@ class GameBoard {
 
   private generateEnemy() {
     if (this.canGenerateEnemy === true) {
+      let x = random(0, width - 220);
       let y = height;
-
-      while (y > 0) {
-        let x = random(0, width - 220);
-        let position = createVector(x, y);
-        let enemy = new Enemy(position);
-        this.enemies.push(enemy);
-        y -= 500;
-      }
+      let position = createVector(x, y);
+      let enemy = new Enemy(position);
+      this.enemies.push(enemy);
+      this.canGenerateEnemy = false;
+      // this.scoreThreshold += 10;
     } else {
       return;
     }
-    this.canGenerateEnemy = false;
-    setTimeout(() => (this.canGenerateEnemy = true), 50000);
   }
 
   private updateEnemies() {
@@ -110,6 +109,16 @@ class GameBoard {
         let newEnemy = new Enemy(position);
         this.enemies.push(newEnemy);
       }
+    }
+  }
+
+  private moveEnemies() {
+    if (this.canMoveLeft === true) {
+      this.enemies.forEach((enemy) => (enemy.getPosition().x -= 1));
+      setTimeout(() => (this.canMoveLeft = false), 2000);
+    } else {
+      this.enemies.forEach((enemy) => (enemy.getPosition().x += 1));
+      setTimeout(() => (this.canMoveLeft = true), 2000);
     }
   }
 
@@ -142,7 +151,10 @@ class GameBoard {
         this.platforms.push(newPlatform);
         this.score += 1 * this.scoreMultiplier;
         this.timeSinceLastMultiplierIncrease += 1;
-        if (this.timeSinceLastMultiplierIncrease >= 10) {
+        console.log(this.timeSinceLastMultiplierIncrease);
+        if (this.timeSinceLastMultiplierIncrease === 20) {
+          // this.generateEnemy();
+          this.canGenerateEnemy = true;
           this.scoreMultiplier += 1;
           this.timeSinceLastMultiplierIncrease = 0;
         }
