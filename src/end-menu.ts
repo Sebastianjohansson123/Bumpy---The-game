@@ -53,4 +53,9 @@ class EndMenu {
     text("Game Over!", 275, 100);
     pop();
   }
+
+  public setScore(score: number) {
+    this.score = score;
+}
+
 }

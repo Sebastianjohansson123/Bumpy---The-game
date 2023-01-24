@@ -36,6 +36,7 @@ class Game {
   public draw() {
     if (this.activeScene === "play") {
       this.gameBoard.draw();
+      this.updateScore();
     } else if (this.activeScene === "start") {
       this.startMenu.draw()
     } else if (this.activeScene === "howtoplay") {
@@ -46,6 +47,9 @@ class Game {
     }
   }
 
+  public updateScore() {
+    this.endMenu.setScore(this.gameBoard.getScore());
+  }
 
   public startGame() {
 
