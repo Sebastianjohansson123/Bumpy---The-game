@@ -83,6 +83,20 @@ class GameBoard {
         this.mainCharacter.jump();
       }
     }
+    for (let enemy of this.enemies) {
+      let distance = dist(
+        this.mainCharacter.getPosition().x,
+        this.mainCharacter.getPosition().y,
+        enemy.getPosition().x,
+        enemy.getPosition().y
+      );
+      if (
+        distance < this.mainCharacter.getSize().x + enemy.getSize().x - 50 &&
+        distance < this.mainCharacter.getSize().y + enemy.getSize().y - 50
+      ) {
+        console.log("Game Over");
+      }
+    }
   }
 
   private generateEnemy() {
@@ -155,7 +169,7 @@ class GameBoard {
         this.platforms.push(newPlatform);
         this.score += 1 * this.scoreMultiplier;
         this.timeSinceLastMultiplierIncrease += 1;
-        console.log(this.timeSinceLastMultiplierIncrease);
+        // console.log(this.timeSinceLastMultiplierIncrease);
         if (this.timeSinceLastMultiplierIncrease === 10) {
           this.canGenerateEnemy = true;
           this.scoreMultiplier += 1;
