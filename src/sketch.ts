@@ -18,6 +18,7 @@ interface Images {
   bumpy: p5.Image;
   bg: p5.Image;
   platform: p5.Image;
+  bumpySad: p5.Image;
   // balloon: p5.Image;
   backgrounds: p5.Image[];
   talkingBubble: p5.Image;
@@ -58,6 +59,7 @@ function preload() {
     enemy: loadImage("./assets/images/enemy.png"),
     platform: loadImage("./assets/images/platform.png"),
     bumpy: loadImage("./assets/images/bumpy.png"),
+    bumpySad: loadImage("./assets/images/bumpy-sad.png"),
     talkingBubble: loadImage("./assets/images/bumpy-bubble.png")
   }
   

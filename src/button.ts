@@ -38,11 +38,6 @@ public draw() {
 }
 
 
-// Created buttons for EndMenu
-let btnPlayAgain = new Button("PLAY AGAIN", new p5.Vector(100, 150), new p5.Vector(300, 100));
-let btnMenu = new Button("MENU", new p5.Vector(100, 200), new p5.Vector(200, 50));
-
-
 
 
 

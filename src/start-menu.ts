@@ -6,17 +6,12 @@ class StartMenu {
   private btnScores: Button;
   private btnSound: Button;
 
-  // Buttons for How To Play
-  //private btnUpArrow: Button;
-
   constructor() {
     const centerX = width * 0.5;
     this.btnPlayGame = new Button("Play Game", new p5.Vector(centerX, 230), new p5.Vector(200, 50));
     this.btnHowToPlay = new Button("How to play", new p5.Vector(centerX, 290), new p5.Vector(200, 50));
     this.btnScores = new Button("Scores", new p5.Vector(centerX, 350), new p5.Vector(200, 50));
     this.btnSound = new Button(images.soundOn, new p5.Vector(centerX, 410), new p5.Vector(50, 50)); 
-
-    //this.btnUpArrow = new Button(images.upArrow, new p5.Vector(centerX, 360), new p5.Vector(50, 50)); 
   }
 
   public update() {}
@@ -31,7 +26,6 @@ class StartMenu {
     this.btnScores.draw();
     this.btnSound.draw();
     image(images.bumpy, 50, 450);
-    //this.btnUpArrow.draw();
   }
 
 
