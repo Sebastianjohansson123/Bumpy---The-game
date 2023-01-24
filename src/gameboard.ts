@@ -91,8 +91,8 @@ class GameBoard {
         enemy.getPosition().y
       );
       if (
-        distance < this.mainCharacter.getSize().x + enemy.getSize().x - 50 &&
-        distance < this.mainCharacter.getSize().y + enemy.getSize().y - 50
+        distance < this.mainCharacter.getSize().x + enemy.getSize().x - 70 &&
+        distance < this.mainCharacter.getSize().y + enemy.getSize().y - 70
       ) {
         console.log("Game Over");
       }
