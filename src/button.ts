@@ -3,17 +3,24 @@ class Button {
    private position: p5.Vector;
    private size: p5.Vector;
    private radius: number;
+   public clicked: boolean;
 
    constructor(content: string | p5.Image, position: p5.Vector, size: p5.Vector) {
      this.content = content;
      this.position = position;
      this.size = size;
      this.radius = size.x * 0.3;
+     this.clicked = false;
    } 
 
-//   public update() {
-//     // Klickade användaren på knappen?
-//   }
+     public update() {
+     // Klickade användaren på knappen?
+      if (this.isMouseWithinBounds() && mouseIsPressed) {
+   // Perform action or set variable to indicate that the button has been clicked
+      this.clicked = true;
+      console.log("Button clicked!");
+      }
+  }
 
 public draw() {
    push();
@@ -35,7 +42,17 @@ public draw() {
    }
    pop();
   }
+
+  private isMouseWithinBounds() {
+   return (
+     mouseX > this.position.x - this.size.x / 2 &&
+     mouseX < this.position.x + this.size.x / 2 &&
+     mouseY > this.position.y - this.size.y / 2 &&
+     mouseY < this.position.y + this.size.y / 2
+   );
+ }
 }
+
 
 
 
