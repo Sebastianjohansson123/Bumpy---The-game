@@ -11,7 +11,7 @@ class GameBoard {
   private canGenerateEnemy: boolean | undefined;
   private currentBackgroundIndex: number = 0;
   private backgroundChangeScoreIncrement: number = 8;
-  private canMoveLeft: boolean = false;
+  private canMoveEnemy: boolean = false;
   // private scoreThreshold: number = 10;
 
   constructor() {
@@ -184,12 +184,12 @@ class GameBoard {
       }
     }
 
-    if (this.canMoveLeft === true) {
+    if (this.canMoveEnemy === true) {
       this.enemies.forEach((enemy) => (enemy.getPosition().x -= 1));
-      setTimeout(() => (this.canMoveLeft = false), 2000);
+      setTimeout(() => (this.canMoveEnemy = false), 2000);
     } else {
       this.enemies.forEach((enemy) => (enemy.getPosition().x += 1));
-      setTimeout(() => (this.canMoveLeft = true), 2000);
+      setTimeout(() => (this.canMoveEnemy = true), 2000);
     }
   }
 
