@@ -17,6 +17,7 @@ class EndMenu {
     this.btnMenu.update();
     if(this.btnPlayAgain.clicked) {
       //this.activeScene = "play"
+      console.log("Play again button clicked!");
       this.btnPlayAgain.clicked = false;
     }
     if(this.btnMenu.clicked) {
