@@ -81,7 +81,7 @@ function setup() {
   sounds.jumpSound = loadSound("./assets/sounds/jump.wav");
   sounds.song.setVolume(0.05);
   // song.loop();
-  createCanvas(550, windowHeight);
+  createCanvas(540, windowHeight);
   // heightOnBg = 0;
   frameRate(60);
 
