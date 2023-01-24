@@ -12,7 +12,19 @@ class EndMenu {
     this.btnMenu = new Button("MENU", new p5.Vector(centerX, 350), new p5.Vector(140, 40));
   }
 
-  public update() {}
+  public update() {
+    this.btnPlayAgain.update();
+    this.btnMenu.update();
+    if(this.btnPlayAgain.clicked) {
+      //this.activeScene = "play"
+      this.btnPlayAgain.clicked = false;
+    }
+    if(this.btnMenu.clicked) {
+      // Perform action for menu button
+      console.log("Menu button clicked!");
+      this.btnMenu.clicked = false;
+    }
+  }
 
   public draw() {
     image(images.bg, 0, 0);
