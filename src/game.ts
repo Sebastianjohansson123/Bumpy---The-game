@@ -1,21 +1,27 @@
 class Game {
   private gameBoard: GameBoard;
-  // private endMenu: EndMenu;
   private startMenu: StartMenu;
-  private activeScene: "start" | "play" | "end";
+  private howToPlay: HowToPlay;
+  private endMenu: EndMenu;
+  private activeScene: "start" | "howtoplay" | "play" | "end";
   // private highscores: number[];
 
   constructor() {
     this.gameBoard = new GameBoard();
     this.startMenu = new StartMenu();
-    this.activeScene = "play"
+    this.howToPlay = new HowToPlay();
+    this.endMenu = new EndMenu();
+    this.activeScene = "howtoplay";
   }
   
   public update() {
     if (this.activeScene === "play") {
       this.gameBoard.update();
     } else if (this.activeScene === "start") {
-      this.startMenu.update()
+      this.startMenu.update();
+    }
+    else if (this.activeScene === "end") {
+      this.endMenu.update();
     }
   }
   
@@ -24,6 +30,11 @@ class Game {
       this.gameBoard.draw();
     } else if (this.activeScene === "start") {
       this.startMenu.draw()
+    } else if (this.activeScene === "howtoplay") {
+      this.howToPlay.draw()
+    }
+    else if (this.activeScene === "end") {
+      this.endMenu.draw();
     }
   }
 
