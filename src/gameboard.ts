@@ -29,7 +29,7 @@ class GameBoard {
     this.moveEntities();
     this.updatePlatforms();
     this.updateEnemies();
-    this.moveEnemies();
+    // this.moveEnemies();
     this.generateEnemy();
   }
 
@@ -130,16 +130,6 @@ class GameBoard {
     }
   }
 
-  private moveEnemies() {
-    if (this.canMoveLeft === true) {
-      this.enemies.forEach((enemy) => (enemy.getPosition().x -= 1));
-      setTimeout(() => (this.canMoveLeft = false), 2000);
-    } else {
-      this.enemies.forEach((enemy) => (enemy.getPosition().x += 1));
-      setTimeout(() => (this.canMoveLeft = true), 2000);
-    }
-  }
-
   // randomly creates the X position for the platform but makes sure that there is always a 120 px gap
   // between the height of each platform
   private generatePlatforms() {
@@ -192,6 +182,14 @@ class GameBoard {
         enemy.getPosition().y += 4.7;
         this.mainCharacter.getPosition().y += 0.5;
       }
+    }
+
+    if (this.canMoveLeft === true) {
+      this.enemies.forEach((enemy) => (enemy.getPosition().x -= 1));
+      setTimeout(() => (this.canMoveLeft = false), 2000);
+    } else {
+      this.enemies.forEach((enemy) => (enemy.getPosition().x += 1));
+      setTimeout(() => (this.canMoveLeft = true), 2000);
     }
   }
 
