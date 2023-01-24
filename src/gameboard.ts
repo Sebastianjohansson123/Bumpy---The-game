@@ -35,10 +35,10 @@ class GameBoard {
 
   public draw() {
     this.drawBackground();
-    this.getScore();
     this.platforms.forEach((platform) => platform.draw());
     this.enemies.forEach((enemy) => enemy.draw());
     this.mainCharacter.draw();
+    this.getScore();
   }
 
   // checks if the score is above a certain threshold
