@@ -4,7 +4,7 @@ class Game {
   private howToPlay: HowToPlay;
   private endMenu: EndMenu;
   private activeScene: "start" | "howtoplay" | "play" | "end";
-  // private highscores: number[];
+  private _highscore: number;
 
   constructor() {
     this.gameBoard = new GameBoard();
@@ -12,9 +12,17 @@ class Game {
     this.howToPlay = new HowToPlay();
     this.endMenu = new EndMenu(this.gameBoard.getScore());
     this.activeScene = "end";
+    this._highscore = Number(localStorage.getItem("highscore")) || 0;
   }
   
+  public get highscore(): number {
+    return this._highscore;
+  }
   public update() {
+    if (this.gameBoard.getScore() > this.highscore) {
+      this._highscore = this.gameBoard.getScore();
+      localStorage.setItem("highscore", this.highscore.toString());
+    }
     // PLATSHÅLLARE
     if (keyIsPressed && key === "1"){
       this.activeScene = "play"
@@ -51,7 +59,7 @@ class Game {
     this.endMenu.setScore(this.gameBoard.getScore());
   }
 
-  public startGame() {
-
-  }
+  public getHighscore(): number {
+    return this.highscore;
+}
 }

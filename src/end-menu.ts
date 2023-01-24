@@ -36,7 +36,7 @@ class EndMenu {
     textSize(20);
     textAlign(CENTER, CENTER);
     textFont(Fonts.TitanOne);
-    text("Highscore:", 278, 220);
+    text("Highscore:" + " " + game.getHighscore(), 278, 220);
     pop();
     push();
     fill("#000000");
