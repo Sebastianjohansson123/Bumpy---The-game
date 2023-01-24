@@ -3,10 +3,11 @@ class EndMenu {
   //private score: number;
   private btnPlayAgain: Button;
   private btnMenu: Button;
+  private score: number;
 
-  constructor() {
+  constructor(score: number) {
     const centerX = width * 0.5;
-    //this.score = 0;
+    this.score = score;
     this.btnPlayAgain = new Button("PLAY AGAIN", new p5.Vector(centerX, 290), new p5.Vector(220, 60));
     this.btnMenu = new Button("MENU", new p5.Vector(centerX, 350), new p5.Vector(140, 40));
   }
@@ -28,7 +29,7 @@ class EndMenu {
     textSize(20);
     textAlign(CENTER, CENTER);
     textFont(Fonts.TitanOne);
-    text("Your score:", 278, 190);
+    text("Your score:" + " " + this.score, 278, 190);
     pop(); 
     push();
     fill("#FFFFFF");
