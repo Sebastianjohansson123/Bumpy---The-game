@@ -20,13 +20,16 @@ interface Images {
   platform: p5.Image;
   xBtn: p5.Image;
   howToPlayKeys: p5.Image;
+  bumpySad: p5.Image;
   // balloon: p5.Image;
   backgrounds: p5.Image[];
   talkingBubble: p5.Image;
   // rocket: p5.Image;
+  enemy: p5.Image;
   soundOn: p5.Image;
   soundOff: p5.Image;
   upArrow: p5.Image;
+
 }
 
 interface Sounds {
@@ -47,7 +50,6 @@ const Fonts = {
  * sound files, images etc...
  */
 function preload() {
-
   images = {
     backgrounds: [loadImage("./assets/images/bg1.png"), loadImage("./assets/images/bg2.png")],
     bg: loadImage("./assets/images/bg1.png"),
@@ -58,8 +60,10 @@ function preload() {
     xBtn: loadImage("./assets/images/x-btn.png"),
     howToPlayKeys: loadImage("./assets/images/howtoplay-keys.png"),
     upArrow: loadImage("assets/images/up-arrow.png"),
+    enemy: loadImage("./assets/images/enemy.png"),
     platform: loadImage("./assets/images/platform.png"),
     bumpy: loadImage("./assets/images/bumpy.png"),
+    bumpySad: loadImage("./assets/images/bumpy-sad.png"),
     talkingBubble: loadImage("./assets/images/bumpy-bubble.png")
   }
   
@@ -68,7 +72,6 @@ function preload() {
     song: loadSound("./assets/music/bumpy.mp3"),
     jumpSound: loadSound("./assets/sounds/jump.wav"),
   }
-
 }
 
 /**
