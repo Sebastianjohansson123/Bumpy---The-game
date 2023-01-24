@@ -1,7 +1,6 @@
 class GameBoard {
-  // private entities: entity [];
   // private backgrounds: Background[];
-  // private isGameOver: boolean;
+  private isGameOver: boolean;
   private mainCharacter: MainCharacter;
   private platforms: Platform[];
   private score: number;
@@ -16,6 +15,7 @@ class GameBoard {
 
   constructor() {
     this.mainCharacter = new MainCharacter();
+    this.isGameOver = false;
     this.platforms = [];
     this.enemies = [];
     this.score = 0;
@@ -94,7 +94,8 @@ class GameBoard {
         distance < this.mainCharacter.getSize().x + enemy.getSize().x - 70 &&
         distance < this.mainCharacter.getSize().y + enemy.getSize().y - 70
       ) {
-        console.log("Game Over");
+        this.isGameOver = true;
+        console.log("Game Over = " + this.isGameOver);
       }
     }
   }
