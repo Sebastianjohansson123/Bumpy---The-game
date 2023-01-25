@@ -1,6 +1,5 @@
 class GameBoard {
   // private backgrounds: Background[];
-  private isGameOver: boolean;
   private mainCharacter: MainCharacter;
   private platforms: Platform[];
   private score: number;
@@ -11,11 +10,9 @@ class GameBoard {
   private currentBackgroundIndex: number = 0;
   private backgroundChangeScoreIncrement: number = 8;
   private canMoveEnemy: boolean = false;
-  // private scoreThreshold: number = 10;
 
   constructor() {
     this.mainCharacter = new MainCharacter();
-    this.isGameOver = false;
     this.platforms = [];
     this.enemies = [];
     this.score = 0;
@@ -29,7 +26,6 @@ class GameBoard {
     this.moveEntities();
     this.updatePlatforms();
     this.updateEnemies();
-    // this.moveEnemies();
     this.generateEnemy();
   }
 
@@ -98,7 +94,6 @@ class GameBoard {
             enemy.getPosition().y + enemy.getSize().y - 20 &&
           bullet.getPosition().y + bullet.getSize().y > enemy.getPosition().y
         ) {
-          console.log("enemy died");
           sounds.enemyDeath.play();
 
           this.mainCharacter.bullets.splice(
@@ -124,9 +119,7 @@ class GameBoard {
         distance < this.mainCharacter.getSize().x + enemy.getSize().x - 70 &&
         distance < this.mainCharacter.getSize().y + enemy.getSize().y - 70
       ) {
-        this.isGameOver = true;
         game.activeScene = "end";
-        console.log("Game Over = " + this.isGameOver);
       }
     }
   }
@@ -191,7 +184,6 @@ class GameBoard {
         this.platforms.push(newPlatform);
         this.score += 1 * this.scoreMultiplier;
         this.timeSinceLastMultiplierIncrease += 1;
-        // console.log(this.timeSinceLastMultiplierIncrease);
         if (this.timeSinceLastMultiplierIncrease === 10) {
           this.canGenerateEnemy = true;
           this.scoreMultiplier += 1;
