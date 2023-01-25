@@ -101,6 +101,7 @@ class GameBoard {
             1
           );
           this.enemies.splice(this.enemies.indexOf(enemy), 1);
+          this.score += 100;
           // add death animation or sound effect here
         }
       }
