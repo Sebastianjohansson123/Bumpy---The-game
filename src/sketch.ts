@@ -87,7 +87,7 @@ function setup() {
   sounds.jumpSound = loadSound("./assets/sounds/jump.wav");
   sounds.song.setVolume(0.05);
   // song.loop();
-  createCanvas(540, windowHeight);
+  createCanvas(550, 720);
   // heightOnBg = 0;
   frameRate(60);
 
@@ -121,5 +121,5 @@ function draw() {
  *  Built in windowResize listener function in P5
  */
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+  resizeCanvas(540, 720);
 }
