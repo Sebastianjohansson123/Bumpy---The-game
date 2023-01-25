@@ -95,6 +95,7 @@ class GameBoard {
         distance < this.mainCharacter.getSize().y + enemy.getSize().y - 70
       ) {
         this.isGameOver = true;
+        game.activeScene = "end";
         console.log("Game Over = " + this.isGameOver);
       }
     }

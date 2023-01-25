@@ -3,7 +3,7 @@ class Game {
   private startMenu: StartMenu;
   private howToPlay: HowToPlay;
   private endMenu: EndMenu;
-  private activeScene: "start" | "howtoplay" | "play" | "end";
+  public activeScene: "start" | "howtoplay" | "play" | "end";
   private _highscore: number;
 
   constructor() {
