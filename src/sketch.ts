@@ -29,13 +29,13 @@ interface Images {
   soundOn: p5.Image;
   soundOff: p5.Image;
   upArrow: p5.Image;
-
 }
 
 interface Sounds {
   bulletSound: p5.SoundFile;
   song: p5.SoundFile;
   jumpSound: p5.SoundFile;
+  enemyDeath: p5.SoundFile;
 }
 
 const Fonts = {
@@ -51,7 +51,10 @@ const Fonts = {
  */
 function preload() {
   images = {
-    backgrounds: [loadImage("./assets/images/bg1.png"), loadImage("./assets/images/bg2.png")],
+    backgrounds: [
+      loadImage("./assets/images/bg1.png"),
+      loadImage("./assets/images/bg2.png"),
+    ],
     bg: loadImage("./assets/images/bg1.png"),
     //balloon: loadImage(""),
     //rocket: loadImage(""),
@@ -64,14 +67,15 @@ function preload() {
     platform: loadImage("./assets/images/platform.png"),
     bumpy: loadImage("./assets/images/bumpy.png"),
     bumpySad: loadImage("./assets/images/bumpy-sad.png"),
-    talkingBubble: loadImage("./assets/images/bumpy-bubble.png")
-  }
-  
+    talkingBubble: loadImage("./assets/images/bumpy-bubble.png"),
+  };
+
   sounds = {
     bulletSound: loadSound("./assets/sounds/bullet.mp3"),
     song: loadSound("./assets/music/bumpy.mp3"),
     jumpSound: loadSound("./assets/sounds/jump.wav"),
-  }
+    enemyDeath: loadSound("./assets/sounds/enemy-death.wav"),
+  };
 }
 
 /**
@@ -81,10 +85,11 @@ function preload() {
  * in the draw function below
  */
 function setup() {
-  sounds.bulletSound = loadSound("./assets/sounds/bullet.mp3")
-  sounds.bulletSound.setVolume(0.1)
-  sounds.jumpSound.setVolume(0.1)
+  sounds.bulletSound = loadSound("./assets/sounds/bullet.mp3");
+  sounds.bulletSound.setVolume(0.1);
+  sounds.jumpSound.setVolume(0.1);
   sounds.jumpSound = loadSound("./assets/sounds/jump.wav");
+  sounds.enemyDeath.setVolume(0.1);
   sounds.song.setVolume(0.05);
   // song.loop();
   createCanvas(550, 720);
@@ -114,7 +119,6 @@ function draw() {
 
   game.update();
   game.draw();
-  
 }
 
 /**

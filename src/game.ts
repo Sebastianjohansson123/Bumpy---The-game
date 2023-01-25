@@ -3,7 +3,7 @@ class Game {
   private startMenu: StartMenu;
   private howToPlay: HowToPlay;
   private endMenu: EndMenu;
-  private activeScene: "start" | "howtoplay" | "play" | "end";
+  public activeScene: "start" | "howtoplay" | "play" | "end";
   private _highscore: number;
 
   constructor() {
@@ -14,7 +14,7 @@ class Game {
     this.activeScene = "end";
     this._highscore = Number(localStorage.getItem("highscore")) || 0;
   }
-  
+
   public get highscore(): number {
     return this._highscore;
   }
@@ -24,33 +24,31 @@ class Game {
       localStorage.setItem("highscore", this.highscore.toString());
     }
     // PLATSHÅLLARE
-    if (keyIsPressed && key === "1"){
-      this.activeScene = "play"
+    if (keyIsPressed && key === "1") {
+      this.activeScene = "play";
     }
-    if (keyIsPressed && key === "2"){
-      this.activeScene = "end"
+    if (keyIsPressed && key === "2") {
+      this.activeScene = "end";
     }
     //
     if (this.activeScene === "play") {
       this.gameBoard.update();
     } else if (this.activeScene === "start") {
       this.startMenu.update();
-    }
-    else if (this.activeScene === "end") {
+    } else if (this.activeScene === "end") {
       this.endMenu.update();
     }
   }
-  
+
   public draw() {
     if (this.activeScene === "play") {
       this.gameBoard.draw();
       this.updateScore();
     } else if (this.activeScene === "start") {
-      this.startMenu.draw()
+      this.startMenu.draw();
     } else if (this.activeScene === "howtoplay") {
-      this.howToPlay.draw()
-    }
-    else if (this.activeScene === "end") {
+      this.howToPlay.draw();
+    } else if (this.activeScene === "end") {
       this.endMenu.draw();
     }
   }
@@ -61,5 +59,5 @@ class Game {
 
   public getHighscore(): number {
     return this.highscore;
-}
+  }
 }
