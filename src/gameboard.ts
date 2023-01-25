@@ -86,14 +86,20 @@ class GameBoard {
     for (let enemy of this.enemies) {
       for (let bullet of this.mainCharacter.bullets) {
         if (
-          bullet.getPosition().x < enemy.getPosition().x + enemy.getSize().x &&
+          bullet.getPosition().x <
+            enemy.getPosition().x + enemy.getSize().x - 20 &&
           bullet.getPosition().x + bullet.getSize().x > enemy.getPosition().x &&
-          bullet.getPosition().y < enemy.getPosition().y + enemy.getSize().y &&
+          bullet.getPosition().y <
+            enemy.getPosition().y + enemy.getSize().y - 20 &&
           bullet.getPosition().y + bullet.getSize().y > enemy.getPosition().y
         ) {
           console.log("enemy died");
           sounds.enemyDeath.play();
 
+          this.mainCharacter.bullets.splice(
+            this.mainCharacter.bullets.indexOf(bullet),
+            1
+          );
           this.enemies.splice(this.enemies.indexOf(enemy), 1);
           // add death animation or sound effect here
         }
