@@ -84,6 +84,20 @@ class GameBoard {
       }
     }
     for (let enemy of this.enemies) {
+      for (let bullet of this.mainCharacter.bullets) {
+        if (
+          bullet.getPosition().x < enemy.getPosition().x + enemy.getSize().x &&
+          bullet.getPosition().x + bullet.getSize().x > enemy.getPosition().x &&
+          bullet.getPosition().y < enemy.getPosition().y + enemy.getSize().y &&
+          bullet.getPosition().y + bullet.getSize().y > enemy.getPosition().y
+        ) {
+          console.log("enemy died");
+          this.enemies.splice(this.enemies.indexOf(enemy), 1);
+          // add death animation or sound effect here
+        }
+      }
+    }
+    for (let enemy of this.enemies) {
       let distance = dist(
         this.mainCharacter.getPosition().x,
         this.mainCharacter.getPosition().y,
