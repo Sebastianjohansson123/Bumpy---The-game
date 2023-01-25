@@ -92,6 +92,8 @@ class GameBoard {
           bullet.getPosition().y + bullet.getSize().y > enemy.getPosition().y
         ) {
           console.log("enemy died");
+          sounds.enemyDeath.play();
+
           this.enemies.splice(this.enemies.indexOf(enemy), 1);
           // add death animation or sound effect here
         }
