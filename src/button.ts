@@ -22,17 +22,25 @@ class Button {
       }
   }
 
+// Draws the template for the button
 public draw() {
    push();
-   // 1. rita rektangel
+// draws the rect for the button shape with hover effect
+   if (mouseX > this.position.x - this.size.x/2 && mouseX < this.position.x + this.size.x/2 &&
+   mouseY > this.position.y - this.size.y/2 && mouseY < this.position.y + this.size.y/2) {
+ // if mouse is within the area of the rect, change fill color
+   fill("#FFFFFF"); // hover color
+   } else {
+   fill("#DFADD0"); // original color
+   }
    noStroke();
-   fill("#DFADD0");
    rectMode(CENTER);
    rect(this.position.x, this.position.y, this.size.x, this.size.y, this.radius);
-   // 2. rita texten
+// draws the text on the button
    fill("#3A1458");
    textSize(22);
    textFont(Fonts.TitanOne);
+// checks if the content of the button is a string or image
    if (typeof this.content === "string") {
       textAlign(CENTER, CENTER);
       text(this.content, this.position.x, this.position.y);
