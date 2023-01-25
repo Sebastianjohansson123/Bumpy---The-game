@@ -51,7 +51,7 @@ class GameBoard {
         (this.currentBackgroundIndex + 1) % images.backgrounds.length;
       this.backgroundChangeScoreIncrement += 500;
     }
-    images.backgrounds[this.currentBackgroundIndex].resize(0, windowHeight);
+    images.backgrounds[this.currentBackgroundIndex];
     let repeatCount =
       height / images.backgrounds[this.currentBackgroundIndex].height + 1;
     for (let i = 0; i < repeatCount; i++) {
