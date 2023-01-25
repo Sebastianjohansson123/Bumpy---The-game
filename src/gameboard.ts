@@ -62,9 +62,11 @@ class GameBoard {
       );
     }
   }
-  // checks if the MainCharacters gets in contact with the platform
-  // when it is falling and triggers an automatic jump if it is
+
+  // Detects collisions between entities on the GameBoard
   private detectCollision() {
+    // checks if the MainCharacters gets in contact with the platform
+    // when it is falling and triggers an automatic jump if it is
     for (let platform of this.platforms) {
       if (
         this.mainCharacter.getPosition().y + this.mainCharacter.getSize().y >
@@ -83,6 +85,9 @@ class GameBoard {
         this.mainCharacter.jump();
       }
     }
+
+    // Checks if bullet collides with an enemy
+    // If they collide, enemy and bullet dissappears and 100 is added to the score
     for (let enemy of this.enemies) {
       for (let bullet of this.mainCharacter.bullets) {
         if (
@@ -102,10 +107,12 @@ class GameBoard {
           );
           this.enemies.splice(this.enemies.indexOf(enemy), 1);
           this.score += 100;
-          // add death animation or sound effect here
         }
       }
     }
+
+    // Checks if an enemy collides with mainCharacter
+    // If they collide active scene is set to "end"
     for (let enemy of this.enemies) {
       let distance = dist(
         this.mainCharacter.getPosition().x,
