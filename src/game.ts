@@ -11,7 +11,7 @@ class Game {
     this.startMenu = new StartMenu();
     this.howToPlay = new HowToPlay();
     this.endMenu = new EndMenu();
-    this.activeScene = "howtoplay";
+    this.activeScene = "start";
   }
   
   public update() {
