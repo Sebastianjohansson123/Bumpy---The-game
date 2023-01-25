@@ -9,12 +9,24 @@ class StartMenu {
   constructor() {
     const centerX = width * 0.5;
     this.btnPlayGame = new Button("Play Game", new p5.Vector(centerX, 230), new p5.Vector(200, 50));
+    this.btnPlayGame.onClickCallback = () => {
+      game.activeScene = "play";
+    };
     this.btnHowToPlay = new Button("How to play", new p5.Vector(centerX, 290), new p5.Vector(200, 50));
+    this.btnHowToPlay.onClickCallback = () => {
+      game.activeScene = "howtoplay";
+    };
     this.btnScores = new Button("Scores", new p5.Vector(centerX, 350), new p5.Vector(200, 50));
     this.btnSound = new Button(images.soundOn, new p5.Vector(centerX, 410), new p5.Vector(50, 50)); 
+    // this.btnSound.onClickCallback = () => {
+    
+    // };
   }
 
-  public update() {}
+  public update() {
+    this.btnPlayGame.update();
+    this.btnHowToPlay.update();
+  }
 
   public draw() {
     image(images.bg, 0, 0);
@@ -27,7 +39,6 @@ class StartMenu {
     this.btnSound.draw();
     image(images.bumpy, 50, 450);
   }
-
 
   private drawTitle() {
     push();
