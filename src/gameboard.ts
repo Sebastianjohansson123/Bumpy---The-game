@@ -34,7 +34,7 @@ class GameBoard {
     this.platforms.forEach((platform) => platform.draw());
     this.enemies.forEach((enemy) => enemy.draw());
     this.mainCharacter.draw();
-    this.getScore();
+    this.DisplayScore();
   }
 
   // checks if the score is above a certain threshold
@@ -218,11 +218,14 @@ class GameBoard {
   }
 
   // Function to track the score of the current game and display it in the top-left corner
-  public getScore() {
+  public DisplayScore() {
     fill("#FFFFFF");
     textFont(Fonts.TitanOne);
     textSize(21);
     text("Score: " + this.score, 10, 30);
+  }
+
+  public getScore() {
     return this.score;
   }
 }

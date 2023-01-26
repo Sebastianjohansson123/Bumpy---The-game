@@ -3,20 +3,17 @@ class EndMenu {
   //private score: number;
   private btnPlayAgain: Button;
   private btnMenu: Button;
-  private score: number;
 
-  constructor(score: number) {
+  constructor() {
     const centerX = width * 0.5;
-    this.score = score;
     this.btnPlayAgain = new Button("PLAY AGAIN", new p5.Vector(centerX, 290), new p5.Vector(220, 60));
     this.btnPlayAgain.onClickCallback = () => {
-        game.activeScene = "play";
-        console.log("play")
+      game.resetGameBoard();
+      game.activeScene = "play";
     };
     this.btnMenu = new Button("MENU", new p5.Vector(centerX, 350), new p5.Vector(140, 40));
     this.btnMenu.onClickCallback = () => {
         game.activeScene = "start";
-        console.log("menu")
     };
   }
 
@@ -40,7 +37,7 @@ class EndMenu {
     textSize(20);
     textAlign(CENTER, CENTER);
     textFont(Fonts.TitanOne);
-    text("Your score:" + " " + this.score, 278, 190);
+    text("Your score:" + " " + game.setEndMenuScore(), 278, 190);
     pop(); 
     push();
     fill("#FFFFFF");
@@ -64,9 +61,5 @@ class EndMenu {
     text("Game Over!", 275, 100);
     pop();
   }
-
-  public setScore(score: number) {
-    this.score = score;
-}
 
 }

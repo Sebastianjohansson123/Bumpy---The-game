@@ -26,22 +26,19 @@ class StartMenu {
         sounds.bulletSound.setVolume(0.1);
         sounds.jumpSound.setVolume(0.1);
         sounds.song.setVolume(0.05);
-        console.log("Sound is on");
       } else {
         sounds.bulletSound.setVolume(0.0);
         sounds.jumpSound.setVolume(0.0);
         sounds.song.setVolume(0.0);
-        console.log("Sound is off");
       }
     };
 
     this.btnPlayGame.onClickCallback = () => {
       game.activeScene = "play";
-      console.log("play")
+      game.resetGameBoard();
     };
     this.btnHowToPlay.onClickCallback = () => {
       game.activeScene = "howtoplay";
-      console.log("howtoplay")
     };
   }
 
