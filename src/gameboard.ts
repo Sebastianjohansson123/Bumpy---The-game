@@ -15,6 +15,7 @@ class GameBoard {
   private canMoveBalloonBoost: boolean = false;
   private balloonBoosts: BalloonBoost[];
   private rocketBoosts: RocketBoost[];
+  private isRocketBoostActive: boolean;
 
   constructor() {
     this.mainCharacter = new MainCharacter();
@@ -28,6 +29,7 @@ class GameBoard {
     this.canGenerateEnemy = false;
     this.canGenerateBalloonBoost = false;
     this.canGenerateRocketBoost = false;
+    this.isRocketBoostActive = false;
   }
 
   public update() {
@@ -174,7 +176,7 @@ class GameBoard {
         console.log("rocket boost");
         this.rocketBoosts.splice(this.rocketBoosts.indexOf(rocketBoost), 1);
         // this.score += 100;
-        this.mainCharacter.getVelocity().y = -15;
+        this.isRocketBoostActive = true;
       }
     }
   }
@@ -339,6 +341,15 @@ class GameBoard {
         rocketBoost.getPosition().y += 4.7;
         this.mainCharacter.getPosition().y += 0.5;
       }
+    }
+    // Adjusting position/speed of Bumpy and platforms when triggered by RocketBoost-entity
+    if (this.isRocketBoostActive === true) {
+      for (let platform of this.platforms) {
+        this.mainCharacter.getVelocity().y = -10;
+        platform.getPosition().y += 15;
+        this.mainCharacter.getPosition().y += 3.4;
+      }
+      setTimeout(() => (this.isRocketBoostActive = false), 2000);
     }
 
     this.balloonBoosts.forEach(
