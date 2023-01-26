@@ -55,4 +55,7 @@ class Game {
   public getHighscore(): number {
     return this.highscore;
   }
+  public resetGameBoard() {
+    this.gameBoard = new GameBoard();
+  }
 }

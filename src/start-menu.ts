@@ -35,6 +35,7 @@ class StartMenu {
 
     this.btnPlayGame.onClickCallback = () => {
       game.activeScene = "play";
+      game.resetGameBoard();
     };
     this.btnHowToPlay.onClickCallback = () => {
       game.activeScene = "howtoplay";
