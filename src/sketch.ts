@@ -14,6 +14,12 @@ let sound: p5.SoundFile;
 // let bg: p5.Image;
 // let font: p5.Font;
 
+// let bumpyBlink: p5.Image[];
+// bumpyBlink = [loadImage("./assets/images/rymd1.png"), loadImage("./assets/images/rymd2.png"), loadImage("./assets/image/rymd3.png")]
+// let currentImage = 0;
+// let bumpyBlink: [loadImage("./assets/images/rymd1.png"), loadImage("./assets/images/rymd2.png"), loadImage("./assets/image/rymd3.png")]
+
+
 interface Images {
   bumpy: p5.Image;
   bg: p5.Image;
@@ -67,9 +73,13 @@ function preload() {
     bumpySad: loadImage("./assets/images/bumpy-sad.png"),
     talkingBubble: loadImage("./assets/images/bumpy-bubble.png"),
     bumpyBlink_gif: loadImage("./assets/gif/bumpyblinking.gif"),
-    bumpyBlinkSprite: loadImage("./assets/images/spritesheet.png")
+    bumpyBlinkSprite: loadImage("./assets/images/spritesheet.png"),
   }
   
+//   for (let i = 0; i < bumpyBlink.length; i++) {
+//     bumpyBlink[i] = loadImage(bumpyBlink[i]);
+// }
+
   sounds = {
     bulletSound: loadSound("./assets/sounds/bullet.mp3"),
     song: loadSound("./assets/music/bumpy.mp3"),
