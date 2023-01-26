@@ -11,12 +11,10 @@ class EndMenu {
     this.btnPlayAgain = new Button("PLAY AGAIN", new p5.Vector(centerX, 290), new p5.Vector(220, 60));
     this.btnPlayAgain.onClickCallback = () => {
         game.activeScene = "play";
-        console.log("play")
     };
     this.btnMenu = new Button("MENU", new p5.Vector(centerX, 350), new p5.Vector(140, 40));
     this.btnMenu.onClickCallback = () => {
         game.activeScene = "start";
-        console.log("menu")
     };
   }
 
