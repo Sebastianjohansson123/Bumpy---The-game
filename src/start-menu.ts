@@ -5,7 +5,7 @@ class StartMenu {
   private btnHowToPlay: Button;
   private btnScores: Button;
   private btnSound: Button;
-  private bumpyBlinkSprite: p5.Image;
+  // private bumpyBlinkSprite: p5.Image;
   private bumpyBlinkFrames: number[];
   private currentBumpyFrame: number;
 
@@ -20,7 +20,7 @@ class StartMenu {
     this.btnHowToPlay = new Button("How to play", new p5.Vector(centerX, 290), new p5.Vector(200, 50));
     this.btnScores = new Button("Scores", new p5.Vector(centerX, 350), new p5.Vector(200, 50));
     this.btnSound = new Button(images.soundOn, new p5.Vector(centerX, 410), new p5.Vector(50, 50)); 
-    this.bumpyBlinkSprite = loadImage("./assets/images/spritesheet.png");
+    // this.bumpyBlinkSprite = loadImage("./assets/images/spritesheet.png");
     this.bumpyBlinkFrames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     this.currentBumpyFrame = 0;
     this.frameIsComplete = true;
@@ -54,11 +54,12 @@ class StartMenu {
   }
 
   private drawBumpyBlink() {
-    let frame = this.bumpyBlinkFrames[this.currentBumpyFrame];
-    let frameWidth = this.bumpyBlinkSprite.width / this.bumpyBlinkFrames.length;
-    let frameHeight = this.bumpyBlinkSprite.height;
-    image(this.bumpyBlinkSprite, 50, 350, frameWidth, frameHeight, frame * frameWidth, 0, frameWidth, frameHeight);
-    images.bumpyBlinkSprite.resize(100, 300);
+    // let frame = this.bumpyBlinkFrames[this.currentBumpyFrame];
+    // let frameWidth = this.bumpyBlinkSprite.width / this.bumpyBlinkFrames.length;
+    // let frameHeight = this.bumpyBlinkSprite.height;
+    // image(this.bumpyBlinkSprite, 50, 350, frameWidth, frameHeight, frame * frameWidth, 0, frameWidth, frameHeight);
+    // images.bumpyBlinkSprite.resize(100, 300);
+    image(images.bumpyBlink_gif, 50, 450, 131, 193); // 50 = X-position, 450 = Y-position, 131 = bumpy width, 193 = bumpy height
   }
 
   private loopBlinkingBumpy() {
@@ -68,9 +69,9 @@ class StartMenu {
         this.frameIsComplete = true;
       }, 80);
       this.currentBumpyFrame++;
-      if (this.currentBumpyFrame >= this.bumpyBlinkFrames.length) {
-        this.currentBumpyFrame = 0;
-      }
+     if (this.currentBumpyFrame >= this.bumpyBlinkFrames.length) {
+       this.currentBumpyFrame = 0;
+     }
     }
   }
 
