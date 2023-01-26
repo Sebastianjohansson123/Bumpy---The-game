@@ -124,13 +124,14 @@ class GameBoard {
         enemy.getPosition().y
       );
       if (
-        distance < this.mainCharacter.getSize().x + enemy.getSize().x - 70 &&
+        distance < this.mainCharacter.getSize().x + enemy.getSize().x - 80 &&
         distance < this.mainCharacter.getSize().y + enemy.getSize().y - 70
       ) {
         game.activeScene = "end";
       }
     }
 
+    //Checks if mainCharacter collides with balloonBoost
     for (let balloonBoost of this.balloonBoosts) {
       let distance = dist(
         this.mainCharacter.getPosition().x,
@@ -146,6 +147,7 @@ class GameBoard {
       ) {
         console.log("balloon boost");
         this.balloonBoosts.splice(this.balloonBoosts.indexOf(balloonBoost), 1);
+        this.score += 100;
       }
     }
   }
@@ -241,11 +243,15 @@ class GameBoard {
         this.platforms.push(newPlatform);
         this.score += 1 * this.scoreMultiplier;
         this.timeSinceLastMultiplierIncrease += 1;
-        if (this.timeSinceLastMultiplierIncrease === 10) {
-          this.canGenerateEnemy = true;
+        console.log(this.timeSinceLastMultiplierIncrease);
+        if (this.timeSinceLastMultiplierIncrease === 20) {
           this.canGenerateBalloonBoost = true;
           this.scoreMultiplier += 1;
           this.timeSinceLastMultiplierIncrease = 0;
+        }
+        if (this.timeSinceLastMultiplierIncrease === 10) {
+          this.canGenerateEnemy = true;
+          // this.canGenerateBalloonBoost = true;
         }
       }
     }
