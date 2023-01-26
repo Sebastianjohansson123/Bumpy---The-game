@@ -11,7 +11,7 @@ class Game {
     this.startMenu = new StartMenu();
     this.howToPlay = new HowToPlay();
     this.endMenu = new EndMenu(this.gameBoard.getScore());
-    this.activeScene = "end";
+    this.activeScene = "start";
     this._highscore = Number(localStorage.getItem("highscore")) || 0;
   }
 
