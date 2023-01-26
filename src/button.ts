@@ -4,7 +4,7 @@ class Button {
    private size: p5.Vector;
    private radius: number;
    private isClicked: boolean;
-   public onClickCallback: any;
+   public onClickCallback: (()=> void); 
 
    constructor(content: string | p5.Image, position: p5.Vector, size: p5.Vector) {
      this.content = content;
@@ -12,6 +12,7 @@ class Button {
      this.size = size;
      this.radius = size.x * 0.3;
      this.isClicked = false;
+     this.onClickCallback = ()=>{};
    } 
 
   public update() {
@@ -27,7 +28,7 @@ class Button {
     }    
    } 
 
-   public onClick(cb:any) {
+   public onClick(cb: (()=> void)) {
       this.onClickCallback = cb;   
    }
 

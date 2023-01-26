@@ -8,6 +8,8 @@ class StartMenu {
   private btnSoundOff: Button;
   private soundOn: any;
 
+
+
   constructor() {
     this.soundOn = true;
     const centerX = width * 0.5;
