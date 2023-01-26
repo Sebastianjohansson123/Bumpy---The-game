@@ -173,7 +173,6 @@ class GameBoard {
           this.mainCharacter.getSize().x + rocketBoost.getSize().x - 70 &&
         distance < this.mainCharacter.getSize().y + rocketBoost.getSize().y - 70
       ) {
-        console.log("rocket boost");
         this.rocketBoosts.splice(this.rocketBoosts.indexOf(rocketBoost), 1);
         // this.score += 100;
         this.isRocketBoostActive = true;
@@ -343,6 +342,7 @@ class GameBoard {
       }
     }
     // Adjusting position/speed of Bumpy and platforms when triggered by RocketBoost-entity
+    // TODO: remove enemies and other boosts from spawning during duration of boost
     if (this.isRocketBoostActive === true) {
       for (let platform of this.platforms) {
         this.mainCharacter.getVelocity().y = -10;
