@@ -7,17 +7,21 @@ class GameBoard {
   private timeSinceLastMultiplierIncrease: number = 0;
   private enemies: Enemy[];
   private canGenerateEnemy: boolean | undefined;
+  private canGenerateBalloonBoost: boolean | undefined;
   private currentBackgroundIndex: number = 0;
   private backgroundChangeScoreIncrement: number = 8;
   private canMoveEnemy: boolean = false;
+  private balloonBoosts: BalloonBoost[];
 
   constructor() {
     this.mainCharacter = new MainCharacter();
     this.platforms = [];
     this.enemies = [];
+    this.balloonBoosts = [];
     this.score = 0;
     this.generatePlatforms();
     this.canGenerateEnemy = false;
+    this.canGenerateBalloonBoost = false;
   }
 
   public update() {
@@ -27,12 +31,15 @@ class GameBoard {
     this.updatePlatforms();
     this.updateEnemies();
     this.generateEnemy();
+    this.updateBalloonBoosts();
+    this.generateBalloonBoost();
   }
 
   public draw() {
     this.drawBackground();
     this.platforms.forEach((platform) => platform.draw());
     this.enemies.forEach((enemy) => enemy.draw());
+    this.balloonBoosts.forEach((balloonBoost) => balloonBoost.draw());
     this.mainCharacter.draw();
     this.getScore();
   }
@@ -137,6 +144,19 @@ class GameBoard {
     }
   }
 
+  private generateBalloonBoost() {
+    if (this.canGenerateBalloonBoost === true) {
+      let x = random(0, width - 220);
+      let y = 720;
+      let position = createVector(x, y);
+      let balloonBoost = new BalloonBoost(position);
+      this.balloonBoosts.push(balloonBoost);
+      this.canGenerateBalloonBoost = false;
+    } else {
+      return;
+    }
+  }
+
   private updateEnemies() {
     if (this.canGenerateEnemy === true) {
       for (let i = 0; i < this.enemies.length; i++) {
@@ -148,6 +168,24 @@ class GameBoard {
           let newEnemy = new Enemy(position);
           this.enemies.push(newEnemy);
           this.canGenerateEnemy = false;
+        } else {
+          return;
+        }
+      }
+    }
+  }
+
+  private updateBalloonBoosts() {
+    if (this.canGenerateBalloonBoost === true) {
+      for (let i = 0; i < this.balloonBoosts.length; i++) {
+        let balloonBoost = this.balloonBoosts[i];
+        if (balloonBoost.getPosition().y < height) {
+          this.balloonBoosts.splice(i, 1);
+          let x = random(0, width - 220);
+          let position = createVector(x, 720);
+          let newBalloonBoost = new BalloonBoost(position);
+          this.balloonBoosts.push(newBalloonBoost);
+          this.canGenerateBalloonBoost = false;
         } else {
           return;
         }
@@ -186,6 +224,7 @@ class GameBoard {
         this.timeSinceLastMultiplierIncrease += 1;
         if (this.timeSinceLastMultiplierIncrease === 10) {
           this.canGenerateEnemy = true;
+          this.canGenerateBalloonBoost = true;
           this.scoreMultiplier += 1;
           this.timeSinceLastMultiplierIncrease = 0;
         }
@@ -204,6 +243,10 @@ class GameBoard {
       }
       for (let enemy of this.enemies) {
         enemy.getPosition().y += 4.7;
+        this.mainCharacter.getPosition().y += 0.5;
+      }
+      for (let balloonBoost of this.balloonBoosts) {
+        balloonBoost.getPosition().y -= 9;
         this.mainCharacter.getPosition().y += 0.5;
       }
     }
