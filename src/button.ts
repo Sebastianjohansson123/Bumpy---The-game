@@ -3,19 +3,26 @@ class Button {
    private position: p5.Vector;
    private size: p5.Vector;
    private radius: number;
-   public onClickCallback: any; 
+   private isClicked: boolean;
+   public onClickCallback: any;
 
    constructor(content: string | p5.Image, position: p5.Vector, size: p5.Vector) {
      this.content = content;
      this.position = position;
      this.size = size;
      this.radius = size.x * 0.3;
+     this.isClicked = false;
    } 
 
   public update() {
    if (this.onClickCallback) { 
-      if (dist(mouseX, mouseY, this.position.x, this.position.y) < this.radius) { 
-      if (mouseIsPressed) this.onClickCallback(); 
+      if (mouseX > this.position.x - this.size.x/2 && mouseX < this.position.x + this.size.x/2 &&
+      mouseY > this.position.y - this.size.y/2 && mouseY < this.position.y + this.size.y/2) { 
+        if (mouseIsPressed && !this.isClicked) {
+          this.onClickCallback(); 
+          this.isClicked = true;
+        }
+        if (!mouseIsPressed) this.isClicked = false;
       }
     }    
    } 

@@ -7,10 +7,8 @@ class StartMenu {
   private btnSoundOn: Button;
   private btnSoundOff: Button;
   private soundOn: any;
-  private buttonOnCooldown: boolean;
 
   constructor() {
-    this.buttonOnCooldown = false;
     this.soundOn = true;
     const centerX = width * 0.5;
 
@@ -20,36 +18,31 @@ class StartMenu {
     this.btnSoundOn = new Button(images.soundOn, new p5.Vector(centerX, 410), new p5.Vector(50, 50)); 
     this.btnSoundOff = new Button(images.soundOff, new p5.Vector(centerX, 410), new p5.Vector(50, 50)); 
 
-    this.btnPlayGame.onClickCallback = () => {
-      game.activeScene = "play";
-    };
-    
-    this.btnHowToPlay.onClickCallback = () => {
-      game.activeScene = "howtoplay";
-    };
-
     this.btnSoundOn.onClickCallback = () => {
-      if (this.soundOn === true && this.buttonOnCooldown === false) {
-      this.buttonOnCooldown = true;
-      this.soundOn = false;
-      console.log(this.soundOn)
-      sounds.bulletSound.setVolume(0.0);
-      sounds.jumpSound.setVolume(0.0);
-      sounds.song.setVolume(0.0);
-      setTimeout(() => {this.buttonOnCooldown = false}, 500);
-      }
-       if (this.soundOn === false && this.buttonOnCooldown === false)  {
-        this.buttonOnCooldown = true;
-        this.soundOn = true;
+      this.soundOn = !this.soundOn;
+      if (this.soundOn) {
         sounds.bulletSound.setVolume(0.1);
         sounds.jumpSound.setVolume(0.1);
         sounds.song.setVolume(0.05);
-        console.log(this.soundOn)
-        setTimeout(() => {this.buttonOnCooldown = false}, 500);
+        console.log("Sound is on");
+      } else {
+        sounds.bulletSound.setVolume(0.0);
+        sounds.jumpSound.setVolume(0.0);
+        sounds.song.setVolume(0.0);
+        console.log("Sound is off");
       }
     };
 
+    this.btnPlayGame.onClickCallback = () => {
+      game.activeScene = "play";
+      console.log("play")
+    };
+    this.btnHowToPlay.onClickCallback = () => {
+      game.activeScene = "howtoplay";
+      console.log("howtoplay")
+    };
   }
+
 
   public update() {
     this.btnPlayGame.update();
