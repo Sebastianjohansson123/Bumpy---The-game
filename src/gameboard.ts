@@ -345,11 +345,11 @@ class GameBoard {
     // TODO: remove enemies and other boosts from spawning during duration of boost
     if (this.isRocketBoostActive === true) {
       for (let platform of this.platforms) {
-        this.mainCharacter.getVelocity().y = -10;
-        platform.getPosition().y += 15;
-        this.mainCharacter.getPosition().y += 3.4;
+        this.mainCharacter.getVelocity().y = -4.9;
+        platform.getPosition().y += 17;
+        this.mainCharacter.getPosition().y += 1.62;
       }
-      setTimeout(() => (this.isRocketBoostActive = false), 2000);
+      setTimeout(() => (this.isRocketBoostActive = false), 1200);
     }
 
     this.balloonBoosts.forEach(
