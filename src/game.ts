@@ -4,7 +4,7 @@ class Game {
   private howToPlay: HowToPlay;
   private endMenu: EndMenu;
   public activeScene: "start" | "howtoplay" | "play" | "end";
-  // private highscores: number[];
+  private _highscore: number;
 
   constructor() {
     this.gameBoard = new GameBoard();
@@ -12,8 +12,13 @@ class Game {
     this.howToPlay = new HowToPlay();
     this.endMenu = new EndMenu(this.gameBoard.getScore());
     this.activeScene = "end";
+    this._highscore = Number(localStorage.getItem("highscore")) || 0;
   }
-  
+
+  public get highscore(): number {
+    return this._highscore;
+  }
+
   public update() {
     if(this.activeScene === "start") {
       this.startMenu.update();
@@ -24,8 +29,13 @@ class Game {
     } else if(this.activeScene === "end") {
       this.endMenu.update();
     }
-  }
   
+    if (this.gameBoard.getScore() > this.highscore) {
+      this._highscore = this.gameBoard.getScore();
+      localStorage.setItem("highscore", this.highscore.toString());
+    }
+  }
+
   public draw() {
     if(this.activeScene === "start") {
       this.startMenu.draw();
@@ -38,8 +48,11 @@ class Game {
     }
   }
 
+  public updateScore() {
+    this.endMenu.setScore(this.gameBoard.getScore());
+  }
 
-  public startGame() {
-
+  public getHighscore(): number {
+    return this.highscore;
   }
 }

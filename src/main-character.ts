@@ -3,7 +3,7 @@ class MainCharacter extends Entity {
   // private isFalling: boolean;
   private isJumping: boolean;
   private speed: number;
-  private bullets: Shoot[];
+  public bullets: Shoot[];
   private canShoot: boolean | undefined;
 
   constructor() {

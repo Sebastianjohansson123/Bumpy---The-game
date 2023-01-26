@@ -1,7 +1,5 @@
 class GameBoard {
-  // private entities: entity [];
   // private backgrounds: Background[];
-  // private isGameOver: boolean;
   private mainCharacter: MainCharacter;
   private platforms: Platform[];
   private score: number;
@@ -11,8 +9,7 @@ class GameBoard {
   private canGenerateEnemy: boolean | undefined;
   private currentBackgroundIndex: number = 0;
   private backgroundChangeScoreIncrement: number = 8;
-  private canMoveLeft: boolean = false;
-  // private scoreThreshold: number = 10;
+  private canMoveEnemy: boolean = false;
 
   constructor() {
     this.mainCharacter = new MainCharacter();
@@ -29,16 +26,15 @@ class GameBoard {
     this.moveEntities();
     this.updatePlatforms();
     this.updateEnemies();
-    this.moveEnemies();
     this.generateEnemy();
   }
 
   public draw() {
     this.drawBackground();
-    this.getScore();
     this.platforms.forEach((platform) => platform.draw());
     this.enemies.forEach((enemy) => enemy.draw());
     this.mainCharacter.draw();
+    this.getScore();
   }
 
   // checks if the score is above a certain threshold
@@ -51,7 +47,7 @@ class GameBoard {
         (this.currentBackgroundIndex + 1) % images.backgrounds.length;
       this.backgroundChangeScoreIncrement += 500;
     }
-    images.backgrounds[this.currentBackgroundIndex].resize(0, windowHeight);
+    images.backgrounds[this.currentBackgroundIndex];
     let repeatCount =
       height / images.backgrounds[this.currentBackgroundIndex].height + 1;
     for (let i = 0; i < repeatCount; i++) {
@@ -62,9 +58,11 @@ class GameBoard {
       );
     }
   }
-  // checks if the MainCharacters gets in contact with the platform
-  // when it is falling and triggers an automatic jump if it is
+
+  // Detects collisions between entities on the GameBoard
   private detectCollision() {
+    // checks if the MainCharacters gets in contact with the platform
+    // when it is falling and triggers an automatic jump if it is
     for (let platform of this.platforms) {
       if (
         this.mainCharacter.getPosition().y + this.mainCharacter.getSize().y >
@@ -81,6 +79,47 @@ class GameBoard {
       ) {
         // Makes it so that the MainCharacter only jumps on the platforms if is falling at a certain velocity
         this.mainCharacter.jump();
+      }
+    }
+
+    // Checks if bullet collides with an enemy
+    // If they collide, enemy and bullet dissappears and 100 is added to the score
+    for (let enemy of this.enemies) {
+      for (let bullet of this.mainCharacter.bullets) {
+        if (
+          bullet.getPosition().x <
+            enemy.getPosition().x + enemy.getSize().x - 20 &&
+          bullet.getPosition().x + bullet.getSize().x > enemy.getPosition().x &&
+          bullet.getPosition().y <
+            enemy.getPosition().y + enemy.getSize().y - 20 &&
+          bullet.getPosition().y + bullet.getSize().y > enemy.getPosition().y
+        ) {
+          sounds.enemyDeath.play();
+
+          this.mainCharacter.bullets.splice(
+            this.mainCharacter.bullets.indexOf(bullet),
+            1
+          );
+          this.enemies.splice(this.enemies.indexOf(enemy), 1);
+          this.score += 100;
+        }
+      }
+    }
+
+    // Checks if an enemy collides with mainCharacter
+    // If they collide active scene is set to "end"
+    for (let enemy of this.enemies) {
+      let distance = dist(
+        this.mainCharacter.getPosition().x,
+        this.mainCharacter.getPosition().y,
+        enemy.getPosition().x,
+        enemy.getPosition().y
+      );
+      if (
+        distance < this.mainCharacter.getSize().x + enemy.getSize().x - 70 &&
+        distance < this.mainCharacter.getSize().y + enemy.getSize().y - 70
+      ) {
+        game.activeScene = "end";
       }
     }
   }
@@ -116,16 +155,6 @@ class GameBoard {
     }
   }
 
-  private moveEnemies() {
-    if (this.canMoveLeft === true) {
-      this.enemies.forEach((enemy) => (enemy.getPosition().x -= 1));
-      setTimeout(() => (this.canMoveLeft = false), 2000);
-    } else {
-      this.enemies.forEach((enemy) => (enemy.getPosition().x += 1));
-      setTimeout(() => (this.canMoveLeft = true), 2000);
-    }
-  }
-
   // randomly creates the X position for the platform but makes sure that there is always a 120 px gap
   // between the height of each platform
   private generatePlatforms() {
@@ -155,7 +184,6 @@ class GameBoard {
         this.platforms.push(newPlatform);
         this.score += 1 * this.scoreMultiplier;
         this.timeSinceLastMultiplierIncrease += 1;
-        console.log(this.timeSinceLastMultiplierIncrease);
         if (this.timeSinceLastMultiplierIncrease === 10) {
           this.canGenerateEnemy = true;
           this.scoreMultiplier += 1;
@@ -178,6 +206,14 @@ class GameBoard {
         enemy.getPosition().y += 4.7;
         this.mainCharacter.getPosition().y += 0.5;
       }
+    }
+
+    if (this.canMoveEnemy === true) {
+      this.enemies.forEach((enemy) => (enemy.getPosition().x -= 1));
+      setTimeout(() => (this.canMoveEnemy = false), 2000);
+    } else {
+      this.enemies.forEach((enemy) => (enemy.getPosition().x += 1));
+      setTimeout(() => (this.canMoveEnemy = true), 2000);
     }
   }
 

@@ -47,7 +47,7 @@ class EndMenu {
     textSize(20);
     textAlign(CENTER, CENTER);
     textFont(Fonts.TitanOne);
-    text("Highscore:", 278, 220);
+    text("Highscore:" + " " + game.getHighscore(), 278, 220);
     pop();
     push();
     fill("#000000");
@@ -64,4 +64,9 @@ class EndMenu {
     text("Game Over!", 275, 100);
     pop();
   }
+
+  public setScore(score: number) {
+    this.score = score;
+}
+
 }
