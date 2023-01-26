@@ -4,29 +4,19 @@ class EndMenu {
   private btnPlayAgain: Button;
   private btnMenu: Button;
   private score: number;
-  private startMenu: StartMenu;
 
   constructor(score: number) {
-    this.startMenu = new StartMenu();
     const centerX = width * 0.5;
     this.score = score;
     this.btnPlayAgain = new Button("PLAY AGAIN", new p5.Vector(centerX, 290), new p5.Vector(220, 60));
     this.btnPlayAgain.onClickCallback = () => {
-      if (this.startMenu.buttonOnCooldown === false) {
-        this.startMenu.buttonOnCooldown = true;
         game.activeScene = "play";
         console.log("play")
-        setTimeout(() => {this.startMenu.buttonOnCooldown = false}, 500);
-      }
     };
     this.btnMenu = new Button("MENU", new p5.Vector(centerX, 350), new p5.Vector(140, 40));
     this.btnMenu.onClickCallback = () => {
-      if (this.startMenu.buttonOnCooldown === false) {
-        this.startMenu.buttonOnCooldown = true;
         game.activeScene = "start";
         console.log("menu")
-        setTimeout(() => {this.startMenu.buttonOnCooldown = false}, 500);
-      }
     };
   }
 
