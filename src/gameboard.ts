@@ -19,7 +19,6 @@ class GameBoard {
     this.platforms = [];
     this.enemies = [];
     this.balloonBoosts = [];
-    this.balloonBoosts = [];
     this.score = 0;
     this.generatePlatforms();
     this.canGenerateEnemy = false;
