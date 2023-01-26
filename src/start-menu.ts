@@ -59,7 +59,7 @@ class StartMenu {
     // let frameHeight = this.bumpyBlinkSprite.height;
     // image(this.bumpyBlinkSprite, 50, 350, frameWidth, frameHeight, frame * frameWidth, 0, frameWidth, frameHeight);
     // images.bumpyBlinkSprite.resize(100, 300);
-    image(images.bumpyBlink_gif, 50, 450, 131, 193); // 50 = X-position, 450 = Y-position, 131 = bumpy width, 193 = bumpy height
+    image(images.bumpyBlink_gif, 50, 450, 152, 193); // 50 = X-position, 450 = Y-position, 131 = bumpy width, 193 = bumpy height
   }
 
   private loopBlinkingBumpy() {
