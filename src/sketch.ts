@@ -3,16 +3,6 @@ let game: Game;
 let images: Images;
 let sounds: Sounds;
 let sound: p5.SoundFile;
-// let talkingBubble: p5.Image;
-// let heightOnBg: number;
-// let bulletSound: p5.SoundFile;
-// let song: p5.SoundFile;
-// let bumpy: p5.Image;
-// let soundOn: p5.Image;
-// let soundOff: p5.Image;
-// let upArrow: p5.Image;
-// let bg: p5.Image;
-// let font: p5.Font;
 
 interface Images {
   bumpy: p5.Image;
@@ -58,8 +48,8 @@ function preload() {
     bg: loadImage("./assets/images/bg1.png"),
     //balloon: loadImage(""),
     //rocket: loadImage(""),
-    soundOn: loadImage("./assets/images/sound-on.png"),
-    soundOff: loadImage("./assets/images/sound-off.png"),
+    soundOn: loadImage("./assets/images/soundon.png"),
+    soundOff: loadImage("./assets/images/soundoff.png"),
     xBtn: loadImage("./assets/images/x-btn.png"),
     howToPlayKeys: loadImage("./assets/images/howtoplay-keys.png"),
     upArrow: loadImage("assets/images/up-arrow.png"),
@@ -89,7 +79,9 @@ function setup() {
   sounds.bulletSound.setVolume(0.1);
   sounds.jumpSound.setVolume(0.1);
   sounds.jumpSound = loadSound("./assets/sounds/jump.wav");
+  sounds.song = loadSound("./assets/music/bumpy.mp3");
   sounds.enemyDeath.setVolume(0.1);
+
   sounds.song.setVolume(0.05);
   // song.loop();
   createCanvas(550, 720);

@@ -2,11 +2,14 @@ class HowToPlay {
     private btnExit: Button;
   
     constructor() {
-      this.btnExit = new Button(images.xBtn, new p5.Vector(376, 173), new p5.Vector(0, 0));
+      this.btnExit = new Button(images.xBtn, new p5.Vector(376, 173), new p5.Vector(15, 15));
+      this.btnExit.onClickCallback = () => {
+        game.activeScene = "start";
+      };
     }
   
     public update() {
-
+      this.btnExit.update();
     }
   
     public draw() {

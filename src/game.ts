@@ -18,37 +18,32 @@ class Game {
   public get highscore(): number {
     return this._highscore;
   }
+
   public update() {
+    if(this.activeScene === "start") {
+      this.startMenu.update();
+    } else if(this.activeScene === "howtoplay") {
+      this.howToPlay.update();
+    } else if(this.activeScene === "play") {
+      this.gameBoard.update();
+    } else if(this.activeScene === "end") {
+      this.endMenu.update();
+    }
+  
     if (this.gameBoard.getScore() > this.highscore) {
       this._highscore = this.gameBoard.getScore();
       localStorage.setItem("highscore", this.highscore.toString());
     }
-    // PLATSHÅLLARE
-    if (keyIsPressed && key === "1") {
-      this.activeScene = "play";
-    }
-    if (keyIsPressed && key === "2") {
-      this.activeScene = "end";
-    }
-    //
-    if (this.activeScene === "play") {
-      this.gameBoard.update();
-    } else if (this.activeScene === "start") {
-      this.startMenu.update();
-    } else if (this.activeScene === "end") {
-      this.endMenu.update();
-    }
   }
 
   public draw() {
-    if (this.activeScene === "play") {
-      this.gameBoard.draw();
-      this.updateScore();
-    } else if (this.activeScene === "start") {
+    if(this.activeScene === "start") {
       this.startMenu.draw();
-    } else if (this.activeScene === "howtoplay") {
+    } else if(this.activeScene === "howtoplay") {
       this.howToPlay.draw();
-    } else if (this.activeScene === "end") {
+    } else if(this.activeScene === "play") {
+      this.gameBoard.draw();
+    } else if(this.activeScene === "end") {
       this.endMenu.draw();
     }
   }
