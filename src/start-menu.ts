@@ -7,7 +7,7 @@ class StartMenu {
   private btnSoundOn: Button;
   private btnSoundOff: Button;
   private soundOn: any;
-  private buttonOnCooldown: boolean;
+  public buttonOnCooldown: boolean;
 
   constructor() {
     this.buttonOnCooldown = false;
@@ -21,11 +21,17 @@ class StartMenu {
     this.btnSoundOff = new Button(images.soundOff, new p5.Vector(centerX, 410), new p5.Vector(50, 50)); 
 
     this.btnPlayGame.onClickCallback = () => {
-      game.activeScene = "play";
+      if (game.activeScene === "start" || game.activeScene === "end") {
+        game.activeScene = "play";
+        console.log("play")
+      }
     };
     
     this.btnHowToPlay.onClickCallback = () => {
-      game.activeScene = "howtoplay";
+      if (game.activeScene === "start") {
+        game.activeScene = "howtoplay";
+        console.log("howtoplay")
+      }
     };
 
     this.btnSoundOn.onClickCallback = () => {
