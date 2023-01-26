@@ -10,7 +10,7 @@ class Game {
     this.gameBoard = new GameBoard();
     this.startMenu = new StartMenu();
     this.howToPlay = new HowToPlay();
-    this.endMenu = new EndMenu(this.gameBoard.getScore());
+    this.endMenu = new EndMenu();
     this.activeScene = "start";
     this._highscore = Number(localStorage.getItem("highscore")) || 0;
   }
@@ -48,10 +48,9 @@ class Game {
     }
   }
 
-  public updateScore() {
-    this.endMenu.setScore(this.gameBoard.getScore());
+  public setEndMenuScore() {
+    return this.gameBoard.getScore();
   }
-
   public getHighscore(): number {
     return this.highscore;
   }
