@@ -8,17 +8,35 @@ class StartMenu {
   private btnSoundOff: Button;
   private soundOn: any;
 
-
-
   constructor() {
     this.soundOn = true;
     const centerX = width * 0.5;
 
-    this.btnPlayGame = new Button("Play Game", new p5.Vector(centerX, 230), new p5.Vector(200, 50));
-    this.btnHowToPlay = new Button("How to play", new p5.Vector(centerX, 290), new p5.Vector(200, 50));
-    this.btnScores = new Button("Scores", new p5.Vector(centerX, 350), new p5.Vector(200, 50));
-    this.btnSoundOn = new Button(images.soundOn, new p5.Vector(centerX, 410), new p5.Vector(50, 50)); 
-    this.btnSoundOff = new Button(images.soundOff, new p5.Vector(centerX, 410), new p5.Vector(50, 50)); 
+    this.btnPlayGame = new Button(
+      "Play Game",
+      new p5.Vector(centerX, 230),
+      new p5.Vector(200, 50)
+    );
+    this.btnHowToPlay = new Button(
+      "How to play",
+      new p5.Vector(centerX, 290),
+      new p5.Vector(200, 50)
+    );
+    this.btnScores = new Button(
+      "Scores",
+      new p5.Vector(centerX, 350),
+      new p5.Vector(200, 50)
+    );
+    this.btnSoundOn = new Button(
+      images.soundOn,
+      new p5.Vector(centerX, 410),
+      new p5.Vector(50, 50)
+    );
+    this.btnSoundOff = new Button(
+      images.soundOff,
+      new p5.Vector(centerX, 410),
+      new p5.Vector(50, 50)
+    );
 
     this.btnSoundOn.onClickCallback = () => {
       this.soundOn = !this.soundOn;
@@ -41,7 +59,6 @@ class StartMenu {
       game.activeScene = "howtoplay";
     };
   }
-
 
   public update() {
     this.btnPlayGame.update();
