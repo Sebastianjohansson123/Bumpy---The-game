@@ -11,6 +11,7 @@ class GameBoard {
   private currentBackgroundIndex: number = 0;
   private backgroundChangeScoreIncrement: number = 8;
   private canMoveEnemy: boolean = false;
+  private canMoveBalloonBoost: boolean = false;
   private balloonBoosts: BalloonBoost[];
 
   constructor() {
@@ -127,6 +128,24 @@ class GameBoard {
         distance < this.mainCharacter.getSize().y + enemy.getSize().y - 70
       ) {
         game.activeScene = "end";
+      }
+    }
+
+    for (let balloonBoost of this.balloonBoosts) {
+      let distance = dist(
+        this.mainCharacter.getPosition().x,
+        this.mainCharacter.getPosition().y,
+        balloonBoost.getPosition().x,
+        balloonBoost.getPosition().y
+      );
+      if (
+        distance <
+          this.mainCharacter.getSize().x + balloonBoost.getSize().x - 70 &&
+        distance <
+          this.mainCharacter.getSize().y + balloonBoost.getSize().y - 70
+      ) {
+        console.log("balloon boost");
+        this.balloonBoosts.splice(this.balloonBoosts.indexOf(balloonBoost), 1);
       }
     }
   }
@@ -246,9 +265,25 @@ class GameBoard {
         this.mainCharacter.getPosition().y += 0.5;
       }
       for (let balloonBoost of this.balloonBoosts) {
-        balloonBoost.getPosition().y -= 9;
+        balloonBoost.getPosition().y += 4.7;
         this.mainCharacter.getPosition().y += 0.5;
       }
+    }
+
+    this.balloonBoosts.forEach(
+      (balloonBoost) => (balloonBoost.getPosition().y -= 6)
+    );
+
+    if (this.canMoveBalloonBoost === true) {
+      this.balloonBoosts.forEach(
+        (balloonBoost) => (balloonBoost.getPosition().x -= 1)
+      );
+      setTimeout(() => (this.canMoveBalloonBoost = false), 4000);
+    } else {
+      this.balloonBoosts.forEach(
+        (balloonBoost) => (balloonBoost.getPosition().x += 1)
+      );
+      setTimeout(() => (this.canMoveBalloonBoost = true), 4000);
     }
 
     if (this.canMoveEnemy === true) {
