@@ -32,7 +32,6 @@ class StartMenu {
       if (this.soundOn === true && this.buttonOnCooldown === false) {
       this.buttonOnCooldown = true;
       this.soundOn = false;
-      console.log(this.soundOn)
       sounds.bulletSound.setVolume(0.0);
       sounds.jumpSound.setVolume(0.0);
       sounds.song.setVolume(0.0);
@@ -44,7 +43,6 @@ class StartMenu {
         sounds.bulletSound.setVolume(0.1);
         sounds.jumpSound.setVolume(0.1);
         sounds.song.setVolume(0.05);
-        console.log(this.soundOn)
         setTimeout(() => {this.buttonOnCooldown = false}, 500);
       }
     };
