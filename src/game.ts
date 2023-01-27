@@ -13,7 +13,7 @@ class Game {
     this.howToPlay = new HowToPlay();
     this.endMenu = new EndMenu();
     this.scoreboard = new Scoreboard();
-    this.activeScene = "scoreboard";
+    this.activeScene = "start";
     this._highscore = Number(localStorage.getItem("highscore")) || 0;
   }
 
