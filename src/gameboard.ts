@@ -100,6 +100,14 @@ class GameBoard {
       }
     }
 
+    // check if shape is colliding with the bottom of the canvas
+    if (
+      this.mainCharacter.getPosition().y + this.mainCharacter.getSize().y >=
+      height
+    ) {
+      game.activeScene = "end";
+    }
+
     // Checks if bullet collides with an enemy
     // If they collide, enemy and bullet dissappears and 100 is added to the score
     for (let enemy of this.enemies) {
