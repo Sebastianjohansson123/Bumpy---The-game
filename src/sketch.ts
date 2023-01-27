@@ -59,6 +59,7 @@ function preload() {
     bumpy: loadImage("./assets/images/bumpy.png"),
     bumpySad: loadImage("./assets/images/bumpy-sad.png"),
     talkingBubble: loadImage("./assets/images/bumpy-bubble.png"),
+    bumpyBlink_gif: loadImage("./assets/gif/bumpyblinking.gif"),
   };
 
   sounds = {
