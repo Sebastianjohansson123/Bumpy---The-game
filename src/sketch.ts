@@ -93,18 +93,6 @@ function setup() {
  * you created in the setup function above
  */
 function draw() {
-  //  heightOnBg++;
-  //  if (heightOnBg < 200) {
-  //    image(bg, 0, 0);
-  //  } else {
-  //   image(bg2, 0, 0);
-  //  }
-
-  // push()
-  // textFont(fonts.monsterFont);
-  // text("hello world", 0, 0);
-  // pop()
-
   game.update();
   game.draw();
   
