@@ -3,16 +3,6 @@ let game: Game;
 let images: Images;
 let sounds: Sounds;
 let sound: p5.SoundFile;
-// let talkingBubble: p5.Image;
-// let heightOnBg: number;
-// let bulletSound: p5.SoundFile;
-// let song: p5.SoundFile;
-// let bumpy: p5.Image;
-// let soundOn: p5.Image;
-// let soundOff: p5.Image;
-// let upArrow: p5.Image;
-// let bg: p5.Image;
-// let font: p5.Font;
 
 interface Images {
   bumpy: p5.Image;
