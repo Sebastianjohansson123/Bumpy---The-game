@@ -81,7 +81,6 @@ function setup() {
   createCanvas(540, windowHeight);
   // heightOnBg = 0;
   frameRate(60);
-
   game = new Game();
 }
 
