@@ -10,14 +10,18 @@ class GameBoard {
   private currentBackgroundIndex: number = 0;
   private backgroundChangeScoreIncrement: number = 8;
   private canMoveEnemy: boolean = false;
+  private starBoosts: StarBoost[];
+  private canGenerateStarBoost: boolean | undefined;
 
   constructor() {
     this.mainCharacter = new MainCharacter();
     this.platforms = [];
     this.enemies = [];
+    this.starBoosts = [];
     this.score = 0;
     this.generatePlatforms();
     this.canGenerateEnemy = false;
+    this.canGenerateStarBoost = false;
   }
 
   public update() {
@@ -27,12 +31,15 @@ class GameBoard {
     this.updatePlatforms();
     this.updateEnemies();
     this.generateEnemy();
+    this.updateStarBoosts();
+    this.generateStarBoost();
   }
 
   public draw() {
     this.drawBackground();
     this.platforms.forEach((platform) => platform.draw());
     this.enemies.forEach((enemy) => enemy.draw());
+    this.starBoosts.forEach((starBoost) => starBoost.draw());
     this.mainCharacter.draw();
     this.DisplayScore();
   }
@@ -137,6 +144,37 @@ class GameBoard {
     }
   }
 
+  private generateStarBoost() {
+    if (this.canGenerateStarBoost === true) {
+      let x = random(0, width - 220);
+      let y = height;
+      let position = createVector(x, y);
+      let starBoost = new StarBoost(position);
+      this.starBoosts.push(starBoost);
+      this.canGenerateStarBoost = false;
+    } else {
+      return;
+    }
+  }
+
+  private updateStarBoosts() {
+    if (this.canGenerateStarBoost === true) {
+      for (let i = 0; i < this.starBoosts.length; i++) {
+        let starBoost = this.starBoosts[i];
+        if (starBoost.getPosition().y > height) {
+          this.starBoosts.splice(i, 1);
+          let x = random(0, width - 220);
+          let position = createVector(x, 0);
+          let newStarBoost = new StarBoost(position);
+          this.starBoosts.push(newStarBoost);
+          this.canGenerateStarBoost = false;
+        } else {
+          return;
+        }
+      }
+    }
+  }
+
   private updateEnemies() {
     if (this.canGenerateEnemy === true) {
       for (let i = 0; i < this.enemies.length; i++) {
@@ -184,10 +222,16 @@ class GameBoard {
         this.platforms.push(newPlatform);
         this.score += 1 * this.scoreMultiplier;
         this.timeSinceLastMultiplierIncrease += 1;
-        if (this.timeSinceLastMultiplierIncrease === 10) {
-          this.canGenerateEnemy = true;
+
+        if (this.timeSinceLastMultiplierIncrease === 20) {
           this.scoreMultiplier += 1;
           this.timeSinceLastMultiplierIncrease = 0;
+        }
+        if (this.timeSinceLastMultiplierIncrease === 10) {
+          this.canGenerateEnemy = true;
+        }
+        if (this.timeSinceLastMultiplierIncrease === 5) {
+          this.canGenerateStarBoost = true;
         }
       }
     }
@@ -204,6 +248,10 @@ class GameBoard {
       }
       for (let enemy of this.enemies) {
         enemy.getPosition().y += 4.7;
+        this.mainCharacter.getPosition().y += 0.5;
+      }
+      for (let starBoost of this.starBoosts) {
+        starBoost.getPosition().y += 4.7;
         this.mainCharacter.getPosition().y += 0.5;
       }
     }
