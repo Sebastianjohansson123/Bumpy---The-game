@@ -18,7 +18,6 @@ class GameBoard {
   private isRocketBoostActive: boolean;
   private isBalloonBoostActive: boolean;
 
-
   constructor() {
     this.mainCharacter = new MainCharacter();
     this.platforms = [];
@@ -33,8 +32,7 @@ class GameBoard {
     this.canGenerateRocketBoost = false;
     this.isRocketBoostActive = false;
     this.isBalloonBoostActive = false;
-
-
+  }
   public update() {
     this.mainCharacter.update();
     this.detectCollision();
