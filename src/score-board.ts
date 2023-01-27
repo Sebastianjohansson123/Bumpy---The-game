@@ -18,8 +18,20 @@
         this.drawTitle();
         this.btnExit2.draw();
         images.xBtn.resize(11, 11);
+        this.drawRects();
         image(images.bumpy, 50, 450);
         image(images.crown, 164, 182, 40, 40);
+    }
+
+    private drawRects() {
+        rectMode(CENTER);
+        noStroke();
+        fill("#FFFFFF");
+        let positions = [new p5.Vector(275, 220), new p5.Vector(275, 260), new p5.Vector(275, 300)];
+        for (let i = 0; i < positions.length; i++) {
+            let pos = positions[i];
+            rect(pos.x, pos.y, 190, 27, 11);
+        }
     }
 
     private drawTitle() {
@@ -52,42 +64,6 @@
         text("Score", 274, 180);
         pop();
         push();
-        rectMode(CENTER);
-        noStroke();
-        // for (let i = 0; i < 3; i++) {
-        //     rect(275, 190, +i * 100, 27, 40);
-        // }
-        rect(275, 220, 190, 27, 11);
-        fill("#FFFFFF");
-        textAlign(LEFT, CENTER);
-        textFont(Fonts.TitanOne);
-        textSize(20);
-        fill("#000000");
-        text("01", 190, 220);
-        pop();
-        push();
-        rectMode(CENTER);
-        noStroke();
-        rect(275, 260, 190, 27, 11);
-        fill("#FFFFFF");
-        textAlign(LEFT, CENTER);
-        textFont(Fonts.TitanOne);
-        textSize(20);
-        fill("#000000");
-        text("02", 190, 260);
-        pop();
-        push();
-        rectMode(CENTER);
-        noStroke();
-        rect(275, 300, 190, 27, 11);
-        fill("#FFFFFF");
-        textAlign(LEFT, CENTER);
-        textFont(Fonts.TitanOne);
-        textSize(20);
-        fill("#000000");
-        text("03", 190, 300);
-        pop();
-        push();
         fill("#FFFFFF");
         textSize(28);
         textAlign(CENTER, CENTER);
@@ -109,4 +85,4 @@
         text("14390", 274, 395);
         pop();
     }
-    }
+}
