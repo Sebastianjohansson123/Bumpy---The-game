@@ -140,6 +140,22 @@ class GameBoard {
       }
     }
 
+    for (let starBoost of this.starBoosts) {
+      let distance = dist(
+        this.mainCharacter.getPosition().x,
+        this.mainCharacter.getPosition().y,
+        starBoost.getPosition().x,
+        starBoost.getPosition().y
+      );
+      if (
+        distance <
+          this.mainCharacter.getSize().x + starBoost.getSize().x - 70 &&
+        distance < this.mainCharacter.getSize().y + starBoost.getSize().y - 70
+      ) {
+        this.starBoosts.splice(this.starBoosts.indexOf(starBoost), 1);
+      }
+    }
+
     //Checks if mainCharacter collides with balloonBoost
     for (let balloonBoost of this.balloonBoosts) {
       let distance = dist(
@@ -320,6 +336,10 @@ class GameBoard {
       }
       for (let balloonBoost of this.balloonBoosts) {
         balloonBoost.getPosition().y += 4.7;
+        this.mainCharacter.getPosition().y += 0.5;
+      }
+      for (let starBoost of this.starBoosts) {
+        starBoost.getPosition().y += 4.7;
         this.mainCharacter.getPosition().y += 0.5;
       }
     }
