@@ -3,7 +3,8 @@ class Game {
   private startMenu: StartMenu;
   private howToPlay: HowToPlay;
   private endMenu: EndMenu;
-  public activeScene: "start" | "howtoplay" | "play" | "end";
+  private scoreboard: Scoreboard;
+  public activeScene: "start" | "howtoplay" | "scoreboard" | "play"| "end";
   private _highscore: number;
 
   constructor() {
@@ -11,7 +12,8 @@ class Game {
     this.startMenu = new StartMenu();
     this.howToPlay = new HowToPlay();
     this.endMenu = new EndMenu();
-    this.activeScene = "start";
+    this.scoreboard = new Scoreboard();
+    this.activeScene = "scoreboard";
     this._highscore = Number(localStorage.getItem("highscore")) || 0;
   }
 
@@ -24,6 +26,8 @@ class Game {
       this.startMenu.update();
     } else if(this.activeScene === "howtoplay") {
       this.howToPlay.update();
+    } else if(this.activeScene === "scoreboard") {
+      this.scoreboard.update();
     } else if(this.activeScene === "play") {
       this.gameBoard.update();
     } else if(this.activeScene === "end") {
@@ -41,6 +45,8 @@ class Game {
       this.startMenu.draw();
     } else if(this.activeScene === "howtoplay") {
       this.howToPlay.draw();
+    } else if(this.activeScene === "scoreboard") {
+      this.scoreboard.draw();
     } else if(this.activeScene === "play") {
       this.gameBoard.draw();
     } else if(this.activeScene === "end") {

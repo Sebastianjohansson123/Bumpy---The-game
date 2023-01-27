@@ -19,6 +19,7 @@ interface Images {
   soundOn: p5.Image;
   soundOff: p5.Image;
   upArrow: p5.Image;
+  crown: p5.Image;
 }
 
 interface Sounds {
@@ -58,6 +59,7 @@ function preload() {
     bumpy: loadImage("./assets/images/bumpy.png"),
     bumpySad: loadImage("./assets/images/bumpy-sad.png"),
     talkingBubble: loadImage("./assets/images/bumpy-bubble.png"),
+    crown: loadImage("./assets/images/crown.png")
   };
 
   sounds = {
