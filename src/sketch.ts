@@ -3,22 +3,6 @@ let game: Game;
 let images: Images;
 let sounds: Sounds;
 let sound: p5.SoundFile;
-// let talkingBubble: p5.Image;
-// let heightOnBg: number;
-// let bulletSound: p5.SoundFile;
-// let song: p5.SoundFile;
-// let bumpy: p5.Image;
-// let soundOn: p5.Image;
-// let soundOff: p5.Image;
-// let upArrow: p5.Image;
-// let bg: p5.Image;
-// let font: p5.Font;
-
-// let bumpyBlink: p5.Image[];
-// bumpyBlink = [loadImage("./assets/images/rymd1.png"), loadImage("./assets/images/rymd2.png"), loadImage("./assets/image/rymd3.png")]
-// let currentImage = 0;
-// let bumpyBlink: [loadImage("./assets/images/rymd1.png"), loadImage("./assets/images/rymd2.png"), loadImage("./assets/image/rymd3.png")]
-
 
 interface Images {
   bumpy: p5.Image;
@@ -36,7 +20,6 @@ interface Images {
   soundOff: p5.Image;
   upArrow: p5.Image;
   bumpyBlink_gif: p5.Image;
-  bumpyBlinkSprite: p5.Image;
 }
 
 interface Sounds {
@@ -72,13 +55,8 @@ function preload() {
     bumpy: loadImage("./assets/images/bumpy.png"),
     bumpySad: loadImage("./assets/images/bumpy-sad.png"),
     talkingBubble: loadImage("./assets/images/bumpy-bubble.png"),
-    bumpyBlink_gif: loadImage("./assets/gif/bumpyblinking.gif"),
-    bumpyBlinkSprite: loadImage("./assets/images/spritesheet.png"),
+    bumpyBlink_gif: loadImage("./assets/gif/bumpyblinking.gif")
   }
-  
-//   for (let i = 0; i < bumpyBlink.length; i++) {
-//     bumpyBlink[i] = loadImage(bumpyBlink[i]);
-// }
 
   sounds = {
     bulletSound: loadSound("./assets/sounds/bullet.mp3"),
@@ -113,18 +91,6 @@ function setup() {
  * you created in the setup function above
  */
 function draw() {
-  //  heightOnBg++;
-  //  if (heightOnBg < 200) {
-  //    image(bg, 0, 0);
-  //  } else {
-  //   image(bg2, 0, 0);
-  //  }
-
-  // push()
-  // textFont(fonts.monsterFont);
-  // text("hello world", 0, 0);
-  // pop()
-
   game.update();
   game.draw();
   
