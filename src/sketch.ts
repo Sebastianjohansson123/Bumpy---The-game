@@ -20,7 +20,6 @@ interface Images {
   soundOff: p5.Image;
   upArrow: p5.Image;
   bumpyBlink_gif: p5.Image;
-  bumpyBlinkSprite: p5.Image;
 }
 
 interface Sounds {
@@ -56,8 +55,7 @@ function preload() {
     bumpy: loadImage("./assets/images/bumpy.png"),
     bumpySad: loadImage("./assets/images/bumpy-sad.png"),
     talkingBubble: loadImage("./assets/images/bumpy-bubble.png"),
-    bumpyBlink_gif: loadImage("./assets/gif/bumpyblinking.gif"),
-    bumpyBlinkSprite: loadImage("./assets/images/spritesheet.png"),
+    bumpyBlink_gif: loadImage("./assets/gif/bumpyblinking.gif")
   }
 
   sounds = {
