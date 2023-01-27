@@ -13,6 +13,7 @@ class GameBoard {
   private canMoveEnemy: boolean = false;
   private canMoveBalloonBoost: boolean = false;
   private balloonBoosts: BalloonBoost[];
+  private isBalloonBoostActive: boolean;
 
   constructor() {
     this.mainCharacter = new MainCharacter();
@@ -23,6 +24,7 @@ class GameBoard {
     this.generatePlatforms();
     this.canGenerateEnemy = false;
     this.canGenerateBalloonBoost = false;
+    this.isBalloonBoostActive = false;
   }
 
   public update() {
@@ -147,6 +149,7 @@ class GameBoard {
       ) {
         console.log("balloon boost");
         this.balloonBoosts.splice(this.balloonBoosts.indexOf(balloonBoost), 1);
+        this.isBalloonBoostActive = true;
         this.score += 100;
       }
     }
@@ -274,6 +277,15 @@ class GameBoard {
         balloonBoost.getPosition().y += 4.7;
         this.mainCharacter.getPosition().y += 0.5;
       }
+    }
+
+    if (this.isBalloonBoostActive === true) {
+      for (let platform of this.platforms) {
+        this.mainCharacter.getVelocity().y = -4.9;
+        platform.getPosition().y += 10;
+        this.mainCharacter.getPosition().y += 1.62;
+      }
+      setTimeout(() => (this.isBalloonBoostActive = false), 1500);
     }
 
     this.balloonBoosts.forEach(
