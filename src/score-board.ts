@@ -23,6 +23,7 @@
         image(images.crown, 164, 182, 40, 40);
     }
 
+    // Draws the rects with top 3 scores
     private drawRects() {
         rectMode(CENTER);
         noStroke();
