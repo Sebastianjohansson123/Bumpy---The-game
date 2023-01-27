@@ -29,6 +29,7 @@
         noStroke();
         let positions = [new p5.Vector(275, 220), new p5.Vector(275, 260), new p5.Vector(275, 300)];
         let texts = ["01", "02", "03"];
+        let scores = [30, 20, 185689];
         for (let i = 0; i < positions.length; i++) {
             let pos = positions[i];
             rectMode(CENTER);
@@ -39,6 +40,8 @@
             textFont(Fonts.TitanOne);
             textAlign(LEFT, CENTER);
             text(texts[i], 190, pos.y);
+            textAlign(RIGHT, CENTER);
+            text(scores[i], 360, pos.y);
         }
     }
 
