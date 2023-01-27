@@ -25,13 +25,20 @@
 
     // Draws the rects with top 3 scores
     private drawRects() {
-        rectMode(CENTER);
+  
         noStroke();
-        fill("#FFFFFF");
         let positions = [new p5.Vector(275, 220), new p5.Vector(275, 260), new p5.Vector(275, 300)];
+        let texts = ["01", "02", "03"];
         for (let i = 0; i < positions.length; i++) {
             let pos = positions[i];
+            rectMode(CENTER);
+            fill("#FFFFFF");
             rect(pos.x, pos.y, 190, 27, 11);
+            fill("#000000")
+            textSize(20);
+            textFont(Fonts.TitanOne);
+            textAlign(LEFT, CENTER);
+            text(texts[i], 190, pos.y);
         }
     }
 
