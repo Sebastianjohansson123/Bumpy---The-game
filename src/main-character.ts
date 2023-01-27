@@ -3,7 +3,7 @@ class MainCharacter extends Entity {
   // private isFalling: boolean;
   private isJumping: boolean;
   private speed: number;
-  private bullets: Shoot[];
+  public bullets: Shoot[];
   private canShoot: boolean | undefined;
 
   constructor() {
@@ -25,11 +25,6 @@ class MainCharacter extends Entity {
 
   public update() {
     this.bullets.forEach((bullet) => bullet.update());
-    // check if shape is colliding with the bottom of the canvas
-    if (this.position.y + this.size.y >= height) {
-      // this.jump();
-    }
-
     if (this.isJumping) {
       this.velocity.add(this.gravity);
       this.position.add(this.velocity);

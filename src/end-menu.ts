@@ -6,12 +6,29 @@ class EndMenu {
 
   constructor() {
     const centerX = width * 0.5;
-    //this.score = 0;
-    this.btnPlayAgain = new Button("PLAY AGAIN", new p5.Vector(centerX, 290), new p5.Vector(220, 60));
-    this.btnMenu = new Button("MENU", new p5.Vector(centerX, 350), new p5.Vector(140, 40));
+    this.btnPlayAgain = new Button(
+      "PLAY AGAIN",
+      new p5.Vector(centerX, 290),
+      new p5.Vector(220, 60)
+    );
+    this.btnPlayAgain.onClickCallback = () => {
+      game.resetGameBoard();
+      game.activeScene = "play";
+    };
+    this.btnMenu = new Button(
+      "MENU",
+      new p5.Vector(centerX, 350),
+      new p5.Vector(140, 40)
+    );
+    this.btnMenu.onClickCallback = () => {
+      game.activeScene = "start";
+    };
   }
 
-  public update() {}
+  public update() {
+    this.btnPlayAgain.update();
+    this.btnMenu.update();
+  }
 
   public draw() {
     image(images.bg, 0, 0);
@@ -28,14 +45,14 @@ class EndMenu {
     textSize(20);
     textAlign(CENTER, CENTER);
     textFont(Fonts.TitanOne);
-    text("Your score:", 278, 190);
-    pop(); 
+    text("Your score:" + " " + game.setEndMenuScore(), 278, 190);
+    pop();
     push();
     fill("#FFFFFF");
     textSize(20);
     textAlign(CENTER, CENTER);
     textFont(Fonts.TitanOne);
-    text("Highscore:", 278, 220);
+    text("Highscore:" + " " + game.getHighscore(), 278, 220);
     pop();
     push();
     fill("#000000");

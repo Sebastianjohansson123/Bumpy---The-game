@@ -1,17 +1,13 @@
 /// <reference path="entity.ts"  />
-class Shoot extends Entity {
+class BalloonBoost extends Entity {
   constructor(position: p5.Vector) {
     super(
       position,
-      createVector(0, 10),
       createVector(0, 0),
-      createVector(15, 15),
-      images.bumpy
+      createVector(0, 0),
+      createVector(50, 90),
+      images.balloon
     );
-  }
-
-  public update() {
-    this.position.y -= this.velocity.y;
   }
 
   public getPosition(): p5.Vector {

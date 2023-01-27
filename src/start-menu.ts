@@ -4,18 +4,68 @@ class StartMenu {
   private btnPlayGame: Button;
   private btnHowToPlay: Button;
   private btnScores: Button;
-  private btnSound: Button;
-
+  private btnSoundOn: Button;
+  private btnSoundOff: Button;
+  private soundOn: any;
 
   constructor() {
+    this.soundOn = true;
     const centerX = width * 0.5;
-    this.btnPlayGame = new Button("Play Game", new p5.Vector(centerX, 230), new p5.Vector(200, 50));
-    this.btnHowToPlay = new Button("How to play", new p5.Vector(centerX, 290), new p5.Vector(200, 50));
-    this.btnScores = new Button("Scores", new p5.Vector(centerX, 350), new p5.Vector(200, 50));
-    this.btnSound = new Button(images.soundOn, new p5.Vector(centerX, 410), new p5.Vector(50, 50)); 
+
+    this.btnPlayGame = new Button(
+      "Play Game",
+      new p5.Vector(centerX, 230),
+      new p5.Vector(200, 50)
+    );
+    this.btnHowToPlay = new Button(
+      "How to play",
+      new p5.Vector(centerX, 290),
+      new p5.Vector(200, 50)
+    );
+    this.btnScores = new Button(
+      "Scores",
+      new p5.Vector(centerX, 350),
+      new p5.Vector(200, 50)
+    );
+    this.btnSoundOn = new Button(
+      images.soundOn,
+      new p5.Vector(centerX, 410),
+      new p5.Vector(50, 50)
+    );
+    this.btnSoundOff = new Button(
+      images.soundOff,
+      new p5.Vector(centerX, 410),
+      new p5.Vector(50, 50)
+    );
+
+    this.btnSoundOn.onClickCallback = () => {
+      this.soundOn = !this.soundOn;
+      if (this.soundOn) {
+        sounds.bulletSound.setVolume(0.1);
+        sounds.jumpSound.setVolume(0.1);
+        sounds.song.setVolume(0.05);
+      } else {
+        sounds.bulletSound.setVolume(0.0);
+        sounds.jumpSound.setVolume(0.0);
+        sounds.song.setVolume(0.0);
+      }
+    };
+
+    this.btnPlayGame.onClickCallback = () => {
+      game.activeScene = "play";
+      game.resetGameBoard();
+    };
+    this.btnHowToPlay.onClickCallback = () => {
+      game.activeScene = "howtoplay";
+    };
   }
 
   public update() {
+    this.btnPlayGame.update();
+    this.btnHowToPlay.update();
+    this.btnScores.update();
+    this.btnSoundOn.update();
+    this.btnSoundOff.update();
   }
 
   public draw() {
@@ -25,10 +75,14 @@ class StartMenu {
     this.btnPlayGame.draw();
     this.btnHowToPlay.draw();
     this.btnScores.draw();
-    this.btnSound.draw();
     image(images.bumpyBlink_gif, 50, 450, 152, 193);
+    image(images.bumpy, 50, 450);
+    if (this.soundOn === true) {
+      this.btnSoundOn.draw();
+    } else {
+      this.btnSoundOff.draw();
+    }
   }
-
 
   private drawTitle() {
     push();
@@ -61,4 +115,3 @@ class StartMenu {
     pop();
   }
 }
-
