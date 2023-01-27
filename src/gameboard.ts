@@ -100,12 +100,20 @@ class GameBoard {
       }
     }
 
-    // check if shape is colliding with the bottom of the canvas
+    // check if MainCharacter collides with the bottom of the canvas
     if (
       this.mainCharacter.getPosition().y + this.mainCharacter.getSize().y >=
       height
     ) {
-      game.activeScene = "end";
+      for (let platform of this.platforms) {
+        this.mainCharacter.getVelocity().y = -4.9;
+        platform.getPosition().y -= 17;
+        this.mainCharacter.getPosition().y += 1.62;
+        setTimeout(() => (game.activeScene = "end"), 700);
+      }
+      for (let rocketBoost of this.rocketBoosts) {
+        rocketBoost.getPosition().y -= 17;
+      }
     }
 
     // Checks if bullet collides with an enemy
