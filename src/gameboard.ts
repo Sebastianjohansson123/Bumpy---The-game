@@ -8,11 +8,14 @@ class GameBoard {
   private enemies: Enemy[];
   private canGenerateEnemy: boolean | undefined;
   private canGenerateBalloonBoost: boolean | undefined;
+  private canGenerateRocketBoost: boolean | undefined;
   private currentBackgroundIndex: number = 0;
   private backgroundChangeScoreIncrement: number = 8;
   private canMoveEnemy: boolean = false;
   private canMoveBalloonBoost: boolean = false;
   private balloonBoosts: BalloonBoost[];
+  private rocketBoosts: RocketBoost[];
+  private isRocketBoostActive: boolean;
   private isBalloonBoostActive: boolean;
   private starBoosts: StarBoost[];
   private canGenerateStarBoost: boolean | undefined;
@@ -22,15 +25,18 @@ class GameBoard {
     this.platforms = [];
     this.enemies = [];
     this.balloonBoosts = [];
+    this.balloonBoosts = [];
+    this.rocketBoosts = [];
     this.starBoosts = [];
     this.score = 0;
     this.generatePlatforms();
     this.canGenerateEnemy = false;
     this.canGenerateBalloonBoost = false;
+    this.canGenerateRocketBoost = false;
+    this.isRocketBoostActive = false;
     this.isBalloonBoostActive = false;
     this.canGenerateStarBoost = false;
   }
-
   public update() {
     this.mainCharacter.update();
     this.detectCollision();
@@ -40,6 +46,8 @@ class GameBoard {
     this.generateEnemy();
     this.updateBalloonBoosts();
     this.generateBalloonBoost();
+    this.updateRocketBoosts();
+    this.generateRocketBoost();
     this.updateStarBoosts();
     this.generateStarBoost();
   }
@@ -49,6 +57,7 @@ class GameBoard {
     this.platforms.forEach((platform) => platform.draw());
     this.enemies.forEach((enemy) => enemy.draw());
     this.balloonBoosts.forEach((balloonBoost) => balloonBoost.draw());
+    this.rocketBoosts.forEach((rocketBoost) => rocketBoost.draw());
     this.starBoosts.forEach((starBoost) => starBoost.draw());
     this.mainCharacter.draw();
     this.DisplayScore();
@@ -96,6 +105,22 @@ class GameBoard {
       ) {
         // Makes it so that the MainCharacter only jumps on the platforms if is falling at a certain velocity
         this.mainCharacter.jump();
+      }
+    }
+
+    // check if MainCharacter collides with the bottom of the canvas
+    if (
+      this.mainCharacter.getPosition().y + this.mainCharacter.getSize().y >=
+      height
+    ) {
+      for (let platform of this.platforms) {
+        this.mainCharacter.getVelocity().y = -4.9;
+        platform.getPosition().y -= 17;
+        this.mainCharacter.getPosition().y += 1.62;
+        setTimeout(() => (game.activeScene = "end"), 700);
+      }
+      for (let rocketBoost of this.rocketBoosts) {
+        rocketBoost.getPosition().y -= 17;
       }
     }
 
@@ -176,6 +201,24 @@ class GameBoard {
         this.score += 100;
       }
     }
+    //Checks if mainCharacter collides with rocketBoost
+    for (let rocketBoost of this.rocketBoosts) {
+      let distance = dist(
+        this.mainCharacter.getPosition().x,
+        this.mainCharacter.getPosition().y,
+        rocketBoost.getPosition().x,
+        rocketBoost.getPosition().y
+      );
+      if (
+        distance <
+          this.mainCharacter.getSize().x + rocketBoost.getSize().x - 70 &&
+        distance < this.mainCharacter.getSize().y + rocketBoost.getSize().y - 70
+      ) {
+        this.rocketBoosts.splice(this.rocketBoosts.indexOf(rocketBoost), 1);
+        // this.score += 100;
+        this.isRocketBoostActive = true;
+      }
+    }
   }
 
   private generateEnemy() {
@@ -235,6 +278,18 @@ class GameBoard {
     }
   }
 
+  private generateRocketBoost() {
+    if (this.canGenerateRocketBoost === true) {
+      let x = random(0, width - 220);
+      let y = -150;
+      let position = createVector(x, y);
+      let rocketBoost = new RocketBoost(position);
+      this.rocketBoosts.push(rocketBoost);
+      this.canGenerateRocketBoost = false;
+    } else {
+      return;
+    }
+  }
   private updateEnemies() {
     if (this.canGenerateEnemy === true) {
       for (let i = 0; i < this.enemies.length; i++) {
@@ -264,6 +319,24 @@ class GameBoard {
           let newBalloonBoost = new BalloonBoost(position);
           this.balloonBoosts.push(newBalloonBoost);
           this.canGenerateBalloonBoost = false;
+        } else {
+          return;
+        }
+      }
+    }
+  }
+
+  private updateRocketBoosts() {
+    if (this.canGenerateRocketBoost === true) {
+      for (let i = 0; i < this.rocketBoosts.length; i++) {
+        let rocketBoost = this.rocketBoosts[i];
+        if (rocketBoost.getPosition().y < height) {
+          this.rocketBoosts.splice(i, 1);
+          let x = random(0, width - 220);
+          let position = createVector(x, 720);
+          let newRocketBoost = new RocketBoost(position);
+          this.rocketBoosts.push(newRocketBoost);
+          this.canGenerateRocketBoost = false;
         } else {
           return;
         }
@@ -317,6 +390,14 @@ class GameBoard {
         if (this.timeSinceLastMultiplierIncrease === 5) {
           this.canGenerateStarBoost = true;
         }
+        if (this.timeSinceLastMultiplierIncrease === 1) {
+          this.canGenerateRocketBoost = true;
+          // this.canGenerateBalloonBoost = true;
+        }
+        if (this.timeSinceLastMultiplierIncrease === 1) {
+          this.canGenerateRocketBoost = true;
+          // this.canGenerateBalloonBoost = true;
+        }
       }
     }
   }
@@ -338,6 +419,20 @@ class GameBoard {
         balloonBoost.getPosition().y += 4.7;
         this.mainCharacter.getPosition().y += 0.5;
       }
+      for (let rocketBoost of this.rocketBoosts) {
+        rocketBoost.getPosition().y += 4.7;
+        this.mainCharacter.getPosition().y += 0.5;
+      }
+    }
+    // Adjusting position/speed of Bumpy and platforms when triggered by RocketBoost-entity
+    // TODO: remove enemies and other boosts from spawning during duration of boost
+    if (this.isRocketBoostActive === true) {
+      for (let platform of this.platforms) {
+        this.mainCharacter.getVelocity().y = -4.9;
+        platform.getPosition().y += 17;
+        this.mainCharacter.getPosition().y += 1.62;
+      }
+      setTimeout(() => (this.isRocketBoostActive = false), 1200);
       for (let starBoost of this.starBoosts) {
         starBoost.getPosition().y += 4.7;
         this.mainCharacter.getPosition().y += 0.5;

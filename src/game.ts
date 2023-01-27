@@ -20,16 +20,16 @@ class Game {
   }
 
   public update() {
-    if(this.activeScene === "start") {
+    if (this.activeScene === "start") {
       this.startMenu.update();
-    } else if(this.activeScene === "howtoplay") {
+    } else if (this.activeScene === "howtoplay") {
       this.howToPlay.update();
-    } else if(this.activeScene === "play") {
+    } else if (this.activeScene === "play") {
       this.gameBoard.update();
-    } else if(this.activeScene === "end") {
+    } else if (this.activeScene === "end") {
       this.endMenu.update();
     }
-  
+
     if (this.gameBoard.getScore() > this.highscore) {
       this._highscore = this.gameBoard.getScore();
       localStorage.setItem("highscore", this.highscore.toString());
@@ -37,13 +37,13 @@ class Game {
   }
 
   public draw() {
-    if(this.activeScene === "start") {
+    if (this.activeScene === "start") {
       this.startMenu.draw();
-    } else if(this.activeScene === "howtoplay") {
+    } else if (this.activeScene === "howtoplay") {
       this.howToPlay.draw();
-    } else if(this.activeScene === "play") {
+    } else if (this.activeScene === "play") {
       this.gameBoard.draw();
-    } else if(this.activeScene === "end") {
+    } else if (this.activeScene === "end") {
       this.endMenu.draw();
     }
   }
