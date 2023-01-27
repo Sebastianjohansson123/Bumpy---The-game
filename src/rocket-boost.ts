@@ -6,7 +6,7 @@ class RocketBoost extends Entity {
       createVector(0, 0),
       createVector(0, 0),
       createVector(50, 90),
-      images.bumpySad
+      images.rocket
     );
   }
 
