@@ -6,7 +6,7 @@ class StarBoost extends Entity {
       position,
       createVector(0, 0),
       createVector(0, 0),
-      createVector(90, 90),
+      createVector(50, 50),
       images.star
     );
   }
