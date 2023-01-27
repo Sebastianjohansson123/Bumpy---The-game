@@ -12,7 +12,7 @@ interface Images {
   howToPlayKeys: p5.Image;
   bumpySad: p5.Image;
   star: p5.Image;
-  // balloon: p5.Image;
+  balloon: p5.Image;
   backgrounds: p5.Image[];
   talkingBubble: p5.Image;
   // rocket: p5.Image;
@@ -47,7 +47,7 @@ function preload() {
       loadImage("./assets/images/bg2.png"),
     ],
     bg: loadImage("./assets/images/bg1.png"),
-    //balloon: loadImage(""),
+    balloon: loadImage("./assets/images/balloon.png"),
     //rocket: loadImage(""),
     star: loadImage("./assets/images/star.png"),
     soundOn: loadImage("./assets/images/soundon.png"),

@@ -7,9 +7,13 @@ class GameBoard {
   private timeSinceLastMultiplierIncrease: number = 0;
   private enemies: Enemy[];
   private canGenerateEnemy: boolean | undefined;
+  private canGenerateBalloonBoost: boolean | undefined;
   private currentBackgroundIndex: number = 0;
   private backgroundChangeScoreIncrement: number = 8;
   private canMoveEnemy: boolean = false;
+  private canMoveBalloonBoost: boolean = false;
+  private balloonBoosts: BalloonBoost[];
+  private isBalloonBoostActive: boolean;
   private starBoosts: StarBoost[];
   private canGenerateStarBoost: boolean | undefined;
 
@@ -17,10 +21,13 @@ class GameBoard {
     this.mainCharacter = new MainCharacter();
     this.platforms = [];
     this.enemies = [];
+    this.balloonBoosts = [];
     this.starBoosts = [];
     this.score = 0;
     this.generatePlatforms();
     this.canGenerateEnemy = false;
+    this.canGenerateBalloonBoost = false;
+    this.isBalloonBoostActive = false;
     this.canGenerateStarBoost = false;
   }
 
@@ -31,6 +38,8 @@ class GameBoard {
     this.updatePlatforms();
     this.updateEnemies();
     this.generateEnemy();
+    this.updateBalloonBoosts();
+    this.generateBalloonBoost();
     this.updateStarBoosts();
     this.generateStarBoost();
   }
@@ -39,6 +48,7 @@ class GameBoard {
     this.drawBackground();
     this.platforms.forEach((platform) => platform.draw());
     this.enemies.forEach((enemy) => enemy.draw());
+    this.balloonBoosts.forEach((balloonBoost) => balloonBoost.draw());
     this.starBoosts.forEach((starBoost) => starBoost.draw());
     this.mainCharacter.draw();
     this.DisplayScore();
@@ -123,10 +133,31 @@ class GameBoard {
         enemy.getPosition().y
       );
       if (
-        distance < this.mainCharacter.getSize().x + enemy.getSize().x - 70 &&
+        distance < this.mainCharacter.getSize().x + enemy.getSize().x - 80 &&
         distance < this.mainCharacter.getSize().y + enemy.getSize().y - 70
       ) {
         game.activeScene = "end";
+      }
+    }
+
+    //Checks if mainCharacter collides with balloonBoost
+    for (let balloonBoost of this.balloonBoosts) {
+      let distance = dist(
+        this.mainCharacter.getPosition().x,
+        this.mainCharacter.getPosition().y,
+        balloonBoost.getPosition().x,
+        balloonBoost.getPosition().y
+      );
+      if (
+        distance <
+          this.mainCharacter.getSize().x + balloonBoost.getSize().x - 70 &&
+        distance <
+          this.mainCharacter.getSize().y + balloonBoost.getSize().y - 70
+      ) {
+        console.log("balloon boost");
+        this.balloonBoosts.splice(this.balloonBoosts.indexOf(balloonBoost), 1);
+        this.isBalloonBoostActive = true;
+        this.score += 100;
       }
     }
   }
@@ -139,6 +170,19 @@ class GameBoard {
       let enemy = new Enemy(position);
       this.enemies.push(enemy);
       this.canGenerateEnemy = false;
+    } else {
+      return;
+    }
+  }
+
+  private generateBalloonBoost() {
+    if (this.canGenerateBalloonBoost === true) {
+      let x = random(0, width - 220);
+      let y = 720;
+      let position = createVector(x, y);
+      let balloonBoost = new BalloonBoost(position);
+      this.balloonBoosts.push(balloonBoost);
+      this.canGenerateBalloonBoost = false;
     } else {
       return;
     }
@@ -193,6 +237,24 @@ class GameBoard {
     }
   }
 
+  private updateBalloonBoosts() {
+    if (this.canGenerateBalloonBoost === true) {
+      for (let i = 0; i < this.balloonBoosts.length; i++) {
+        let balloonBoost = this.balloonBoosts[i];
+        if (balloonBoost.getPosition().y < height) {
+          this.balloonBoosts.splice(i, 1);
+          let x = random(0, width - 220);
+          let position = createVector(x, 720);
+          let newBalloonBoost = new BalloonBoost(position);
+          this.balloonBoosts.push(newBalloonBoost);
+          this.canGenerateBalloonBoost = false;
+        } else {
+          return;
+        }
+      }
+    }
+  }
+
   // randomly creates the X position for the platform but makes sure that there is always a 120 px gap
   // between the height of each platform
   private generatePlatforms() {
@@ -222,6 +284,12 @@ class GameBoard {
         this.platforms.push(newPlatform);
         this.score += 1 * this.scoreMultiplier;
         this.timeSinceLastMultiplierIncrease += 1;
+        console.log(this.timeSinceLastMultiplierIncrease);
+        if (this.timeSinceLastMultiplierIncrease === 20) {
+          this.canGenerateBalloonBoost = true;
+          this.scoreMultiplier += 1;
+          this.timeSinceLastMultiplierIncrease = 0;
+        }
 
         if (this.timeSinceLastMultiplierIncrease === 20) {
           this.scoreMultiplier += 1;
@@ -250,6 +318,35 @@ class GameBoard {
         enemy.getPosition().y += 4.7;
         this.mainCharacter.getPosition().y += 0.5;
       }
+      for (let balloonBoost of this.balloonBoosts) {
+        balloonBoost.getPosition().y += 4.7;
+        this.mainCharacter.getPosition().y += 0.5;
+      }
+    }
+
+    if (this.isBalloonBoostActive === true) {
+      for (let platform of this.platforms) {
+        this.mainCharacter.getVelocity().y = -4.9;
+        platform.getPosition().y += 10;
+        this.mainCharacter.getPosition().y += 1.62;
+      }
+      setTimeout(() => (this.isBalloonBoostActive = false), 1500);
+    }
+
+    this.balloonBoosts.forEach(
+      (balloonBoost) => (balloonBoost.getPosition().y -= 6)
+    );
+
+    if (this.canMoveBalloonBoost === true) {
+      this.balloonBoosts.forEach(
+        (balloonBoost) => (balloonBoost.getPosition().x -= 1)
+      );
+      setTimeout(() => (this.canMoveBalloonBoost = false), 4000);
+    } else {
+      this.balloonBoosts.forEach(
+        (balloonBoost) => (balloonBoost.getPosition().x += 1)
+      );
+      setTimeout(() => (this.canMoveBalloonBoost = true), 4000);
       for (let starBoost of this.starBoosts) {
         starBoost.getPosition().y += 4.7;
         this.mainCharacter.getPosition().y += 0.5;
