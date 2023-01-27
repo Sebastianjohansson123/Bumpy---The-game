@@ -76,7 +76,6 @@ class StartMenu {
     this.btnHowToPlay.draw();
     this.btnScores.draw();
     image(images.bumpyBlink_gif, 50, 450, 152, 193);
-    image(images.bumpy, 50, 450);
     if (this.soundOn === true) {
       this.btnSoundOn.draw();
     } else {
