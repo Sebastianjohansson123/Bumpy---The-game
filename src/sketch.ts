@@ -14,7 +14,7 @@ interface Images {
   // balloon: p5.Image;
   backgrounds: p5.Image[];
   talkingBubble: p5.Image;
-  // rocket: p5.Image;
+  rocket: p5.Image;
   enemy: p5.Image;
   soundOn: p5.Image;
   soundOff: p5.Image;
@@ -44,7 +44,7 @@ function preload() {
     backgrounds: [loadImage("./assets/images/bg1.png"), loadImage("./assets/images/bg2.png")],
     bg: loadImage("./assets/images/bg1.png"),
     //balloon: loadImage(""),
-    //rocket: loadImage(""),
+    rocket: loadImage("./assets/gif/bumpyspace.gif"),
     soundOn: loadImage("./assets/images/sound-on.png"),
     soundOff: loadImage("./assets/images/sound-off.png"),
     xBtn: loadImage("./assets/images/x-btn.png"),
