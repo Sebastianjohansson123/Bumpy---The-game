@@ -1,49 +1,61 @@
 class Scoreboard {
-private btnExit2: Button;
+  private btnExit2: Button;
 
-constructor() {
-    this.btnExit2 = new Button(images.xBtn, new p5.Vector(376, 173), new p5.Vector(15, 15));
+  constructor() {
+    this.btnExit2 = new Button(
+      images.xBtn,
+      new p5.Vector(376, 173),
+      new p5.Vector(15, 15)
+    );
     this.btnExit2.onClickCallback = () => {
-    game.activeScene = "start";
+      game.activeScene = "start";
     };
-}
+  }
 
-public update() {
+  public update() {
     this.btnExit2.update();
-}
+  }
 
-public draw() {
+  public draw() {
     image(images.bg, 0, 0);
     image(images.talkingBubble, 150, 150, 249, 350);
     this.drawTitle();
     this.btnExit2.draw();
-    (images.xBtn, 376, 173, 11, 11);
+    images.xBtn, 376, 173, 11, 11;
     this.drawRects();
     image(images.bumpy, 50, 450);
     image(images.crown, 164, 182, 40, 40);
-}
+  }
 
-// Draws the rects with top 3 scores
-private drawRects() {
-    let positions = [new p5.Vector(275, 220), new p5.Vector(275, 260), new p5.Vector(275, 300)];
+  // Draws the rects with top 3 scores
+  private drawRects() {
+    let positions = [
+      new p5.Vector(275, 220),
+      new p5.Vector(275, 260),
+      new p5.Vector(275, 300),
+    ];
     let texts = ["01", "02", "03"];
-    let scores = [30, 20, 185689];
+    let scores = [
+      game.getTopHighscore(),
+      game.getSecondHighscore(),
+      game.getThirdHighscore(),
+    ];
     for (let i = 0; i < positions.length; i++) {
-        let pos = positions[i];
-        noStroke();
-        rectMode(CENTER);
-        fill("#FFFFFF");
-        rect(pos.x, pos.y, 190, 27, 11);
-        fill("#000000")
-        textSize(20);
-        textFont(Fonts.TitanOne);
-        text(texts[i], pos.x-60, pos.y);
-        textAlign(RIGHT, CENTER);
-        text(scores[i], pos.x+85, pos.y);
+      let pos = positions[i];
+      noStroke();
+      rectMode(CENTER);
+      fill("#FFFFFF");
+      rect(pos.x, pos.y, 190, 27, 11);
+      fill("#000000");
+      textSize(20);
+      textFont(Fonts.TitanOne);
+      text(texts[i], pos.x - 60, pos.y);
+      textAlign(RIGHT, CENTER);
+      text(scores[i], pos.x + 85, pos.y);
     }
-}
+  }
 
-private drawTitle() {
+  private drawTitle() {
     push();
     fill("#3A1458");
     textSize(50);
@@ -91,7 +103,7 @@ private drawTitle() {
     textSize(35);
     textAlign(CENTER, CENTER);
     textFont(Fonts.TitanOne);
-    text("14390", 274, 395);
+    text(game.getTopHighscore(), 274, 395);
     pop();
-}
+  }
 }
