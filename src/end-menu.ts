@@ -6,14 +6,22 @@ class EndMenu {
 
   constructor() {
     const centerX = width * 0.5;
-    this.btnPlayAgain = new Button("PLAY AGAIN", new p5.Vector(centerX, 290), new p5.Vector(220, 60));
+    this.btnPlayAgain = new Button(
+      "PLAY AGAIN",
+      new p5.Vector(centerX, 290),
+      new p5.Vector(220, 60)
+    );
     this.btnPlayAgain.onClickCallback = () => {
       game.resetGameBoard();
       game.activeScene = "play";
     };
-    this.btnMenu = new Button("MENU", new p5.Vector(centerX, 350), new p5.Vector(140, 40));
+    this.btnMenu = new Button(
+      "MENU",
+      new p5.Vector(centerX, 350),
+      new p5.Vector(140, 40)
+    );
     this.btnMenu.onClickCallback = () => {
-        game.activeScene = "start";
+      game.activeScene = "start";
     };
   }
 
@@ -38,13 +46,13 @@ class EndMenu {
     textAlign(CENTER, CENTER);
     textFont(Fonts.TitanOne);
     text("Your score:" + " " + game.setEndMenuScore(), 278, 190);
-    pop(); 
+    pop();
     push();
     fill("#FFFFFF");
     textSize(20);
     textAlign(CENTER, CENTER);
     textFont(Fonts.TitanOne);
-    text("Highscore:" + " " + game.getHighscore(), 278, 220);
+    text("Highscore:" + " " + game.getTopHighscore(), 278, 220);
     pop();
     push();
     fill("#000000");
@@ -61,5 +69,4 @@ class EndMenu {
     text("Game Over!", 275, 100);
     pop();
   }
-
 }
