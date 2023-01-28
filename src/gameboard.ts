@@ -7,19 +7,32 @@ class GameBoard {
   private timeSinceLastMultiplierIncrease: number = 0;
   private enemies: Enemy[];
   private canGenerateEnemy: boolean | undefined;
+  private canGenerateBalloonBoost: boolean | undefined;
+  private canGenerateRocketBoost: boolean | undefined;
   private currentBackgroundIndex: number = 0;
   private backgroundChangeScoreIncrement: number = 8;
   private canMoveEnemy: boolean = false;
+  private canMoveBalloonBoost: boolean = false;
+  private balloonBoosts: BalloonBoost[];
+  private rocketBoosts: RocketBoost[];
+  private isRocketBoostActive: boolean;
+  private isBalloonBoostActive: boolean;
 
   constructor() {
     this.mainCharacter = new MainCharacter();
     this.platforms = [];
     this.enemies = [];
+    this.balloonBoosts = [];
+    this.balloonBoosts = [];
+    this.rocketBoosts = [];
     this.score = 0;
     this.generatePlatforms();
     this.canGenerateEnemy = false;
+    this.canGenerateBalloonBoost = false;
+    this.canGenerateRocketBoost = false;
+    this.isRocketBoostActive = false;
+    this.isBalloonBoostActive = false;
   }
-
   public update() {
     this.mainCharacter.update();
     this.detectCollision();
@@ -27,12 +40,18 @@ class GameBoard {
     this.updatePlatforms();
     this.updateEnemies();
     this.generateEnemy();
+    this.updateBalloonBoosts();
+    this.generateBalloonBoost();
+    this.updateRocketBoosts();
+    this.generateRocketBoost();
   }
 
   public draw() {
     this.drawBackground();
     this.platforms.forEach((platform) => platform.draw());
     this.enemies.forEach((enemy) => enemy.draw());
+    this.balloonBoosts.forEach((balloonBoost) => balloonBoost.draw());
+    this.rocketBoosts.forEach((rocketBoost) => rocketBoost.draw());
     this.mainCharacter.draw();
     this.DisplayScore();
   }
@@ -82,6 +101,22 @@ class GameBoard {
       }
     }
 
+    // check if MainCharacter collides with the bottom of the canvas
+    if (
+      this.mainCharacter.getPosition().y + this.mainCharacter.getSize().y >=
+      height
+    ) {
+      for (let platform of this.platforms) {
+        this.mainCharacter.getVelocity().y = -4.9;
+        platform.getPosition().y -= 17;
+        this.mainCharacter.getPosition().y += 1.62;
+        setTimeout(() => (game.activeScene = "end"), 700);
+      }
+      for (let rocketBoost of this.rocketBoosts) {
+        rocketBoost.getPosition().y -= 17;
+      }
+    }
+
     // Checks if bullet collides with an enemy
     // If they collide, enemy and bullet dissappears and 100 is added to the score
     for (let enemy of this.enemies) {
@@ -116,10 +151,49 @@ class GameBoard {
         enemy.getPosition().y
       );
       if (
-        distance < this.mainCharacter.getSize().x + enemy.getSize().x - 70 &&
+        distance < this.mainCharacter.getSize().x + enemy.getSize().x - 80 &&
         distance < this.mainCharacter.getSize().y + enemy.getSize().y - 70
       ) {
         game.activeScene = "end";
+      }
+    }
+
+    //Checks if mainCharacter collides with balloonBoost
+    for (let balloonBoost of this.balloonBoosts) {
+      let distance = dist(
+        this.mainCharacter.getPosition().x,
+        this.mainCharacter.getPosition().y,
+        balloonBoost.getPosition().x,
+        balloonBoost.getPosition().y
+      );
+      if (
+        distance <
+          this.mainCharacter.getSize().x + balloonBoost.getSize().x - 70 &&
+        distance <
+          this.mainCharacter.getSize().y + balloonBoost.getSize().y - 70
+      ) {
+        console.log("balloon boost");
+        this.balloonBoosts.splice(this.balloonBoosts.indexOf(balloonBoost), 1);
+        this.isBalloonBoostActive = true;
+        this.score += 100;
+      }
+    }
+    //Checks if mainCharacter collides with rocketBoost
+    for (let rocketBoost of this.rocketBoosts) {
+      let distance = dist(
+        this.mainCharacter.getPosition().x,
+        this.mainCharacter.getPosition().y,
+        rocketBoost.getPosition().x,
+        rocketBoost.getPosition().y
+      );
+      if (
+        distance <
+          this.mainCharacter.getSize().x + rocketBoost.getSize().x - 70 &&
+        distance < this.mainCharacter.getSize().y + rocketBoost.getSize().y - 70
+      ) {
+        this.rocketBoosts.splice(this.rocketBoosts.indexOf(rocketBoost), 1);
+        // this.score += 100;
+        this.isRocketBoostActive = true;
       }
     }
   }
@@ -137,6 +211,31 @@ class GameBoard {
     }
   }
 
+  private generateBalloonBoost() {
+    if (this.canGenerateBalloonBoost === true) {
+      let x = random(0, width - 220);
+      let y = 720;
+      let position = createVector(x, y);
+      let balloonBoost = new BalloonBoost(position);
+      this.balloonBoosts.push(balloonBoost);
+      this.canGenerateBalloonBoost = false;
+    } else {
+      return;
+    }
+  }
+
+  private generateRocketBoost() {
+    if (this.canGenerateRocketBoost === true) {
+      let x = random(0, width - 220);
+      let y = -150;
+      let position = createVector(x, y);
+      let rocketBoost = new RocketBoost(position);
+      this.rocketBoosts.push(rocketBoost);
+      this.canGenerateRocketBoost = false;
+    } else {
+      return;
+    }
+  }
   private updateEnemies() {
     if (this.canGenerateEnemy === true) {
       for (let i = 0; i < this.enemies.length; i++) {
@@ -148,6 +247,42 @@ class GameBoard {
           let newEnemy = new Enemy(position);
           this.enemies.push(newEnemy);
           this.canGenerateEnemy = false;
+        } else {
+          return;
+        }
+      }
+    }
+  }
+
+  private updateBalloonBoosts() {
+    if (this.canGenerateBalloonBoost === true) {
+      for (let i = 0; i < this.balloonBoosts.length; i++) {
+        let balloonBoost = this.balloonBoosts[i];
+        if (balloonBoost.getPosition().y < height) {
+          this.balloonBoosts.splice(i, 1);
+          let x = random(0, width - 220);
+          let position = createVector(x, 720);
+          let newBalloonBoost = new BalloonBoost(position);
+          this.balloonBoosts.push(newBalloonBoost);
+          this.canGenerateBalloonBoost = false;
+        } else {
+          return;
+        }
+      }
+    }
+  }
+
+  private updateRocketBoosts() {
+    if (this.canGenerateRocketBoost === true) {
+      for (let i = 0; i < this.rocketBoosts.length; i++) {
+        let rocketBoost = this.rocketBoosts[i];
+        if (rocketBoost.getPosition().y < height) {
+          this.rocketBoosts.splice(i, 1);
+          let x = random(0, width - 220);
+          let position = createVector(x, 720);
+          let newRocketBoost = new RocketBoost(position);
+          this.rocketBoosts.push(newRocketBoost);
+          this.canGenerateRocketBoost = false;
         } else {
           return;
         }
@@ -184,10 +319,19 @@ class GameBoard {
         this.platforms.push(newPlatform);
         this.score += 1 * this.scoreMultiplier;
         this.timeSinceLastMultiplierIncrease += 1;
-        if (this.timeSinceLastMultiplierIncrease === 10) {
-          this.canGenerateEnemy = true;
+        console.log(this.timeSinceLastMultiplierIncrease);
+        if (this.timeSinceLastMultiplierIncrease === 20) {
+          this.canGenerateBalloonBoost = true;
           this.scoreMultiplier += 1;
           this.timeSinceLastMultiplierIncrease = 0;
+        }
+        if (this.timeSinceLastMultiplierIncrease === 10) {
+          this.canGenerateEnemy = true;
+          // this.canGenerateBalloonBoost = true;
+        }
+        if (this.timeSinceLastMultiplierIncrease === 1) {
+          this.canGenerateRocketBoost = true;
+          // this.canGenerateBalloonBoost = true;
         }
       }
     }
@@ -206,6 +350,49 @@ class GameBoard {
         enemy.getPosition().y += 4.7;
         this.mainCharacter.getPosition().y += 0.5;
       }
+      for (let balloonBoost of this.balloonBoosts) {
+        balloonBoost.getPosition().y += 4.7;
+        this.mainCharacter.getPosition().y += 0.5;
+      }
+      for (let rocketBoost of this.rocketBoosts) {
+        rocketBoost.getPosition().y += 4.7;
+        this.mainCharacter.getPosition().y += 0.5;
+      }
+    }
+    // Adjusting position/speed of Bumpy and platforms when triggered by RocketBoost-entity
+    // TODO: remove enemies and other boosts from spawning during duration of boost
+    if (this.isRocketBoostActive === true) {
+      for (let platform of this.platforms) {
+        this.mainCharacter.getVelocity().y = -4.9;
+        platform.getPosition().y += 17;
+        this.mainCharacter.getPosition().y += 1.62;
+      }
+      setTimeout(() => (this.isRocketBoostActive = false), 1200);
+    }
+
+    if (this.isBalloonBoostActive === true) {
+      for (let platform of this.platforms) {
+        this.mainCharacter.getVelocity().y = -4.9;
+        platform.getPosition().y += 10;
+        this.mainCharacter.getPosition().y += 1.62;
+      }
+      setTimeout(() => (this.isBalloonBoostActive = false), 1500);
+    }
+
+    this.balloonBoosts.forEach(
+      (balloonBoost) => (balloonBoost.getPosition().y -= 6)
+    );
+
+    if (this.canMoveBalloonBoost === true) {
+      this.balloonBoosts.forEach(
+        (balloonBoost) => (balloonBoost.getPosition().x -= 1)
+      );
+      setTimeout(() => (this.canMoveBalloonBoost = false), 4000);
+    } else {
+      this.balloonBoosts.forEach(
+        (balloonBoost) => (balloonBoost.getPosition().x += 1)
+      );
+      setTimeout(() => (this.canMoveBalloonBoost = true), 4000);
     }
 
     if (this.canMoveEnemy === true) {

@@ -2,7 +2,11 @@ class HowToPlay {
   private btnExit: Button;
 
   constructor() {
-    this.btnExit = new Button(images.xBtn, new p5.Vector(376, 173), new p5.Vector(15, 15));
+    this.btnExit = new Button(
+      images.xBtn,
+      new p5.Vector(376, 173),
+      new p5.Vector(15, 15)
+    );
     this.btnExit.onClickCallback = () => {
       game.activeScene = "start";
     };
@@ -18,7 +22,7 @@ class HowToPlay {
     images.talkingBubble.resize(249, 350);
     this.drawTitle();
     this.btnExit.draw();
-    (images.xBtn, 376, 173, 11, 11);
+    images.xBtn, 376, 173, 11, 11;
     image(images.howToPlayKeys, 162, 355, 130, 70);
     image(images.bumpy, 50, 450);
   }

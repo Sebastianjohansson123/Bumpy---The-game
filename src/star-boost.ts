@@ -1,3 +1,1 @@
-class StarBoost extends Entity {
-
-}
+class StarBoost extends Entity {}
