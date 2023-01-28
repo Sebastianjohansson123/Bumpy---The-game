@@ -407,6 +407,7 @@ class GameBoard {
   // Function to track the score of the current game and display it in the top-left corner
   public DisplayScore() {
     fill("#FFFFFF");
+    textAlign(LEFT);
     textFont(Fonts.TitanOne);
     textSize(21);
     text("Score: " + this.score, 10, 30);
