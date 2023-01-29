@@ -408,7 +408,7 @@ class GameBoard {
   private detectImgChange() {
     if (this.isRocketBoostActive === true) {
       this.mainCharacter.setImg(images.bumpyRocket_gif);
-      this.mainCharacter.setSize(new p5.Vector(113, 130));
+      this.mainCharacter.setSize(new p5.Vector(153, 175));
     } else {
       this.mainCharacter.setImg(images.bumpy);
       this.mainCharacter.setSize(new p5.Vector(70, 80));
