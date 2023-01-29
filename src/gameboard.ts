@@ -16,6 +16,7 @@ class GameBoard {
     this.platforms = [];
     this.enemies = [];
     this.score = 0;
+    this.generateBottomPlatform();
     this.generatePlatforms();
     this.canGenerateEnemy = false;
   }
@@ -153,6 +154,14 @@ class GameBoard {
         }
       }
     }
+  }
+
+  // creates a platform at the start of the game that spawns below Bumpy
+  private generateBottomPlatform() {
+    let y = height;
+    let position = createVector(200, y - 150);
+    let platform = new Platform(position);
+    this.platforms.push(platform);
   }
 
   // randomly creates the X position for the platform but makes sure that there is always a 120 px gap
