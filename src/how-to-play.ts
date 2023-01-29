@@ -25,7 +25,7 @@ class HowToPlay {
     images.xBtn.resize(11, 11);
     image(images.howToPlayKeys, 162, 355);
     images.howToPlayKeys.resize(130, 70);
-    image(images.bumpy, 50, 450);
+    image(images.bumpyBlink_gif, 50, 450, 152, 193);
   }
 
   private drawTitle() {
