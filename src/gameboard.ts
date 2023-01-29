@@ -44,6 +44,7 @@ class GameBoard {
     this.generateBalloonBoost();
     this.updateRocketBoosts();
     this.generateRocketBoost();
+    this.detectImgChange();
   }
 
   public draw() {
@@ -401,6 +402,16 @@ class GameBoard {
     } else {
       this.enemies.forEach((enemy) => (enemy.getPosition().x += 1));
       setTimeout(() => (this.canMoveEnemy = true), 2000);
+    }
+  }
+
+  private detectImgChange() {
+    if (this.isRocketBoostActive === true) {
+      this.mainCharacter.setImg(images.bumpyRocket_gif);
+      this.mainCharacter.setSize(new p5.Vector(113, 130));
+    } else {
+      this.mainCharacter.setImg(images.bumpy);
+      this.mainCharacter.setSize(new p5.Vector(70, 80));
     }
   }
 
