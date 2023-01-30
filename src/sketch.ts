@@ -11,6 +11,7 @@ interface Images {
   xBtn: p5.Image;
   howToPlayKeys: p5.Image;
   bumpySad: p5.Image;
+  star: p5.Image;
   balloon: p5.Image;
   backgrounds: p5.Image[];
   talkingBubble: p5.Image;
@@ -48,6 +49,7 @@ function preload() {
     bg: loadImage("./assets/images/bg1.png"),
     balloon: loadImage("./assets/images/balloon.png"),
     rocket: loadImage("./assets/images/rocket.png"),
+    star: loadImage("./assets/images/star.png"),
     soundOn: loadImage("./assets/images/soundon.png"),
     soundOff: loadImage("./assets/images/soundoff.png"),
     xBtn: loadImage("./assets/images/x-btn.png"),
