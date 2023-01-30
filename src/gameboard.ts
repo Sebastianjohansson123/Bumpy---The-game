@@ -19,6 +19,7 @@ class GameBoard {
   private rocketBoosts: RocketBoost[];
   private isRocketBoostActive: boolean;
   private isBalloonBoostActive: boolean;
+  private bossAlreadyGenerated: boolean;
 
   constructor() {
     this.mainCharacter = new MainCharacter();
@@ -31,7 +32,8 @@ class GameBoard {
     this.score = 0;
     this.generatePlatforms();
     this.canGenerateEnemy = false;
-    this.canGenerateEnemyBoss = true;
+    this.canGenerateEnemyBoss = false;
+    this.bossAlreadyGenerated = false;
     this.canGenerateBalloonBoost = false;
     this.canGenerateRocketBoost = false;
     this.isRocketBoostActive = false;
@@ -201,8 +203,8 @@ class GameBoard {
       );
       if (
         distance <
-          this.mainCharacter.getSize().x + enemyBoss.getSize().x - 80 &&
-        distance < this.mainCharacter.getSize().y + enemyBoss.getSize().y - 70
+          this.mainCharacter.getSize().x + enemyBoss.getSize().x - 140 &&
+        distance < this.mainCharacter.getSize().y + enemyBoss.getSize().y - 120
       ) {
         game.activeScene = "end";
       }
@@ -328,6 +330,8 @@ class GameBoard {
           let newEnemyBoss = new EnemyBoss(position);
           this.enemyBoss.push(newEnemyBoss);
           this.canGenerateEnemyBoss = false;
+          this.bossAlreadyGenerated = true;
+          console.log("BOSS TIME")
         } else {
           return;
         }
@@ -410,11 +414,18 @@ class GameBoard {
           this.canGenerateEnemy = true;
           // this.canGenerateBalloonBoost = true;
         }
+        if (this.timeSinceLastMultiplierIncrease === 15 && this.score > 8000) {
+          this.bossAlreadyGenerated = false;
+        }
+        if (this.timeSinceLastMultiplierIncrease === 19 && this.score > 8000) {
+          this.canGenerateEnemyBoss = true;
+        }
         if (this.timeSinceLastMultiplierIncrease === 1) {
           this.canGenerateRocketBoost = true;
-          console.log("BOSSTIME");
-          this.canGenerateEnemyBoss = true;
           // this.canGenerateBalloonBoost = true;
+        }
+        if (this.scoreMultiplier === 20 && this.bossAlreadyGenerated === false) {
+          this.canGenerateEnemyBoss = true;
         }
       }
     }
