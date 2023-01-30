@@ -30,6 +30,7 @@ class GameBoard {
     this.rocketBoosts = [];
     this.starBoosts = [];
     this.score = 0;
+    this.generateBottomPlatform();
     this.generatePlatforms();
     this.canGenerateEnemy = false;
     this.canGenerateBalloonBoost = false;
@@ -323,6 +324,12 @@ class GameBoard {
     }
   }
 
+  // creates a platform at the start of the game that spawns below Bumpy
+  private generateBottomPlatform() {
+    let y = height;
+    let position = createVector(200, y - 150);
+    let platform = new Platform(position);
+    this.platforms.push(platform);
   private updateBalloonBoosts() {
     if (this.canGenerateBalloonBoost === true) {
       for (let i = 0; i < this.balloonBoosts.length; i++) {

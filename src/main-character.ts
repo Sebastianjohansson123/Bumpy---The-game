@@ -8,7 +8,7 @@ class MainCharacter extends Entity {
 
   constructor() {
     super(
-      createVector(width * 0.4, height * 0.5),
+      createVector(width * 0.4, height * 0.29),
       createVector(0, 0),
       createVector(0, 0.1),
       createVector(70, 80),
