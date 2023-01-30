@@ -117,15 +117,15 @@ class GameBoard {
       this.mainCharacter.getPosition().y + this.mainCharacter.getSize().y >=
       height
     ) {
-      for (let platform of this.platforms) {
-        this.mainCharacter.getVelocity().y = -4.9;
-        platform.getPosition().y -= 17;
-        this.mainCharacter.getPosition().y += 1.62;
-        // setTimeout(() => (game.activeScene = "end"), 700);
-      }
-      for (let rocketBoost of this.rocketBoosts) {
-        rocketBoost.getPosition().y -= 17;
-      }
+      // for (let platform of this.platforms) {
+      //   this.mainCharacter.getVelocity().y = -4.9;
+      //   platform.getPosition().y -= 17;
+      //   this.mainCharacter.getPosition().y += 1.62;
+      //   setTimeout(() => (game.activeScene = "end"), 700);
+      // }
+      // for (let rocketBoost of this.rocketBoosts) {
+      //   rocketBoost.getPosition().y -= 17;
+      // }
       game.activeScene = "end";
     }
 
