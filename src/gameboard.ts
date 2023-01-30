@@ -210,7 +210,6 @@ class GameBoard {
         distance <
           this.mainCharacter.getSize().y + balloonBoost.getSize().y - 70
       ) {
-        console.log("balloon boost");
         this.balloonBoosts.splice(this.balloonBoosts.indexOf(balloonBoost), 1);
         this.isBalloonBoostActive = true;
         this.score += 100;
