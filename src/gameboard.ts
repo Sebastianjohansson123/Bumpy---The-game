@@ -9,8 +9,8 @@ class GameBoard {
   private canGenerateEnemy: boolean | undefined;
   private canGenerateBalloonBoost: boolean | undefined;
   private canGenerateRocketBoost: boolean | undefined;
-  private currentBackgroundIndex: number = 0;
-  private backgroundChangeScoreIncrement: number = 8;
+  // private currentBackgroundIndex: number = 0;
+  // private backgroundChangeScoreIncrement: number = 8;
   private canMoveEnemy: boolean = false;
   private canMoveBalloonBoost: boolean = false;
   private balloonBoosts: BalloonBoost[];
@@ -47,7 +47,7 @@ class GameBoard {
   }
 
   public draw() {
-    this.drawBackground();
+    // this.drawBackground();
     this.platforms.forEach((platform) => platform.draw());
     this.enemies.forEach((enemy) => enemy.draw());
     this.balloonBoosts.forEach((balloonBoost) => balloonBoost.draw());
@@ -60,23 +60,23 @@ class GameBoard {
   // then increases the backgroundindex which draws
   // a new background image. Can be expanded with additional
   // bgimages and added transition effects
-  private drawBackground() {
-    if (this.score >= this.backgroundChangeScoreIncrement) {
-      this.currentBackgroundIndex =
-        (this.currentBackgroundIndex + 1) % images.backgrounds.length;
-      this.backgroundChangeScoreIncrement += 500;
-    }
-    images.backgrounds[this.currentBackgroundIndex];
-    let repeatCount =
-      height / images.backgrounds[this.currentBackgroundIndex].height + 1;
-    for (let i = 0; i < repeatCount; i++) {
-      image(
-        images.backgrounds[this.currentBackgroundIndex],
-        0,
-        i * images.backgrounds[this.currentBackgroundIndex].height
-      );
-    }
-  }
+  // private drawBackground() {
+  //   if (this.score >= this.backgroundChangeScoreIncrement) {
+  //     this.currentBackgroundIndex =
+  //       (this.currentBackgroundIndex + 1) % images.backgrounds.length;
+  //     this.backgroundChangeScoreIncrement += 500;
+  //   }
+  //   images.backgrounds[this.currentBackgroundIndex];
+  //   let repeatCount =
+  //     height / images.backgrounds[this.currentBackgroundIndex].height + 1;
+  //   for (let i = 0; i < repeatCount; i++) {
+  //     image(
+  //       images.backgrounds[this.currentBackgroundIndex],
+  //       0,
+  //       i * images.backgrounds[this.currentBackgroundIndex].height
+  //     );
+  //   }
+  // }
 
   // Detects collisions between entities on the GameBoard
   private detectCollision() {
