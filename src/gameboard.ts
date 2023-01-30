@@ -38,6 +38,7 @@ class GameBoard {
     this.canGenerateRocketBoost = false;
     this.isRocketBoostActive = false;
     this.isBalloonBoostActive = false;
+    sounds.song. loop(); 
   }
   public update() {
     this.mainCharacter.update();

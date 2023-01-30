@@ -81,11 +81,11 @@ function setup() {
   sounds.bulletSound.setVolume(0.1);
   sounds.jumpSound.setVolume(0.1);
   sounds.jumpSound = loadSound("./assets/sounds/jump.wav");
-  sounds.song = loadSound("./assets/music/bumpy.mp3");
+  // sounds.song = loadSound("./assets/music/bumpy.mp3");
   sounds.enemyDeath.setVolume(0.1);
 
-  sounds.song.setVolume(0.05);
-  // song.loop();
+  sounds.song.setVolume(0.02);
+  //sounds.song.loop();
   createCanvas(550, 720);
   // heightOnBg = 0;
   frameRate(60);
