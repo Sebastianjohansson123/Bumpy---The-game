@@ -330,6 +330,7 @@ class GameBoard {
     let position = createVector(200, y - 150);
     let platform = new Platform(position);
     this.platforms.push(platform);
+  }
   private updateBalloonBoosts() {
     if (this.canGenerateBalloonBoost === true) {
       for (let i = 0; i < this.balloonBoosts.length; i++) {
