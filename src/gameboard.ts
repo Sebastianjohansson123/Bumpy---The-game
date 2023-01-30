@@ -448,10 +448,6 @@ class GameBoard {
         this.mainCharacter.getPosition().y += 1.62;
       }
       setTimeout(() => (this.isRocketBoostActive = false), 1200);
-      // for (let starBoost of this.starBoosts) {
-      //   starBoost.getPosition().y += 4.7;
-      //   this.mainCharacter.getPosition().y += 0.5;
-      // }
     }
 
     if (this.isBalloonBoostActive === true) {
@@ -477,10 +473,6 @@ class GameBoard {
         (balloonBoost) => (balloonBoost.getPosition().x += 1)
       );
       setTimeout(() => (this.canMoveBalloonBoost = true), 4000);
-      // for (let starBoost of this.starBoosts) {
-      //   starBoost.getPosition().y += 4.7;
-      //   this.mainCharacter.getPosition().y += 0.5;
-      // }
     }
 
     if (this.canMoveEnemy === true) {
