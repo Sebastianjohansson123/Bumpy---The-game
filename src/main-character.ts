@@ -8,7 +8,7 @@ class MainCharacter extends Entity {
 
   constructor() {
     super(
-      createVector(width * 0.4, height * 0.5),
+      createVector(width * 0.4, height * 0.29),
       createVector(0, 0),
       createVector(0, 0.1),
       createVector(70, 80),
@@ -99,7 +99,20 @@ class MainCharacter extends Entity {
   public getSize() {
     return this.size;
   }
+
+  public setSize(size: p5.Vector) {
+    this.size = size;
+  }
+
   public getIsJumping() {
     return this.isJumping;
+  }
+
+  public getImg() {
+    return this.img;
+  }
+
+  public setImg(img: p5.Image) {
+    this.img = img;
   }
 }

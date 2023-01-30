@@ -11,6 +11,7 @@ interface Images {
   xBtn: p5.Image;
   howToPlayKeys: p5.Image;
   bumpySad: p5.Image;
+  star: p5.Image;
   balloon: p5.Image;
   backgrounds: p5.Image[];
   talkingBubble: p5.Image;
@@ -20,6 +21,12 @@ interface Images {
   soundOff: p5.Image;
   upArrow: p5.Image;
   crown: p5.Image;
+  bumpyBalloons_gif: p5.Image;
+  bumpyBlink_gif: p5.Image;
+  bumpyBlinkCry_gif: p5.Image;
+  bumpyFall_gif: p5.Image;
+  bumpyRocket_gif: p5.Image;
+  bumpyStar_gif: p5.Image;
 }
 
 interface Sounds {
@@ -49,6 +56,7 @@ function preload() {
     bg: loadImage("./assets/images/bg1.png"),
     balloon: loadImage("./assets/images/balloon.png"),
     rocket: loadImage("./assets/images/rocket.png"),
+    star: loadImage("./assets/images/star.png"),
     soundOn: loadImage("./assets/images/soundon.png"),
     soundOff: loadImage("./assets/images/soundoff.png"),
     xBtn: loadImage("./assets/images/x-btn.png"),
@@ -59,7 +67,13 @@ function preload() {
     bumpy: loadImage("./assets/images/bumpy.png"),
     bumpySad: loadImage("./assets/images/bumpy-sad.png"),
     talkingBubble: loadImage("./assets/images/bumpy-bubble.png"),
-    crown: loadImage("./assets/images/crown.png")
+    crown: loadImage("./assets/images/crown.png"),
+    bumpyBalloons_gif: loadImage("./assets/gif/bumpyballoons.gif"),
+    bumpyBlink_gif: loadImage("./assets/gif/bumpyblinking.gif"),
+    bumpyBlinkCry_gif: loadImage("./assets/gif/bumpyblinkcry.gif"),
+    bumpyFall_gif: loadImage("./assets/gif/bumpyfall.gif"),
+    bumpyRocket_gif: loadImage("./assets/gif/bumpyrocket.gif"),
+    bumpyStar_gif: loadImage("./assets/gif/bumpystar.gif"),
   };
 
   sounds = {
@@ -89,7 +103,6 @@ function setup() {
   createCanvas(550, 720);
   // heightOnBg = 0;
   frameRate(60);
-
   game = new Game();
 }
 
@@ -99,18 +112,6 @@ function setup() {
  * you created in the setup function above
  */
 function draw() {
-  //  heightOnBg++;
-  //  if (heightOnBg < 200) {
-  //    image(bg, 0, 0);
-  //  } else {
-  //   image(bg2, 0, 0);
-  //  }
-
-  // push()
-  // textFont(fonts.monsterFont);
-  // text("hello world", 0, 0);
-  // pop()
-
   game.update();
   game.draw();
 }
