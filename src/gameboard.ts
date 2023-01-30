@@ -7,7 +7,6 @@ class GameBoard {
   private timeSinceLastMultiplierIncrease: number = 0;
   private enemies: Enemy[];
   private canGenerateEnemy: boolean | undefined;
-  private canGenerateBoss: boolean | undefined;
   private canGenerateBalloonBoost: boolean | undefined;
   private canGenerateRocketBoost: boolean | undefined;
   private currentBackgroundIndex: number = 0;
@@ -29,7 +28,6 @@ class GameBoard {
     this.score = 0;
     this.generatePlatforms();
     this.canGenerateEnemy = false;
-    this.canGenerateBoss = false;
     this.canGenerateBalloonBoost = false;
     this.canGenerateRocketBoost = false;
     this.isRocketBoostActive = false;
@@ -208,19 +206,6 @@ class GameBoard {
       let enemy = new Enemy(position);
       this.enemies.push(enemy);
       this.canGenerateEnemy = false;
-    } else {
-      return;
-    }
-  }
-
-  private generateBoss() {
-    if (this.score > 500 && this.canGenerateBoss === true) {
-      let x = random(0, width - 220);
-      let y = height;
-      let position = createVector(x, y);
-      let enemy = new Enemy(position);
-      this.enemies.push(enemy);
-      this.canGenerateBoss = false;
     } else {
       return;
     }
