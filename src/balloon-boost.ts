@@ -1,13 +1,12 @@
-/// <reference path="entity.ts" />
-
-class StarBoost extends Entity {
+/// <reference path="entity.ts"  />
+class BalloonBoost extends Entity {
   constructor(position: p5.Vector) {
     super(
       position,
       createVector(0, 0),
       createVector(0, 0),
-      createVector(50, 50),
-      images.star
+      createVector(50, 90),
+      images.balloon
     );
   }
 

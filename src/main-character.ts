@@ -25,11 +25,6 @@ class MainCharacter extends Entity {
 
   public update() {
     this.bullets.forEach((bullet) => bullet.update());
-    // check if shape is colliding with the bottom of the canvas
-    if (this.position.y + this.size.y >= height) {
-      game.activeScene = "end";
-    }
-
     if (this.isJumping) {
       this.velocity.add(this.gravity);
       this.position.add(this.velocity);
@@ -104,7 +99,20 @@ class MainCharacter extends Entity {
   public getSize() {
     return this.size;
   }
+
+  public setSize(size: p5.Vector) {
+    this.size = size;
+  }
+
   public getIsJumping() {
     return this.isJumping;
+  }
+
+  public getImg() {
+    return this.img;
+  }
+
+  public setImg(img: p5.Image) {
+    this.img = img;
   }
 }
