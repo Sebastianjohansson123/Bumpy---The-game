@@ -23,7 +23,7 @@ class GameBoard {
   constructor() {
     this.mainCharacter = new MainCharacter();
     this.platforms = [];
-    this.enemyBoss = []
+    this.enemyBoss = [];
     this.enemies = [];
     this.balloonBoosts = [];
     this.balloonBoosts = [];
@@ -40,14 +40,14 @@ class GameBoard {
   public update() {
     this.mainCharacter.update();
     this.detectCollision();
-    this.moveEntities();
     this.updatePlatforms();
-    this.generateEnemy();
     this.updateEnemies();
-    this.generateEnemyBoss();
+    this.generateEnemy();
     this.updateEnemyBoss();
+    this.generateEnemyBoss();
     this.updateBalloonBoosts();
     this.generateBalloonBoost();
+    this.moveEntities();
     this.updateRocketBoosts();
     this.generateRocketBoost();
   }
@@ -165,6 +165,24 @@ class GameBoard {
       }
     }
 
+    // Checks if an enemy collides with mainCharacter
+    // If they collide active scene is set to "end"
+    for (let enemyBoss of this.enemyBoss) {
+      let distance = dist(
+        this.mainCharacter.getPosition().x,
+        this.mainCharacter.getPosition().y,
+        enemyBoss.getPosition().x,
+        enemyBoss.getPosition().y
+      );
+      if (
+        distance <
+          this.mainCharacter.getSize().x + enemyBoss.getSize().x - 80 &&
+        distance < this.mainCharacter.getSize().y + enemyBoss.getSize().y - 70
+      ) {
+        game.activeScene = "end";
+      }
+    }
+
     //Checks if mainCharacter collides with balloonBoost
     for (let balloonBoost of this.balloonBoosts) {
       let distance = dist(
@@ -219,13 +237,12 @@ class GameBoard {
   }
 
   private generateEnemyBoss() {
-    if (this.score > 200 && this.canGenerateEnemyBoss === true) {
+    if (this.canGenerateEnemyBoss === true) {
       let x = random(0, width - 220);
       let y = height;
       let position = createVector(x, y);
       let enemyBoss = new EnemyBoss(position);
       this.enemyBoss.push(enemyBoss);
-      console.log("BOSSTIME")
       this.canGenerateEnemyBoss = false;
     } else {
       return;
@@ -370,6 +387,8 @@ class GameBoard {
         }
         if (this.timeSinceLastMultiplierIncrease === 1) {
           this.canGenerateRocketBoost = true;
+          console.log("BOSSTIME");
+          this.canGenerateEnemyBoss = true;
           // this.canGenerateBalloonBoost = true;
         }
       }
@@ -387,6 +406,10 @@ class GameBoard {
       }
       for (let enemy of this.enemies) {
         enemy.getPosition().y += 4.7;
+        this.mainCharacter.getPosition().y += 0.5;
+      }
+      for (let enemyBoss of this.enemyBoss) {
+        enemyBoss.getPosition().y += 4.7;
         this.mainCharacter.getPosition().y += 0.5;
       }
       for (let balloonBoost of this.balloonBoosts) {
