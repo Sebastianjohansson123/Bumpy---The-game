@@ -99,6 +99,7 @@ class MainCharacter extends Entity {
   public getSize() {
     return this.size;
   }
+
   public getIsJumping() {
     return this.isJumping;
   }

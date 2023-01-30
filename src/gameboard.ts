@@ -19,6 +19,7 @@ class GameBoard {
   private isBalloonBoostActive: boolean;
   private starBoosts: StarBoost[];
   private canGenerateStarBoost: boolean | undefined;
+  private starBoostIsActive: boolean;
 
   constructor() {
     this.mainCharacter = new MainCharacter();
@@ -36,6 +37,7 @@ class GameBoard {
     this.isRocketBoostActive = false;
     this.isBalloonBoostActive = false;
     this.canGenerateStarBoost = false;
+    this.starBoostIsActive = false;
   }
   public update() {
     this.mainCharacter.update();
@@ -149,7 +151,8 @@ class GameBoard {
     }
 
     // Checks if an enemy collides with mainCharacter
-    // If they collide active scene is set to "end"
+    // If starBoostIsActive = false and they collide: active scene is set to "end"
+    // If starBoostIsActive = true the enemy dies
     for (let enemy of this.enemies) {
       let distance = dist(
         this.mainCharacter.getPosition().x,
@@ -158,13 +161,24 @@ class GameBoard {
         enemy.getPosition().y
       );
       if (
+        this.starBoostIsActive === false &&
         distance < this.mainCharacter.getSize().x + enemy.getSize().x - 80 &&
         distance < this.mainCharacter.getSize().y + enemy.getSize().y - 70
       ) {
         game.activeScene = "end";
+      } else if (
+        this.starBoostIsActive === true &&
+        distance < this.mainCharacter.getSize().x + enemy.getSize().x - 80 &&
+        distance < this.mainCharacter.getSize().y + enemy.getSize().y - 70
+      ) {
+        sounds.enemyDeath.play();
+        this.enemies.splice(this.enemies.indexOf(enemy), 1);
+        this.score += 100;
+        setTimeout(() => (this.starBoostIsActive = false), 10000);
       }
     }
 
+    // Checks if mainCharacter collides with starBoost and activates it
     for (let starBoost of this.starBoosts) {
       let distance = dist(
         this.mainCharacter.getPosition().x,
@@ -177,6 +191,7 @@ class GameBoard {
           this.mainCharacter.getSize().x + starBoost.getSize().x - 70 &&
         distance < this.mainCharacter.getSize().y + starBoost.getSize().y - 70
       ) {
+        this.starBoostIsActive = true;
         this.starBoosts.splice(this.starBoosts.indexOf(starBoost), 1);
       }
     }
