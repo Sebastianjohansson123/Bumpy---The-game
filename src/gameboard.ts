@@ -488,6 +488,12 @@ class GameBoard {
     if (this.isRocketBoostActive === true) {
       this.mainCharacter.setImg(images.bumpyRocket_gif);
       this.mainCharacter.setSize(new p5.Vector(153, 175));
+    } else if (this.isBalloonBoostActive === true) {
+      this.mainCharacter.setImg(images.bumpyBalloons_gif);
+      this.mainCharacter.setSize(new p5.Vector(150, 150));
+    } else if (this.starBoostIsActive === true) {
+      this.mainCharacter.setImg(images.bumpyStar_gif);
+      this.mainCharacter.setSize(new p5.Vector(130, 130));
     } else {
       this.mainCharacter.setImg(images.bumpy);
       this.mainCharacter.setSize(new p5.Vector(70, 80));
