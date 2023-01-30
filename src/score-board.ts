@@ -1,26 +1,26 @@
 class Scoreboard {
-  private btnExit2: Button;
+  private btnExitScoreBoard: Button;
 
   constructor() {
-    this.btnExit2 = new Button(
+    this.btnExitScoreBoard = new Button(
       images.xBtn,
       new p5.Vector(376, 173),
       new p5.Vector(15, 15)
     );
-    this.btnExit2.onClickCallback = () => {
+    this.btnExitScoreBoard.onClickCallback = () => {
       game.activeScene = "start";
     };
   }
 
   public update() {
-    this.btnExit2.update();
+    this.btnExitScoreBoard.update();
   }
 
   public draw() {
     image(images.bg, 0, 0);
     image(images.talkingBubble, 150, 150, 249, 350);
     this.drawTitle();
-    this.btnExit2.draw();
+    this.btnExitScoreBoard.draw();
     images.xBtn, 376, 173, 11, 11;
     this.drawRects();
     image(images.bumpy, 50, 450);
