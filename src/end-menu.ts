@@ -35,8 +35,7 @@ class EndMenu {
     this.drawTitle();
     this.btnPlayAgain.draw();
     this.btnMenu.draw();
-    image(images.bumpySad, 185, 390);
-    images.bumpySad.resize(180, 238);
+    image(images.bumpyBlinkCry_gif, 75, 310, 400, 400);
   }
 
   private drawTitle() {

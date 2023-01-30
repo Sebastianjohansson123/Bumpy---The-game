@@ -18,14 +18,12 @@ class HowToPlay {
 
   public draw() {
     image(images.bg, 0, 0);
-    image(images.talkingBubble, 150, 150);
-    images.talkingBubble.resize(249, 350);
+    image(images.talkingBubble, 150, 150, 249, 350);
     this.drawTitle();
     this.btnExit.draw();
     images.xBtn.resize(11, 11);
-    image(images.howToPlayKeys, 162, 355);
-    images.howToPlayKeys.resize(130, 70);
-    image(images.bumpy, 50, 450);
+    image(images.howToPlayKeys, 162, 355, 130, 70);
+    image(images.bumpyBlink_gif, 50, 450, 152, 193);
   }
 
   private drawTitle() {

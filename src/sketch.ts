@@ -20,6 +20,12 @@ interface Images {
   soundOn: p5.Image;
   soundOff: p5.Image;
   upArrow: p5.Image;
+  bumpyBalloons_gif: p5.Image;
+  bumpyBlink_gif: p5.Image;
+  bumpyBlinkCry_gif: p5.Image;
+  bumpyFall_gif: p5.Image;
+  bumpyRocket_gif: p5.Image;
+  bumpyStar_gif: p5.Image;
 }
 
 interface Sounds {
@@ -60,6 +66,12 @@ function preload() {
     bumpy: loadImage("./assets/images/bumpy.png"),
     bumpySad: loadImage("./assets/images/bumpy-sad.png"),
     talkingBubble: loadImage("./assets/images/bumpy-bubble.png"),
+    bumpyBalloons_gif: loadImage("./assets/gif/bumpyballoons.gif"),
+    bumpyBlink_gif: loadImage("./assets/gif/bumpyblinking.gif"),
+    bumpyBlinkCry_gif: loadImage("./assets/gif/bumpyblinkcry.gif"),
+    bumpyFall_gif: loadImage("./assets/gif/bumpyfall.gif"),
+    bumpyRocket_gif: loadImage("./assets/gif/bumpyrocket.gif"),
+    bumpyStar_gif: loadImage("./assets/gif/bumpystar.gif"),
   };
 
   sounds = {
@@ -89,7 +101,6 @@ function setup() {
   createCanvas(550, 720);
   // heightOnBg = 0;
   frameRate(60);
-
   game = new Game();
 }
 
@@ -99,18 +110,6 @@ function setup() {
  * you created in the setup function above
  */
 function draw() {
-  //  heightOnBg++;
-  //  if (heightOnBg < 200) {
-  //    image(bg, 0, 0);
-  //  } else {
-  //   image(bg2, 0, 0);
-  //  }
-
-  // push()
-  // textFont(fonts.monsterFont);
-  // text("hello world", 0, 0);
-  // pop()
-
   game.update();
   game.draw();
 }

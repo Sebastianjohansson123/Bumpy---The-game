@@ -100,7 +100,19 @@ class MainCharacter extends Entity {
     return this.size;
   }
 
+  public setSize(size: p5.Vector) {
+    this.size = size;
+  }
+
   public getIsJumping() {
     return this.isJumping;
+  }
+
+  public getImg() {
+    return this.img;
+  }
+
+  public setImg(img: p5.Image) {
+    this.img = img;
   }
 }
