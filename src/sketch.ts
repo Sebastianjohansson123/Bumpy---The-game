@@ -16,6 +16,7 @@ interface Images {
   talkingBubble: p5.Image;
   rocket: p5.Image;
   enemy: p5.Image;
+  enemyBoss: p5.Image;
   soundOn: p5.Image;
   soundOff: p5.Image;
   upArrow: p5.Image;
@@ -54,6 +55,7 @@ function preload() {
     howToPlayKeys: loadImage("./assets/images/howtoplay-keys.png"),
     upArrow: loadImage("assets/images/up-arrow.png"),
     enemy: loadImage("./assets/images/enemy.png"),
+    enemyBoss: loadImage("./assets/images/boss.png"),
     platform: loadImage("./assets/images/platform.png"),
     bumpy: loadImage("./assets/images/bumpy.png"),
     bumpySad: loadImage("./assets/images/bumpy-sad.png"),

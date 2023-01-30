@@ -6,7 +6,9 @@ class GameBoard {
   private scoreMultiplier: number = 1;
   private timeSinceLastMultiplierIncrease: number = 0;
   private enemies: Enemy[];
+  private enemyBoss: EnemyBoss[];
   private canGenerateEnemy: boolean | undefined;
+  private canGenerateEnemyBoss: boolean | undefined;
   private canGenerateBalloonBoost: boolean | undefined;
   private canGenerateRocketBoost: boolean | undefined;
   private currentBackgroundIndex: number = 0;
@@ -21,6 +23,7 @@ class GameBoard {
   constructor() {
     this.mainCharacter = new MainCharacter();
     this.platforms = [];
+    this.enemyBoss = []
     this.enemies = [];
     this.balloonBoosts = [];
     this.balloonBoosts = [];
@@ -28,6 +31,7 @@ class GameBoard {
     this.score = 0;
     this.generatePlatforms();
     this.canGenerateEnemy = false;
+    this.canGenerateEnemyBoss = true;
     this.canGenerateBalloonBoost = false;
     this.canGenerateRocketBoost = false;
     this.isRocketBoostActive = false;
@@ -38,8 +42,10 @@ class GameBoard {
     this.detectCollision();
     this.moveEntities();
     this.updatePlatforms();
-    this.updateEnemies();
     this.generateEnemy();
+    this.updateEnemies();
+    this.generateEnemyBoss();
+    this.updateEnemyBoss();
     this.updateBalloonBoosts();
     this.generateBalloonBoost();
     this.updateRocketBoosts();
@@ -50,6 +56,7 @@ class GameBoard {
     this.drawBackground();
     this.platforms.forEach((platform) => platform.draw());
     this.enemies.forEach((enemy) => enemy.draw());
+    this.enemyBoss.forEach((enemyBoss) => enemyBoss.draw());
     this.balloonBoosts.forEach((balloonBoost) => balloonBoost.draw());
     this.rocketBoosts.forEach((rocketBoost) => rocketBoost.draw());
     this.mainCharacter.draw();
@@ -211,6 +218,20 @@ class GameBoard {
     }
   }
 
+  private generateEnemyBoss() {
+    if (this.score > 200 && this.canGenerateEnemyBoss === true) {
+      let x = random(0, width - 220);
+      let y = height;
+      let position = createVector(x, y);
+      let enemyBoss = new EnemyBoss(position);
+      this.enemyBoss.push(enemyBoss);
+      console.log("BOSSTIME")
+      this.canGenerateEnemyBoss = false;
+    } else {
+      return;
+    }
+  }
+
   private generateBalloonBoost() {
     if (this.canGenerateBalloonBoost === true) {
       let x = random(0, width - 220);
@@ -247,6 +268,24 @@ class GameBoard {
           let newEnemy = new Enemy(position);
           this.enemies.push(newEnemy);
           this.canGenerateEnemy = false;
+        } else {
+          return;
+        }
+      }
+    }
+  }
+
+  private updateEnemyBoss() {
+    if (this.canGenerateEnemyBoss === true) {
+      for (let i = 0; i < this.enemyBoss.length; i++) {
+        let enemyBoss = this.enemyBoss[i];
+        if (enemyBoss.getPosition().y > height) {
+          this.enemyBoss.splice(i, 1);
+          let x = random(0, width - 220);
+          let position = createVector(x, 0);
+          let newEnemyBoss = new EnemyBoss(position);
+          this.enemyBoss.push(newEnemyBoss);
+          this.canGenerateEnemyBoss = false;
         } else {
           return;
         }
