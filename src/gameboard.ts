@@ -147,6 +147,31 @@ class GameBoard {
         }
       }
     }
+    // Checks if bullet collides with enemyBoss
+    // If they collide, enemy and bullet dissappears and 500 is added to the score
+    for (let enemyBoss of this.enemyBoss) {
+      for (let bullet of this.mainCharacter.bullets) {
+        if (
+          bullet.getPosition().x <
+            enemyBoss.getPosition().x + enemyBoss.getSize().x - 20 &&
+          bullet.getPosition().x + bullet.getSize().x >
+            enemyBoss.getPosition().x &&
+          bullet.getPosition().y <
+            enemyBoss.getPosition().y + enemyBoss.getSize().y - 20 &&
+          bullet.getPosition().y + bullet.getSize().y >
+            enemyBoss.getPosition().y
+        ) {
+          sounds.enemyDeath.play();
+
+          this.mainCharacter.bullets.splice(
+            this.mainCharacter.bullets.indexOf(bullet),
+            1
+          );
+          this.enemyBoss.splice(this.enemyBoss.indexOf(enemyBoss), 1);
+          this.score += 500;
+        }
+      }
+    }
 
     // Checks if an enemy collides with mainCharacter
     // If they collide active scene is set to "end"
