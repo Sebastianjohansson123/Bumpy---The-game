@@ -230,6 +230,7 @@ class GameBoard {
         distance < this.mainCharacter.getSize().y + starBoost.getSize().y - 70
       ) {
         this.starBoostIsActive = true;
+        sounds.starBoostSound.play();
         this.starBoosts.splice(this.starBoosts.indexOf(starBoost), 1);
       }
     }
@@ -268,9 +269,11 @@ class GameBoard {
       ) {
         this.balloonBoosts.splice(this.balloonBoosts.indexOf(balloonBoost), 1);
         this.isBalloonBoostActive = true;
+        sounds.balloonSound.play();
         this.score += 100;
       }
     }
+
     //Checks if mainCharacter collides with rocketBoost
     for (let rocketBoost of this.rocketBoosts) {
       let distance = dist(
@@ -287,6 +290,7 @@ class GameBoard {
         this.rocketBoosts.splice(this.rocketBoosts.indexOf(rocketBoost), 1);
         // this.score += 100;
         this.isRocketBoostActive = true;
+        sounds.rocketSound.play();
       }
     }
   }
