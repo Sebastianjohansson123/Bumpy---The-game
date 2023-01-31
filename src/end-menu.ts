@@ -46,7 +46,7 @@ class EndMenu {
   }
 
   /**
-   * Draws title "Game over", score for current game and highscore
+   * Draws title "Game over", score and highscore
    */
   private drawTitle() {
     push();
