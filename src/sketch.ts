@@ -140,5 +140,5 @@ function draw() {
  *  Built in windowResize listener function in P5
  */
 function windowResized() {
-  resizeCanvas(540, 720);
+  resizeCanvas(550, 720);
 }
