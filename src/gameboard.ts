@@ -464,73 +464,8 @@ class GameBoard {
       return;
     }
   }
-
-
-  private updateEnemies() {
-    if (this.canGenerateEnemy === true) {
-      for (let i = 0; i < this.enemies.length; i++) {
-        let enemy = this.enemies[i];
-        if (enemy.getPosition().y > height) {
-          this.enemies.splice(i, 1);
-          let x = random(0, width - 220);
-          let position = createVector(x, 0);
-          let newEnemy = new Enemy(position);
-          this.enemies.push(newEnemy);
-          this.canGenerateEnemy = false;
-        } else {
-          return;
-        }
-      }
-    }
-  }
-
-  private updateEnemyBoss() {
-    if (this.canGenerateEnemyBoss === true) {
-      for (let i = 0; i < this.enemyBoss.length; i++) {
-        let enemyBoss = this.enemyBoss[i];
-        if (enemyBoss.getPosition().y > height) {
-          this.enemyBoss.splice(i, 1);
-          let x = random(0, width - 220);
-          let position = createVector(x, 0);
-          let newEnemyBoss = new EnemyBoss(position);
-          this.enemyBoss.push(newEnemyBoss);
-          this.canGenerateEnemyBoss = false;
-          this.bossAlreadyGenerated = true;
-          console.log("BOSS TIME");
-        } else {
-          return;
-        }
-      }
-    }
-  }
-
-  // creates a platform at the start of the game that spawns below Bumpy
-  private generateBottomPlatform() {
-    let y = height;
-    let position = createVector(200, y - 150);
-    let platform = new Platform(position);
-    this.platforms.push(platform);
-  }
-
-  private updateBalloonBoosts() {
-    if (this.canGenerateBalloonBoost === true) {
-      for (let i = 0; i < this.balloonBoosts.length; i++) {
-        let balloonBoost = this.balloonBoosts[i];
-        if (balloonBoost.getPosition().y < height) {
-          this.balloonBoosts.splice(i, 1);
-          let x = random(0, width - 220);
-          let position = createVector(x, 720);
-          let newBalloonBoost = new BalloonBoost(position);
-          this.balloonBoosts.push(newBalloonBoost);
-          this.canGenerateBalloonBoost = false;
-        } else {
-          return;
-        }
-      }
-    }
-  }
-
-
+  
+  
   private updateRocketBoosts() {
     if (this.canGenerateRocketBoost === true) {
       for (let i = 0; i < this.rocketBoosts.length; i++) {
@@ -549,6 +484,8 @@ class GameBoard {
     }
   }
 
+
+
   // creates a platform at the start of the game that spawns below Bumpy
   private generateBottomPlatform() {
     let y = height;
@@ -556,6 +493,12 @@ class GameBoard {
     let platform = new Platform(position);
     this.platforms.push(platform);
   }
+
+
+
+
+  // creates a platform at the start of the game that spawns below Bumpy
+
 
 
 
@@ -589,17 +532,6 @@ class GameBoard {
         this.score += 1 * this.scoreMultiplier;
         this.timeSinceLastMultiplierIncrease += 1;
         console.log(this.timeSinceLastMultiplierIncrease);
-
-
-        if (this.timeSinceLastMultiplierIncrease === 30) {
-          this.canGenerateBalloonBoost = true;
-          this.scoreMultiplier += 1;
-          this.timeSinceLastMultiplierIncrease = 0;
-        }
-
-
-
-
 
         if (this.timeSinceLastMultiplierIncrease === 30) {
           this.scoreMultiplier += 1;
