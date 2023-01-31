@@ -95,23 +95,28 @@ class GameBoard implements IBoard {
   }
 
   private entitiesOverlap(entity: Entity, otherEntity: Entity) {
-    return entity.getPosition().x <
+    return (
+      entity.getPosition().x <
         otherEntity.getPosition().x + otherEntity.getHitBox().x &&
-      entity.getPosition().x + entity.getHitBox().x > otherEntity.getPosition().x &&
+      entity.getPosition().x + entity.getHitBox().x >
+        otherEntity.getPosition().x &&
       entity.getPosition().y <
         otherEntity.getPosition().y + otherEntity.getHitBox().y &&
-      entity.getPosition().y + entity.getHitBox().y > otherEntity.getPosition().y
+      entity.getPosition().y + entity.getHitBox().y >
+        otherEntity.getPosition().y
+    );
   }
 
   // Detects collisions between entities on the GameBoard
   private detectCollision() {
-    // checks if the MainCharacters gets in contact with the platform
-    // when it is falling and triggers an automatic jump if it is
     for (let entity of this.entities) {
       for (let otherEntity of this.entities) {
         if (entity === otherEntity) continue;
 
-        if (entity instanceof Platform && otherEntity instanceof MainCharacter) {
+        if (
+          entity instanceof Platform &&
+          otherEntity instanceof MainCharacter
+        ) {
           if (this.entitiesOverlap(entity, otherEntity)) {
             // todo: lägg till koll för hastighet
             this.mainCharacter.jump();
@@ -140,6 +145,36 @@ class GameBoard implements IBoard {
             this.score += 100;
           }
         }
+
+        if (
+          entity instanceof BalloonBoost &&
+          otherEntity instanceof MainCharacter
+        ) {
+          if (this.entitiesOverlap(entity, otherEntity)) {
+            this.isBalloonBoostActive = true;
+            this.entities.splice(this.entities.indexOf(entity), 1);
+          }
+        }
+
+        if (
+          entity instanceof RocketBoost &&
+          otherEntity instanceof MainCharacter
+        ) {
+          if (this.entitiesOverlap(entity, otherEntity)) {
+            this.isRocketBoostActive = true;
+            this.entities.splice(this.entities.indexOf(entity), 1);
+          }
+        }
+
+        if (
+          entity instanceof StarBoost &&
+          otherEntity instanceof MainCharacter
+        ) {
+          if (this.entitiesOverlap(entity, otherEntity)) {
+            this.starBoostIsActive = true;
+            this.entities.splice(this.entities.indexOf(entity), 1);
+          }
+        }
       }
     }
 
@@ -156,62 +191,6 @@ class GameBoard implements IBoard {
       }
       for (let rocketBoost of this.rocketBoosts) {
         rocketBoost.getPosition().y -= 17;
-      }
-    }
-
-    // Checks if mainCharacter collides with starBoost and activates it
-    for (let starBoost of this.starBoosts) {
-      let distance = dist(
-        this.mainCharacter.getPosition().x,
-        this.mainCharacter.getPosition().y,
-        starBoost.getPosition().x,
-        starBoost.getPosition().y
-      );
-      if (
-        distance <
-          this.mainCharacter.getSize().x + starBoost.getSize().x - 70 &&
-        distance < this.mainCharacter.getSize().y + starBoost.getSize().y - 70
-      ) {
-        this.starBoostIsActive = true;
-        this.starBoosts.splice(this.starBoosts.indexOf(starBoost), 1);
-      }
-    }
-
-    //Checks if mainCharacter collides with balloonBoost
-    for (let balloonBoost of this.balloonBoosts) {
-      let distance = dist(
-        this.mainCharacter.getPosition().x,
-        this.mainCharacter.getPosition().y,
-        balloonBoost.getPosition().x,
-        balloonBoost.getPosition().y
-      );
-      if (
-        distance <
-          this.mainCharacter.getSize().x + balloonBoost.getSize().x - 70 &&
-        distance <
-          this.mainCharacter.getSize().y + balloonBoost.getSize().y - 70
-      ) {
-        this.balloonBoosts.splice(this.balloonBoosts.indexOf(balloonBoost), 1);
-        this.isBalloonBoostActive = true;
-        this.score += 100;
-      }
-    }
-    //Checks if mainCharacter collides with rocketBoost
-    for (let rocketBoost of this.rocketBoosts) {
-      let distance = dist(
-        this.mainCharacter.getPosition().x,
-        this.mainCharacter.getPosition().y,
-        rocketBoost.getPosition().x,
-        rocketBoost.getPosition().y
-      );
-      if (
-        distance <
-          this.mainCharacter.getSize().x + rocketBoost.getSize().x - 70 &&
-        distance < this.mainCharacter.getSize().y + rocketBoost.getSize().y - 70
-      ) {
-        this.rocketBoosts.splice(this.rocketBoosts.indexOf(rocketBoost), 1);
-        // this.score += 100;
-        this.isRocketBoostActive = true;
       }
     }
   }
@@ -405,7 +384,6 @@ class GameBoard implements IBoard {
       this.mainCharacter.getPosition().y < height * 0.5 &&
       this.mainCharacter.getIsJumping()
     ) {
-      
       for (let entity of this.entities) {
         if (entity instanceof MainCharacter) {
           this.mainCharacter.getPosition().y += 6;
