@@ -231,6 +231,7 @@ class GameBoard {
         distance < this.mainCharacter.getSize().y + starBoost.getSize().y - 70
       ) {
         this.starBoostIsActive = true;
+        sounds.starBoostSound.play();
         this.starBoosts.splice(this.starBoosts.indexOf(starBoost), 1);
       }
     }

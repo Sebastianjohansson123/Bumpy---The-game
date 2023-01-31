@@ -35,6 +35,7 @@ interface Sounds {
   song: p5.SoundFile;
   jumpSound: p5.SoundFile;
   enemyDeath: p5.SoundFile;
+  starBoostSound: p5.SoundFile;
 }
 
 const Fonts = {
@@ -83,6 +84,7 @@ function preload() {
     song: loadSound("./assets/music/bumpy.mp3"),
     jumpSound: loadSound("./assets/sounds/jump.wav"),
     enemyDeath: loadSound("./assets/sounds/enemy-death.wav"),
+    starBoostSound: loadSound("./assets/sounds/starBoost.mp3"),
   };
 }
 
@@ -97,6 +99,8 @@ function setup() {
   sounds.bulletSound.setVolume(0.1);
   sounds.jumpSound.setVolume(0.1);
   sounds.jumpSound = loadSound("./assets/sounds/jump.wav");
+  sounds.starBoostSound = loadSound("./assets/sounds/starBoost.mp3");
+  sounds.starBoostSound.setVolume(0.4);
   // sounds.song = loadSound("./assets/music/bumpy.mp3");
   sounds.enemyDeath.setVolume(0.1);
 
