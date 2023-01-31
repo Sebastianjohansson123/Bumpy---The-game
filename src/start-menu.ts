@@ -1,6 +1,4 @@
 class StartMenu {
-  // private highscore: number;
-  // private game: IGameStart
   private btnPlayGame: Button;
   private btnHowToPlay: Button;
   private btnScores: Button;
