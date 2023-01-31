@@ -6,7 +6,7 @@ class Bubble extends Entity {
       createVector(0, 10),
       createVector(0, 0),
       createVector(15, 15),
-      images.bumpy
+      images.bubbleglow
     );
   }
 
