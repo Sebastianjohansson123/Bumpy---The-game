@@ -1,5 +1,5 @@
 /// <reference path="entity.ts"  />
-class Shoot extends Entity {
+class Bubble extends Entity {
   constructor(position: p5.Vector) {
     super(
       position,

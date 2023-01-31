@@ -3,7 +3,7 @@ class MainCharacter extends Entity {
   // private isFalling: boolean;
   private isJumping: boolean;
   private speed: number;
-  public bullets: Shoot[];
+  public bullets: Bubble[];
   private canShoot: boolean | undefined;
 
   constructor() {
@@ -70,7 +70,7 @@ class MainCharacter extends Entity {
   public shoot() {
     if (this.canShoot === true) {
       sounds.bulletSound.play();
-      let bullet = new Shoot(
+      let bullet = new Bubble(
         createVector(this.position.x + 25, this.position.y)
       );
       // let bullet = new Bullet(this.position.x, this.position.y);
