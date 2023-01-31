@@ -40,9 +40,10 @@ class Button {
     this.mousePressed = mouseIsPressed;
   }
 
-  public onClick(cb: () => void) {
-    this.onClickCallback = cb;
-  }
+  // public onClick(cb: () => void) {
+  //   this.onClickCallback = cb;
+  //   console.log("onClick cb called");
+  // }
 
   public draw() {
     push();
