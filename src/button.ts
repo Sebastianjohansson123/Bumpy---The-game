@@ -39,10 +39,7 @@ class Button {
     }
   }
 
-  /**
-   * @param cb 
-   * Callback function for button click event
-   */
+  // Används inte - ta ev bort! 
   public onClick(cb: () => void) {
     this.onClickCallback = cb;
   }
