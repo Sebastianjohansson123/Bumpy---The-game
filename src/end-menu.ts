@@ -3,7 +3,6 @@ class EndMenu {
   private btnMenu: Button;
 
   constructor() {
-
     // Adds the button in the position center x of canvas
     const centerX = width * 0.5;
 
