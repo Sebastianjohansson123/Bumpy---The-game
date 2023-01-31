@@ -6,7 +6,7 @@ class StartMenu {
   private btnScores: Button;
   private btnSoundOn: Button;
   private btnSoundOff: Button;
-  private soundOn: any;
+  private soundOn: boolean;
 
   constructor() {
     this.soundOn = true;
