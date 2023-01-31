@@ -70,7 +70,7 @@ function preload() {
     bumpyBlink_gif: loadImage("./assets/gif/bumpyblinking.gif"),
     bumpyBlinkCry_gif: loadImage("./assets/gif/bumpyblinkcry.gif"),
     bumpyFall_gif: loadImage("./assets/gif/bumpyfall.gif"),
-    bumpyRocket_gif: loadImage("./assets/gif/bumpyrocket.gif"),
+    bumpyRocket_gif: loadImage("./assets/gif/bumpyrocketcropped.gif"),
     bumpyStar_gif: loadImage("./assets/gif/bumpystarcropped.gif"),
   };
 
