@@ -54,8 +54,31 @@ const Fonts = {
 function preload() {
   images = {
     backgrounds: [
-      loadImage("./assets/images/bg1.png"),
-      loadImage("./assets/images/bg2.png"),
+      loadImage("./assets/images/backgrounds/bg1.png"),
+      loadImage("./assets/images/backgrounds/bg2.png"),
+      loadImage("./assets/images/backgrounds/bg3.png"),
+      loadImage("./assets/images/backgrounds/bg4.png"),
+      loadImage("./assets/images/backgrounds/bg5.png"),
+      loadImage("./assets/images/backgrounds/bg6.png"),
+      loadImage("./assets/images/backgrounds/bg7.png"),
+      loadImage("./assets/images/backgrounds/bg8.png"),
+      loadImage("./assets/images/backgrounds/bg9.png"),
+      loadImage("./assets/images/backgrounds/bg10.png"),
+      loadImage("./assets/images/backgrounds/bg11.png"),
+      loadImage("./assets/images/backgrounds/bg12.png"),
+      loadImage("./assets/images/backgrounds/bg13.png"),
+      loadImage("./assets/images/backgrounds/bg14.png"),
+      loadImage("./assets/images/backgrounds/bg15.png"),
+      loadImage("./assets/images/backgrounds/bg16.png"),
+      loadImage("./assets/images/backgrounds/bg17.png"),
+      loadImage("./assets/images/backgrounds/bg18.png"),
+      loadImage("./assets/images/backgrounds/bg19.png"),
+      loadImage("./assets/images/backgrounds/bg20.png"),
+      loadImage("./assets/images/backgrounds/bg21.png"),
+      loadImage("./assets/images/backgrounds/bg22.png"),
+      loadImage("./assets/images/backgrounds/bg23.png"),
+      loadImage("./assets/images/backgrounds/bg24.png"),
+      loadImage("./assets/images/backgrounds/bg25.png"),
     ],
     bg: loadImage("./assets/images/bg1.png"),
     balloon: loadImage("./assets/images/balloon.png"),
@@ -140,5 +163,5 @@ function draw() {
  *  Built in windowResize listener function in P5
  */
 function windowResized() {
-  resizeCanvas(540, 720);
+  resizeCanvas(550, 720);
 }

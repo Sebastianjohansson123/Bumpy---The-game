@@ -12,13 +12,17 @@ class GameBoard {
   private canGenerateBalloonBoost: boolean | undefined;
   private canGenerateRocketBoost: boolean | undefined;
   private currentBackgroundIndex: number = 0;
-  private backgroundChangeScoreIncrement: number = 8;
+  private backgroundChangeScoreIncrement: number = 30;
   private canMoveEnemy: boolean = false;
   private canMoveBalloonBoost: boolean = false;
   private balloonBoosts: BalloonBoost[];
   private rocketBoosts: RocketBoost[];
   private isRocketBoostActive: boolean;
   private isBalloonBoostActive: boolean;
+
+  private nextBackgroundIndex: number;
+  private transitionStartTime: number;
+  private transitionDuration: number;
   private bossAlreadyGenerated: boolean;
   private starBoosts: StarBoost[];
   private canGenerateStarBoost: boolean | undefined;
@@ -43,6 +47,11 @@ class GameBoard {
     this.canGenerateRocketBoost = false;
     this.isRocketBoostActive = false;
     this.isBalloonBoostActive = false;
+    this.currentBackgroundIndex = 0;
+    this.nextBackgroundIndex = 0;
+    this.backgroundChangeScoreIncrement = 50;
+    this.transitionStartTime = 0;
+    this.transitionDuration = 0;
     sounds.song.loop();
     this.canGenerateStarBoost = false;
     this.starBoostIsActive = false;
@@ -84,19 +93,38 @@ class GameBoard {
   // bgimages and added transition effects
   private drawBackground() {
     if (this.score >= this.backgroundChangeScoreIncrement) {
-      this.currentBackgroundIndex =
+      this.nextBackgroundIndex =
         (this.currentBackgroundIndex + 1) % images.backgrounds.length;
-      this.backgroundChangeScoreIncrement += 500;
+      this.backgroundChangeScoreIncrement += 50;
+      this.transitionStartTime = millis();
+      this.transitionDuration = 1000; // transition lasts 1 second
     }
-    images.backgrounds[this.currentBackgroundIndex];
-    let repeatCount =
-      height / images.backgrounds[this.currentBackgroundIndex].height + 1;
-    for (let i = 0; i < repeatCount; i++) {
-      image(
-        images.backgrounds[this.currentBackgroundIndex],
-        0,
-        i * images.backgrounds[this.currentBackgroundIndex].height
-      );
+    if (this.nextBackgroundIndex !== this.currentBackgroundIndex) {
+      let elapsedTime = millis() - this.transitionStartTime;
+      let t = constrain(elapsedTime / this.transitionDuration, 0, 1);
+      let oldBackgroundOpacity = (1 - t) * 255;
+      let newBackgroundOpacity = t * 255;
+      push();
+      tint(255, oldBackgroundOpacity);
+      image(images.backgrounds[this.currentBackgroundIndex],0,0,width,height);
+      pop();
+      push();
+      tint(255, newBackgroundOpacity);
+      image(images.backgrounds[this.nextBackgroundIndex], 0, 0, width, height);
+      pop();
+      if (elapsedTime >= this.transitionDuration) {
+        this.currentBackgroundIndex = this.nextBackgroundIndex;
+      }
+    } else {
+      let repeatCount =
+        height / images.backgrounds[this.currentBackgroundIndex].height + 1;
+      for (let i = 0; i < repeatCount; i++) {
+        image(
+          images.backgrounds[this.currentBackgroundIndex],
+          0,
+          i * images.backgrounds[this.currentBackgroundIndex].height
+        );
+      }
     }
   }
 
@@ -489,7 +517,7 @@ class GameBoard {
         this.score += 1 * this.scoreMultiplier;
         this.timeSinceLastMultiplierIncrease += 1;
         console.log(this.timeSinceLastMultiplierIncrease);
-        if (this.timeSinceLastMultiplierIncrease === 20) {
+        if (this.timeSinceLastMultiplierIncrease === 30) {
           this.canGenerateBalloonBoost = true;
           this.scoreMultiplier += 1;
           this.timeSinceLastMultiplierIncrease = 0;
