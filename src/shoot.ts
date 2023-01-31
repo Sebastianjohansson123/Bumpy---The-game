@@ -13,12 +13,4 @@ class Shoot extends Entity {
   public update() {
     this.position.y -= this.velocity.y;
   }
-
-  public getPosition(): p5.Vector {
-    return this.position;
-  }
-
-  public getSize(): p5.Vector {
-    return this.size;
-  }
 }

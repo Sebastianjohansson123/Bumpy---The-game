@@ -1,11 +1,14 @@
-class GameBoard {
+interface IBoard {
+  addBullet: (bullet: Shoot) => void;
+}
+
+class GameBoard implements IBoard {
   // private backgrounds: Background[];
   private mainCharacter: MainCharacter;
-  private platforms: Platform[];
+  private entities: Entity[];
   private score: number;
   private scoreMultiplier: number = 1;
   private timeSinceLastMultiplierIncrease: number = 0;
-  private enemies: Enemy[];
   private canGenerateEnemy: boolean | undefined;
   private canGenerateBalloonBoost: boolean | undefined;
   private canGenerateRocketBoost: boolean | undefined;
@@ -22,9 +25,8 @@ class GameBoard {
   private starBoostIsActive: boolean;
 
   constructor() {
-    this.mainCharacter = new MainCharacter();
-    this.platforms = [];
-    this.enemies = [];
+    this.mainCharacter = new MainCharacter(this);
+    this.entities = [this.mainCharacter];
     this.balloonBoosts = [];
     this.balloonBoosts = [];
     this.rocketBoosts = [];
@@ -58,13 +60,16 @@ class GameBoard {
 
   public draw() {
     this.drawBackground();
-    this.platforms.forEach((platform) => platform.draw());
-    this.enemies.forEach((enemy) => enemy.draw());
+    this.entities.forEach((entity) => entity.draw());
     this.balloonBoosts.forEach((balloonBoost) => balloonBoost.draw());
     this.rocketBoosts.forEach((rocketBoost) => rocketBoost.draw());
     this.starBoosts.forEach((starBoost) => starBoost.draw());
     this.mainCharacter.draw();
     this.DisplayScore();
+  }
+
+  public addBullet(bullet: Shoot) {
+    this.entities.push(bullet);
   }
 
   // checks if the score is above a certain threshold
@@ -89,26 +94,52 @@ class GameBoard {
     }
   }
 
+  private entitiesOverlap(entity: Entity, otherEntity: Entity) {
+    return entity.getPosition().x <
+        otherEntity.getPosition().x + otherEntity.getHitBox().x &&
+      entity.getPosition().x + entity.getHitBox().x > otherEntity.getPosition().x &&
+      entity.getPosition().y <
+        otherEntity.getPosition().y + otherEntity.getHitBox().y &&
+      entity.getPosition().y + entity.getHitBox().y > otherEntity.getPosition().y
+  }
+
   // Detects collisions between entities on the GameBoard
   private detectCollision() {
     // checks if the MainCharacters gets in contact with the platform
     // when it is falling and triggers an automatic jump if it is
-    for (let platform of this.platforms) {
-      if (
-        this.mainCharacter.getPosition().y + this.mainCharacter.getSize().y >
-          platform.getPosition().y &&
-        this.mainCharacter.getPosition().y + this.mainCharacter.getSize().y <
-          platform.getPosition().y + platform.getSize().y &&
-        this.mainCharacter.getPosition().x +
-          this.mainCharacter.getSize().x -
-          20 >
-          platform.getPosition().x && // added "- 20" to better adjust hitbox
-        this.mainCharacter.getPosition().x + 20 <
-          platform.getPosition().x + platform.getSize().x && // // added "+ 20" to better adjust hitbox
-        this.mainCharacter.getVelocity().y > 0.5
-      ) {
-        // Makes it so that the MainCharacter only jumps on the platforms if is falling at a certain velocity
-        this.mainCharacter.jump();
+    for (let entity of this.entities) {
+      for (let otherEntity of this.entities) {
+        if (entity === otherEntity) continue;
+
+        if (entity instanceof Platform && otherEntity instanceof MainCharacter) {
+          if (this.entitiesOverlap(entity, otherEntity)) {
+            // todo: lägg till koll för hastighet
+            this.mainCharacter.jump();
+          }
+        }
+
+        if (entity instanceof Enemy && otherEntity instanceof MainCharacter) {
+          if (this.entitiesOverlap(entity, otherEntity)) {
+            if (!this.starBoostIsActive) {
+              game.activeScene = "end";
+            } else {
+              sounds.enemyDeath.play();
+              this.entities.splice(this.entities.indexOf(entity), 1);
+              this.score += 100;
+              setTimeout(() => (this.starBoostIsActive = false), 10000);
+            }
+          }
+        }
+
+        if (entity instanceof Enemy && otherEntity instanceof Shoot) {
+          if (this.entitiesOverlap(entity, otherEntity)) {
+            sounds.enemyDeath.play();
+
+            this.entities.splice(this.entities.indexOf(entity), 1);
+            this.entities.splice(this.entities.indexOf(otherEntity), 1);
+            this.score += 100;
+          }
+        }
       }
     }
 
@@ -117,7 +148,7 @@ class GameBoard {
       this.mainCharacter.getPosition().y + this.mainCharacter.getSize().y >=
       height
     ) {
-      for (let platform of this.platforms) {
+      for (let platform of this.entities) {
         this.mainCharacter.getVelocity().y = -4.9;
         platform.getPosition().y -= 17;
         this.mainCharacter.getPosition().y += 1.62;
@@ -125,58 +156,6 @@ class GameBoard {
       }
       for (let rocketBoost of this.rocketBoosts) {
         rocketBoost.getPosition().y -= 17;
-      }
-    }
-
-    // Checks if bullet collides with an enemy
-    // If they collide, enemy and bullet dissappears and 100 is added to the score
-    for (let enemy of this.enemies) {
-      for (let bullet of this.mainCharacter.bullets) {
-        if (
-          bullet.getPosition().x <
-            enemy.getPosition().x + enemy.getSize().x - 20 &&
-          bullet.getPosition().x + bullet.getSize().x > enemy.getPosition().x &&
-          bullet.getPosition().y <
-            enemy.getPosition().y + enemy.getSize().y - 20 &&
-          bullet.getPosition().y + bullet.getSize().y > enemy.getPosition().y
-        ) {
-          sounds.enemyDeath.play();
-
-          this.mainCharacter.bullets.splice(
-            this.mainCharacter.bullets.indexOf(bullet),
-            1
-          );
-          this.enemies.splice(this.enemies.indexOf(enemy), 1);
-          this.score += 100;
-        }
-      }
-    }
-
-    // Checks if an enemy collides with mainCharacter
-    // If starBoostIsActive = false and they collide: active scene is set to "end"
-    // If starBoostIsActive = true the enemy dies
-    for (let enemy of this.enemies) {
-      let distance = dist(
-        this.mainCharacter.getPosition().x,
-        this.mainCharacter.getPosition().y,
-        enemy.getPosition().x,
-        enemy.getPosition().y
-      );
-      if (
-        this.starBoostIsActive === false &&
-        distance < this.mainCharacter.getSize().x + enemy.getSize().x - 80 &&
-        distance < this.mainCharacter.getSize().y + enemy.getSize().y - 70
-      ) {
-        game.activeScene = "end";
-      } else if (
-        this.starBoostIsActive === true &&
-        distance < this.mainCharacter.getSize().x + enemy.getSize().x - 80 &&
-        distance < this.mainCharacter.getSize().y + enemy.getSize().y - 70
-      ) {
-        sounds.enemyDeath.play();
-        this.enemies.splice(this.enemies.indexOf(enemy), 1);
-        this.score += 100;
-        setTimeout(() => (this.starBoostIsActive = false), 10000);
       }
     }
 
@@ -243,7 +222,7 @@ class GameBoard {
       let y = height;
       let position = createVector(x, y);
       let enemy = new Enemy(position);
-      this.enemies.push(enemy);
+      this.entities.push(enemy);
       this.canGenerateEnemy = false;
     } else {
       return;
@@ -308,19 +287,19 @@ class GameBoard {
   }
   private updateEnemies() {
     if (this.canGenerateEnemy === true) {
-      for (let i = 0; i < this.enemies.length; i++) {
-        let enemy = this.enemies[i];
-        if (enemy.getPosition().y > height) {
-          this.enemies.splice(i, 1);
-          let x = random(0, width - 220);
-          let position = createVector(x, 0);
-          let newEnemy = new Enemy(position);
-          this.enemies.push(newEnemy);
-          this.canGenerateEnemy = false;
-        } else {
-          return;
-        }
-      }
+      // for (let i = 0; i < this.enemies.length; i++) {
+      //   let enemy = this.enemies[i];
+      //   if (enemy.getPosition().y > height) {
+      //     this.enemies.splice(i, 1);
+      //     let x = random(0, width - 220);
+      //     let position = createVector(x, 0);
+      //     let newEnemy = new Enemy(position);
+      //     this.enemies.push(newEnemy);
+      //     this.canGenerateEnemy = false;
+      //   } else {
+      //     return;
+      //   }
+      // }
     }
   }
 
@@ -329,7 +308,7 @@ class GameBoard {
     let y = height;
     let position = createVector(200, y - 150);
     let platform = new Platform(position);
-    this.platforms.push(platform);
+    this.entities.push(platform);
   }
   private updateBalloonBoosts() {
     if (this.canGenerateBalloonBoost === true) {
@@ -376,7 +355,7 @@ class GameBoard {
       let x = random(0, width - 220);
       let position = createVector(x, y);
       let platform = new Platform(position);
-      this.platforms.push(platform);
+      this.entities.push(platform);
       y -= 120;
     }
   }
@@ -386,14 +365,14 @@ class GameBoard {
     // and keeps track of the score by increasing it for each platform that reaches the bottom
     // and gets removed plus adds a multiplier for the score that makes the platform award
     // a higher score the further that the player gets in the game
-    for (let i = 0; i < this.platforms.length; i++) {
-      let platform = this.platforms[i];
+    for (let i = 0; i < this.entities.length; i++) {
+      let platform = this.entities[i];
       if (platform.getPosition().y > height) {
-        this.platforms.splice(i, 1);
+        this.entities.splice(i, 1);
         let x = random(0, width - 220);
         let position = createVector(x, 0);
         let newPlatform = new Platform(position);
-        this.platforms.push(newPlatform);
+        this.entities.push(newPlatform);
         this.score += 1 * this.scoreMultiplier;
         this.timeSinceLastMultiplierIncrease += 1;
         console.log(this.timeSinceLastMultiplierIncrease);
@@ -426,31 +405,19 @@ class GameBoard {
       this.mainCharacter.getPosition().y < height * 0.5 &&
       this.mainCharacter.getIsJumping()
     ) {
-      for (let platform of this.platforms) {
-        platform.getPosition().y += 4.7;
-        this.mainCharacter.getPosition().y += 0.5;
-      }
-      for (let enemy of this.enemies) {
-        enemy.getPosition().y += 4.7;
-        this.mainCharacter.getPosition().y += 0.5;
-      }
-      for (let balloonBoost of this.balloonBoosts) {
-        balloonBoost.getPosition().y += 4.7;
-        this.mainCharacter.getPosition().y += 0.5;
-      }
-      for (let rocketBoost of this.rocketBoosts) {
-        rocketBoost.getPosition().y += 4.7;
-        this.mainCharacter.getPosition().y += 0.5;
-      }
-      for (let starBoost of this.starBoosts) {
-        starBoost.getPosition().y += 4.7;
-        this.mainCharacter.getPosition().y += 0.5;
+      
+      for (let entity of this.entities) {
+        if (entity instanceof MainCharacter) {
+          this.mainCharacter.getPosition().y += 6;
+        } else {
+          entity.getPosition().y += 4.7;
+        }
       }
     }
     // Adjusting position/speed of Bumpy and platforms when triggered by RocketBoost-entity
     // TODO: remove enemies and other boosts from spawning during duration of boost
     if (this.isRocketBoostActive === true) {
-      for (let platform of this.platforms) {
+      for (let platform of this.entities) {
         this.mainCharacter.getVelocity().y = -4.9;
         platform.getPosition().y += 17;
         this.mainCharacter.getPosition().y += 1.62;
@@ -459,7 +426,7 @@ class GameBoard {
     }
 
     if (this.isBalloonBoostActive === true) {
-      for (let platform of this.platforms) {
+      for (let platform of this.entities) {
         this.mainCharacter.getVelocity().y = -4.9;
         platform.getPosition().y += 10;
         this.mainCharacter.getPosition().y += 1.62;
@@ -483,13 +450,13 @@ class GameBoard {
       setTimeout(() => (this.canMoveBalloonBoost = true), 4000);
     }
 
-    if (this.canMoveEnemy === true) {
-      this.enemies.forEach((enemy) => (enemy.getPosition().x -= 1));
-      setTimeout(() => (this.canMoveEnemy = false), 2000);
-    } else {
-      this.enemies.forEach((enemy) => (enemy.getPosition().x += 1));
-      setTimeout(() => (this.canMoveEnemy = true), 2000);
-    }
+    // if (this.canMoveEnemy === true) {
+    //   this.enemies.forEach((enemy) => (enemy.getPosition().x -= 1));
+    //   setTimeout(() => (this.canMoveEnemy = false), 2000);
+    // } else {
+    //   this.enemies.forEach((enemy) => (enemy.getPosition().x += 1));
+    //   setTimeout(() => (this.canMoveEnemy = true), 2000);
+    // }
   }
 
   private detectImgChange() {

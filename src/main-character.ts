@@ -5,8 +5,10 @@ class MainCharacter extends Entity {
   private speed: number;
   public bullets: Shoot[];
   private canShoot: boolean | undefined;
+  private board: IBoard;
 
-  constructor() {
+
+  constructor(board: IBoard) {
     super(
       createVector(width * 0.4, height * 0.29),
       createVector(0, 0),
@@ -14,6 +16,7 @@ class MainCharacter extends Entity {
       createVector(70, 80),
       images.bumpy
     );
+    this.board = board;
     //private handleCollisions()
     //private jump()
     //private shoot()
@@ -74,6 +77,7 @@ class MainCharacter extends Entity {
         createVector(this.position.x + 25, this.position.y)
       );
       // let bullet = new Bullet(this.position.x, this.position.y);
+      this.board.addBullet(bullet);
       this.bullets.push(bullet);
     } else {
       return;

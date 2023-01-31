@@ -16,11 +16,7 @@ class Enemy extends Entity {
     // this.img = img;
   }
 
-  public getPosition(): p5.Vector {
-    return this.position;
-  }
-
-  public getSize(): p5.Vector {
-    return this.size;
+  public getHitBox(): p5.Vector {
+    return this.size.copy().sub(20, 20);
   }
 }
