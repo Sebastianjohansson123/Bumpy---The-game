@@ -24,7 +24,6 @@ class GameBoard {
   private canGenerateStarBoost: boolean | undefined;
   private starBoostIsActive: boolean;
 
-
   constructor() {
     this.mainCharacter = new MainCharacter();
     this.platforms = [];
@@ -44,11 +43,11 @@ class GameBoard {
     this.canGenerateRocketBoost = false;
     this.isRocketBoostActive = false;
     this.isBalloonBoostActive = false;
-    sounds.song. loop(); 
+    sounds.song.loop();
     this.canGenerateStarBoost = false;
     this.starBoostIsActive = false;
   }
-  
+
   public update() {
     this.mainCharacter.update();
     this.detectCollision();
@@ -392,7 +391,6 @@ class GameBoard {
     }
   }
 
-
   private updateEnemyBoss() {
     if (this.canGenerateEnemyBoss === true) {
       for (let i = 0; i < this.enemyBoss.length; i++) {
@@ -405,14 +403,13 @@ class GameBoard {
           this.enemyBoss.push(newEnemyBoss);
           this.canGenerateEnemyBoss = false;
           this.bossAlreadyGenerated = true;
-          console.log("BOSS TIME")
+          console.log("BOSS TIME");
         } else {
           return;
         }
       }
     }
   }
-
 
   // creates a platform at the start of the game that spawns below Bumpy
   private generateBottomPlatform() {
@@ -514,7 +511,10 @@ class GameBoard {
           this.canGenerateRocketBoost = true;
           // this.canGenerateBalloonBoost = true;
         }
-        if (this.scoreMultiplier === 20 && this.bossAlreadyGenerated === false) {
+        if (
+          this.scoreMultiplier === 20 &&
+          this.bossAlreadyGenerated === false
+        ) {
           this.canGenerateEnemyBoss = true;
         }
       }
@@ -556,8 +556,8 @@ class GameBoard {
     if (this.isRocketBoostActive === true) {
       for (let platform of this.platforms) {
         this.mainCharacter.getVelocity().y = -4.9;
-        platform.getPosition().y += 17;
-        this.mainCharacter.getPosition().y += 1.62;
+        platform.getPosition().y += 20;
+        this.mainCharacter.getPosition().y += 0.5;
       }
       setTimeout(() => (this.isRocketBoostActive = false), 1200);
     }
@@ -566,7 +566,7 @@ class GameBoard {
       for (let platform of this.platforms) {
         this.mainCharacter.getVelocity().y = -4.9;
         platform.getPosition().y += 10;
-        this.mainCharacter.getPosition().y += 1.62;
+        this.mainCharacter.getPosition().y += 0.5;
       }
       setTimeout(() => (this.isBalloonBoostActive = false), 1500);
     }
