@@ -23,7 +23,7 @@ class Scoreboard {
     this.btnExitScoreBoard.draw();
     images.xBtn, 376, 173, 11, 11;
     this.drawRects();
-    image(images.bumpy, 50, 450);
+    image(images.bumpyBlink_gif, 50, 450, 152, 193);
     image(images.crown, 164, 182, 40, 40);
   }
 
