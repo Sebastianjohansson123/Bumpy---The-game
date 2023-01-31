@@ -99,6 +99,7 @@ function setup() {
   sounds.song.setVolume(0.05);
   // song.loop();
   createCanvas(550, 720);
+  // Adjusts screen if windowheight is less than 720px
   if (windowHeight < 720) {
     createCanvas(550, windowHeight);
   }
