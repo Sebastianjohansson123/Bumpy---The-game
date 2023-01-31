@@ -18,6 +18,7 @@ class GameBoard {
   private isRocketBoostActive: boolean;
   private isBalloonBoostActive: boolean;
   private canChangeBackgroundImg: boolean;
+  private transitionProgress: number;
 
   constructor() {
     this.mainCharacter = new MainCharacter();
@@ -34,6 +35,7 @@ class GameBoard {
     this.isRocketBoostActive = false;
     this.isBalloonBoostActive = false;
     this.canChangeBackgroundImg = true;
+    this.transitionProgress = 0;
   }
   public update() {
     this.mainCharacter.update();
