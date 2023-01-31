@@ -23,6 +23,7 @@ class GameBoard {
   private starBoosts: StarBoost[];
   private canGenerateStarBoost: boolean | undefined;
   private starBoostIsActive: boolean;
+  private powerUpAlreadyGenerated: boolean;
 
 
   constructor() {
@@ -47,6 +48,7 @@ class GameBoard {
     sounds.song. loop(); 
     this.canGenerateStarBoost = false;
     this.starBoostIsActive = false;
+    this.powerUpAlreadyGenerated = false;
   }
   
   public update() {
@@ -65,6 +67,7 @@ class GameBoard {
     this.detectImgChange();
     this.updateStarBoosts();
     this.generateStarBoost();
+    this.filterPowerUps();
   }
 
   public draw() {
@@ -488,35 +491,49 @@ class GameBoard {
         this.score += 1 * this.scoreMultiplier;
         this.timeSinceLastMultiplierIncrease += 1;
         console.log(this.timeSinceLastMultiplierIncrease);
-        if (this.timeSinceLastMultiplierIncrease === 20) {
-          this.canGenerateBalloonBoost = true;
-          this.scoreMultiplier += 1;
-          this.timeSinceLastMultiplierIncrease = 0;
-        }
 
-        if (this.timeSinceLastMultiplierIncrease === 20) {
+
+
+
+        if (this.timeSinceLastMultiplierIncrease === 30) {
           this.scoreMultiplier += 1;
           this.timeSinceLastMultiplierIncrease = 0;
         }
         if (this.timeSinceLastMultiplierIncrease === 10) {
           this.canGenerateEnemy = true;
         }
-        if (this.timeSinceLastMultiplierIncrease === 5) {
-          this.canGenerateStarBoost = true;
+        if (this.timeSinceLastMultiplierIncrease === 2) {
+          this.powerUpAlreadyGenerated = false;
         }
         if (this.timeSinceLastMultiplierIncrease === 15 && this.score > 8000) {
           this.bossAlreadyGenerated = false;
         }
-        if (this.timeSinceLastMultiplierIncrease === 19 && this.score > 8000) {
+        if (this.timeSinceLastMultiplierIncrease === 25 && this.score > 8000) {
           this.canGenerateEnemyBoss = true;
         }
-        if (this.timeSinceLastMultiplierIncrease === 1) {
-          this.canGenerateRocketBoost = true;
-          // this.canGenerateBalloonBoost = true;
-        }
-        if (this.scoreMultiplier === 20 && this.bossAlreadyGenerated === false) {
+        if (this.scoreMultiplier === 10 && this.bossAlreadyGenerated === false) {
           this.canGenerateEnemyBoss = true;
         }
+      }
+    }
+  }
+  private filterPowerUps() {
+    if (this.timeSinceLastMultiplierIncrease === 15 && this.powerUpAlreadyGenerated === false) {
+      let powerUpsNumber:number = Math.random()
+      if (powerUpsNumber < 0.40) {
+        this.canGenerateBalloonBoost = true;
+        console.log("0-40")
+        this.powerUpAlreadyGenerated = true;
+      }
+      if (powerUpsNumber < 0.70 && powerUpsNumber > 0.40) {
+        this.canGenerateRocketBoost = true;
+        console.log("40-70")
+        this.powerUpAlreadyGenerated = true;
+      }
+      if (powerUpsNumber > 0.70) {
+        this.canGenerateStarBoost = true;
+        console.log("70-100")
+        this.powerUpAlreadyGenerated = true;
       }
     }
   }
