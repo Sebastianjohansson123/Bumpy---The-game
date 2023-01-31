@@ -18,8 +18,8 @@ class GameBoard implements IBoard {
   private canMoveBalloonBoost: boolean = false;
   private balloonBoosts: BalloonBoost[];
   private rocketBoosts: RocketBoost[];
-  private isRocketBoostActive: boolean;
-  private isBalloonBoostActive: boolean;
+  private rocketBoostIsActive: boolean;
+  private balloonBoostIsActive: boolean;
   private starBoosts: StarBoost[];
   private canGenerateStarBoost: boolean | undefined;
   private starBoostIsActive: boolean;
@@ -37,8 +37,8 @@ class GameBoard implements IBoard {
     this.canGenerateEnemy = false;
     this.canGenerateBalloonBoost = false;
     this.canGenerateRocketBoost = false;
-    this.isRocketBoostActive = false;
-    this.isBalloonBoostActive = false;
+    this.rocketBoostIsActive = false;
+    this.balloonBoostIsActive = false;
     this.canGenerateStarBoost = false;
     this.starBoostIsActive = false;
   }
@@ -151,7 +151,7 @@ class GameBoard implements IBoard {
           otherEntity instanceof MainCharacter
         ) {
           if (this.entitiesOverlap(entity, otherEntity)) {
-            this.isBalloonBoostActive = true;
+            this.balloonBoostIsActive = true;
             this.entities.splice(this.entities.indexOf(entity), 1);
           }
         }
@@ -161,7 +161,7 @@ class GameBoard implements IBoard {
           otherEntity instanceof MainCharacter
         ) {
           if (this.entitiesOverlap(entity, otherEntity)) {
-            this.isRocketBoostActive = true;
+            this.rocketBoostIsActive = true;
             this.entities.splice(this.entities.indexOf(entity), 1);
           }
         }
@@ -394,22 +394,22 @@ class GameBoard implements IBoard {
     }
     // Adjusting position/speed of Bumpy and platforms when triggered by RocketBoost-entity
     // TODO: remove enemies and other boosts from spawning during duration of boost
-    if (this.isRocketBoostActive === true) {
+    if (this.rocketBoostIsActive === true) {
       for (let platform of this.entities) {
         this.mainCharacter.getVelocity().y = -4.9;
         platform.getPosition().y += 17;
         this.mainCharacter.getPosition().y += 1.62;
       }
-      setTimeout(() => (this.isRocketBoostActive = false), 1200);
+      setTimeout(() => (this.rocketBoostIsActive = false), 1200);
     }
 
-    if (this.isBalloonBoostActive === true) {
+    if (this.balloonBoostIsActive === true) {
       for (let platform of this.entities) {
         this.mainCharacter.getVelocity().y = -4.9;
         platform.getPosition().y += 10;
         this.mainCharacter.getPosition().y += 1.62;
       }
-      setTimeout(() => (this.isBalloonBoostActive = false), 1500);
+      setTimeout(() => (this.balloonBoostIsActive = false), 1500);
     }
 
     this.balloonBoosts.forEach(
@@ -438,7 +438,7 @@ class GameBoard implements IBoard {
   }
 
   private detectImgChange() {
-    if (this.isRocketBoostActive === true) {
+    if (this.rocketBoostIsActive === true) {
       this.mainCharacter.setImg(images.bumpyRocket_gif);
       this.mainCharacter.setSize(new p5.Vector(153, 175));
     } else {
