@@ -1,26 +1,26 @@
 class HowToPlay {
-  private btnExit: Button;
+  private btnExitHowToPlay: Button;
 
   constructor() {
-    this.btnExit = new Button(
+    this.btnExitHowToPlay = new Button(
       images.xBtn,
       new p5.Vector(376, 173),
       new p5.Vector(15, 15)
     );
-    this.btnExit.onClickCallback = () => {
+    this.btnExitHowToPlay.onClickCallback = () => {
       game.activeScene = "start";
     };
   }
 
   public update() {
-    this.btnExit.update();
+    this.btnExitHowToPlay.update();
   }
 
   public draw() {
     image(images.bg, 0, 0);
     image(images.talkingBubble, 150, 150, 249, 350);
     this.drawTitle();
-    this.btnExit.draw();
+    this.btnExitHowToPlay.draw();
     images.xBtn.resize(11, 11);
     image(images.howToPlayKeys, 162, 355, 130, 70);
     image(images.bumpyBlink_gif, 50, 450, 152, 193);
