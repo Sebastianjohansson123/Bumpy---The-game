@@ -512,7 +512,7 @@ class GameBoard {
         if (this.timeSinceLastMultiplierIncrease === 25 && this.score > 8000) {
           this.canGenerateEnemyBoss = true;
         }
-        if (this.scoreMultiplier === 10 && this.bossAlreadyGenerated === false) {
+        if (this.scoreMultiplier === 5 && this.bossAlreadyGenerated === false) {
           this.canGenerateEnemyBoss = true;
         }
       }
