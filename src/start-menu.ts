@@ -10,7 +10,7 @@ class StartMenu {
     this.soundOn = true;
     const centerX = width * 0.5;
 
-    // Draws the buttons on the canvas
+    // Creates the buttons on the canvas
     this.btnPlayGame = new Button(
       "Play Game",
       new p5.Vector(centerX, 230),
