@@ -1,25 +1,29 @@
 class EndMenu {
-  //private highscore: number;
-  //private score: number;
   private btnPlayAgain: Button;
   private btnMenu: Button;
 
   constructor() {
+
+    // Adds the button in the position center x of canvas
     const centerX = width * 0.5;
+
+    // Creates buttons
     this.btnPlayAgain = new Button(
       "PLAY AGAIN",
       new p5.Vector(centerX, 290),
       new p5.Vector(220, 60)
     );
-    this.btnPlayAgain.onClickCallback = () => {
-      game.resetGameBoard();
-      game.activeScene = "play";
-    };
     this.btnMenu = new Button(
       "MENU",
       new p5.Vector(centerX, 350),
       new p5.Vector(140, 40)
     );
+
+    // Callback functions for click events on buttons
+    this.btnPlayAgain.onClickCallback = () => {
+      game.resetGameBoard();
+      game.activeScene = "play";
+    };
     this.btnMenu.onClickCallback = () => {
       game.activeScene = "start";
     };
@@ -30,6 +34,9 @@ class EndMenu {
     this.btnMenu.update();
   }
 
+  /**
+   * Draws images, buttons and title on the canvas
+   */
   public draw() {
     image(images.bg, 0, 0);
     this.drawTitle();
@@ -38,6 +45,9 @@ class EndMenu {
     image(images.bumpyBlinkCry_gif, 75, 310, 400, 400);
   }
 
+  /**
+   * Draws title "Game over", score for current game and highscore
+   */
   private drawTitle() {
     push();
     fill("#FFFFFF");
