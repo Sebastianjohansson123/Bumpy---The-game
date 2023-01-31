@@ -17,8 +17,9 @@ class GameBoard {
   private rocketBoosts: RocketBoost[];
   private isRocketBoostActive: boolean;
   private isBalloonBoostActive: boolean;
-  private canChangeBackgroundImg: boolean;
-  private transitionProgress: number;
+  private nextBackgroundIndex: number;
+  private transitionStartTime: number;
+  private transitionDuration: number;
 
   constructor() {
     this.mainCharacter = new MainCharacter();
@@ -34,8 +35,11 @@ class GameBoard {
     this.canGenerateRocketBoost = false;
     this.isRocketBoostActive = false;
     this.isBalloonBoostActive = false;
-    this.canChangeBackgroundImg = true;
-    this.transitionProgress = 0;
+    this.currentBackgroundIndex = 0;
+    this.nextBackgroundIndex = 0;
+    this.backgroundChangeScoreIncrement = 50;
+    this.transitionStartTime = 0;
+    this.transitionDuration = 0;
   }
   public update() {
     this.mainCharacter.update();
@@ -65,24 +69,39 @@ class GameBoard {
   // a new background image. Can be expanded with additional
   // bgimages and added transition effects
   private drawBackground() {
-    if (this.timeSinceLastMultiplierIncrease === this.backgroundChangeScoreIncrement
-      && this.canChangeBackgroundImg === true) {
-      this.currentBackgroundIndex += 1;
-      this.canChangeBackgroundImg = false;
-      // this.backgroundChangeScoreIncrement += 20;
+    if (this.score >= this.backgroundChangeScoreIncrement) {
+      this.nextBackgroundIndex =
+        (this.currentBackgroundIndex + 1) % images.backgrounds.length;
+      this.backgroundChangeScoreIncrement += 50;
+      this.transitionStartTime = millis();
+      this.transitionDuration = 1000; // transition lasts 1 second
     }
-    if (this.timeSinceLastMultiplierIncrease === 15) {
-      this.canChangeBackgroundImg = true;
-    }
-    images.backgrounds[this.currentBackgroundIndex];
-    let repeatCount =
-      height / images.backgrounds[this.currentBackgroundIndex].height + 1;
-    for (let i = 0; i < repeatCount; i++) {
-      image(
-        images.backgrounds[this.currentBackgroundIndex],
-        0,
-        i * images.backgrounds[this.currentBackgroundIndex].height
-      );
+    if (this.nextBackgroundIndex !== this.currentBackgroundIndex) {
+      let elapsedTime = millis() - this.transitionStartTime;
+      let t = constrain(elapsedTime / this.transitionDuration, 0, 1);
+      let oldBackgroundOpacity = (1 - t) * 255;
+      let newBackgroundOpacity = t * 255;
+      push();
+      tint(255, oldBackgroundOpacity);
+      image(images.backgrounds[this.currentBackgroundIndex],0,0,width,height);
+      pop();
+      push();
+      tint(255, newBackgroundOpacity);
+      image(images.backgrounds[this.nextBackgroundIndex], 0, 0, width, height);
+      pop();
+      if (elapsedTime >= this.transitionDuration) {
+        this.currentBackgroundIndex = this.nextBackgroundIndex;
+      }
+    } else {
+      let repeatCount =
+        height / images.backgrounds[this.currentBackgroundIndex].height + 1;
+      for (let i = 0; i < repeatCount; i++) {
+        image(
+          images.backgrounds[this.currentBackgroundIndex],
+          0,
+          i * images.backgrounds[this.currentBackgroundIndex].height
+        );
+      }
     }
   }
 
