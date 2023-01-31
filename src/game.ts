@@ -27,7 +27,6 @@ class Game {
   }
 
   public update() {
-    this.updateHighscores();
     if (this.activeScene === "start") {
       this.startMenu.update();
     } else if (this.activeScene === "howtoplay") {
@@ -38,6 +37,7 @@ class Game {
       this.gameBoard.update();
     } else if (this.activeScene === "end") {
       this.endMenu.update();
+      this.updateHighscores();
     }
   }
 
