@@ -12,18 +12,21 @@ class GameBoard {
   private canGenerateBalloonBoost: boolean | undefined;
   private canGenerateRocketBoost: boolean | undefined;
   private currentBackgroundIndex: number = 0;
-  private backgroundChangeScoreIncrement: number = 8;
+  private backgroundChangeScoreIncrement: number = 30;
   private canMoveEnemy: boolean = false;
   private canMoveBalloonBoost: boolean = false;
   private balloonBoosts: BalloonBoost[];
   private rocketBoosts: RocketBoost[];
   private isRocketBoostActive: boolean;
   private isBalloonBoostActive: boolean;
+
+  private nextBackgroundIndex: number;
+  private transitionStartTime: number;
+  private transitionDuration: number;
   private bossAlreadyGenerated: boolean;
   private starBoosts: StarBoost[];
   private canGenerateStarBoost: boolean | undefined;
   private starBoostIsActive: boolean;
-
 
   constructor() {
     this.mainCharacter = new MainCharacter();
@@ -44,11 +47,16 @@ class GameBoard {
     this.canGenerateRocketBoost = false;
     this.isRocketBoostActive = false;
     this.isBalloonBoostActive = false;
-    sounds.song. loop(); 
+    this.currentBackgroundIndex = 0;
+    this.nextBackgroundIndex = 0;
+    this.backgroundChangeScoreIncrement = 50;
+    this.transitionStartTime = 0;
+    this.transitionDuration = 0;
+    sounds.song.loop();
     this.canGenerateStarBoost = false;
     this.starBoostIsActive = false;
   }
-  
+
   public update() {
     this.mainCharacter.update();
     this.detectCollision();
@@ -85,19 +93,38 @@ class GameBoard {
   // bgimages and added transition effects
   private drawBackground() {
     if (this.score >= this.backgroundChangeScoreIncrement) {
-      this.currentBackgroundIndex =
+      this.nextBackgroundIndex =
         (this.currentBackgroundIndex + 1) % images.backgrounds.length;
-      this.backgroundChangeScoreIncrement += 500;
+      this.backgroundChangeScoreIncrement += 50;
+      this.transitionStartTime = millis();
+      this.transitionDuration = 1000; // transition lasts 1 second
     }
-    images.backgrounds[this.currentBackgroundIndex];
-    let repeatCount =
-      height / images.backgrounds[this.currentBackgroundIndex].height + 1;
-    for (let i = 0; i < repeatCount; i++) {
-      image(
-        images.backgrounds[this.currentBackgroundIndex],
-        0,
-        i * images.backgrounds[this.currentBackgroundIndex].height
-      );
+    if (this.nextBackgroundIndex !== this.currentBackgroundIndex) {
+      let elapsedTime = millis() - this.transitionStartTime;
+      let t = constrain(elapsedTime / this.transitionDuration, 0, 1);
+      let oldBackgroundOpacity = (1 - t) * 255;
+      let newBackgroundOpacity = t * 255;
+      push();
+      tint(255, oldBackgroundOpacity);
+      image(images.backgrounds[this.currentBackgroundIndex],0,0,width,height);
+      pop();
+      push();
+      tint(255, newBackgroundOpacity);
+      image(images.backgrounds[this.nextBackgroundIndex], 0, 0, width, height);
+      pop();
+      if (elapsedTime >= this.transitionDuration) {
+        this.currentBackgroundIndex = this.nextBackgroundIndex;
+      }
+    } else {
+      let repeatCount =
+        height / images.backgrounds[this.currentBackgroundIndex].height + 1;
+      for (let i = 0; i < repeatCount; i++) {
+        image(
+          images.backgrounds[this.currentBackgroundIndex],
+          0,
+          i * images.backgrounds[this.currentBackgroundIndex].height
+        );
+      }
     }
   }
 
@@ -231,6 +258,7 @@ class GameBoard {
         distance < this.mainCharacter.getSize().y + starBoost.getSize().y - 70
       ) {
         this.starBoostIsActive = true;
+        sounds.starBoostSound.play();
         this.starBoosts.splice(this.starBoosts.indexOf(starBoost), 1);
       }
     }
@@ -269,9 +297,11 @@ class GameBoard {
       ) {
         this.balloonBoosts.splice(this.balloonBoosts.indexOf(balloonBoost), 1);
         this.isBalloonBoostActive = true;
+        sounds.balloonSound.play();
         this.score += 100;
       }
     }
+
     //Checks if mainCharacter collides with rocketBoost
     for (let rocketBoost of this.rocketBoosts) {
       let distance = dist(
@@ -288,6 +318,7 @@ class GameBoard {
         this.rocketBoosts.splice(this.rocketBoosts.indexOf(rocketBoost), 1);
         // this.score += 100;
         this.isRocketBoostActive = true;
+        sounds.rocketSound.play();
       }
     }
   }
@@ -392,7 +423,6 @@ class GameBoard {
     }
   }
 
-
   private updateEnemyBoss() {
     if (this.canGenerateEnemyBoss === true) {
       for (let i = 0; i < this.enemyBoss.length; i++) {
@@ -405,14 +435,13 @@ class GameBoard {
           this.enemyBoss.push(newEnemyBoss);
           this.canGenerateEnemyBoss = false;
           this.bossAlreadyGenerated = true;
-          console.log("BOSS TIME")
+          console.log("BOSS TIME");
         } else {
           return;
         }
       }
     }
   }
-
 
   // creates a platform at the start of the game that spawns below Bumpy
   private generateBottomPlatform() {
@@ -488,7 +517,7 @@ class GameBoard {
         this.score += 1 * this.scoreMultiplier;
         this.timeSinceLastMultiplierIncrease += 1;
         console.log(this.timeSinceLastMultiplierIncrease);
-        if (this.timeSinceLastMultiplierIncrease === 20) {
+        if (this.timeSinceLastMultiplierIncrease === 30) {
           this.canGenerateBalloonBoost = true;
           this.scoreMultiplier += 1;
           this.timeSinceLastMultiplierIncrease = 0;
@@ -514,7 +543,10 @@ class GameBoard {
           this.canGenerateRocketBoost = true;
           // this.canGenerateBalloonBoost = true;
         }
-        if (this.scoreMultiplier === 20 && this.bossAlreadyGenerated === false) {
+        if (
+          this.scoreMultiplier === 20 &&
+          this.bossAlreadyGenerated === false
+        ) {
           this.canGenerateEnemyBoss = true;
         }
       }
@@ -556,8 +588,8 @@ class GameBoard {
     if (this.isRocketBoostActive === true) {
       for (let platform of this.platforms) {
         this.mainCharacter.getVelocity().y = -4.9;
-        platform.getPosition().y += 17;
-        this.mainCharacter.getPosition().y += 1.62;
+        platform.getPosition().y += 20;
+        this.mainCharacter.getPosition().y += 0.5;
       }
       setTimeout(() => (this.isRocketBoostActive = false), 1200);
     }
@@ -566,7 +598,7 @@ class GameBoard {
       for (let platform of this.platforms) {
         this.mainCharacter.getVelocity().y = -4.9;
         platform.getPosition().y += 10;
-        this.mainCharacter.getPosition().y += 1.62;
+        this.mainCharacter.getPosition().y += 0.5;
       }
       setTimeout(() => (this.isBalloonBoostActive = false), 1500);
     }
