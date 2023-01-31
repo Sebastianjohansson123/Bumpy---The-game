@@ -101,7 +101,10 @@ function setup() {
   sounds.song.setVolume(0.02);
   //sounds.song.loop();
   createCanvas(550, 720);
-  // heightOnBg = 0;
+  // Adjusts screen if windowheight is less than 720px
+  if (windowHeight < 720) {
+    createCanvas(550, windowHeight);
+  }
   frameRate(60);
   game = new Game();
 }
