@@ -1,12 +1,12 @@
 /// <reference path="entity.ts"  />
-class Shoot extends Entity {
+class Bubble extends Entity {
   constructor(position: p5.Vector) {
     super(
       position,
       createVector(0, 10),
       createVector(0, 0),
       createVector(15, 15),
-      images.bumpy
+      images.bubbleglow
     );
   }
 

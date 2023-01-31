@@ -11,14 +11,23 @@ interface Images {
   xBtn: p5.Image;
   howToPlayKeys: p5.Image;
   bumpySad: p5.Image;
+  star: p5.Image;
   balloon: p5.Image;
   backgrounds: p5.Image[];
   talkingBubble: p5.Image;
   rocket: p5.Image;
   enemy: p5.Image;
+  enemyBoss: p5.Image;
   soundOn: p5.Image;
   soundOff: p5.Image;
   upArrow: p5.Image;
+  bubbleglow: p5.Image;
+  bumpyBalloons_gif: p5.Image;
+  bumpyBlink_gif: p5.Image;
+  bumpyBlinkCry_gif: p5.Image;
+  bumpyFall_gif: p5.Image;
+  bumpyRocket_gif: p5.Image;
+  bumpyStar_gif: p5.Image;
 }
 
 interface Sounds {
@@ -26,6 +35,9 @@ interface Sounds {
   song: p5.SoundFile;
   jumpSound: p5.SoundFile;
   enemyDeath: p5.SoundFile;
+  starBoostSound: p5.SoundFile;
+  rocketSound: p5.SoundFile;
+  balloonSound: p5.SoundFile;
 }
 
 const Fonts = {
@@ -71,23 +83,35 @@ function preload() {
     bg: loadImage("./assets/images/bg1.png"),
     balloon: loadImage("./assets/images/balloon.png"),
     rocket: loadImage("./assets/images/rocket.png"),
+    star: loadImage("./assets/images/star.png"),
     soundOn: loadImage("./assets/images/soundon.png"),
     soundOff: loadImage("./assets/images/soundoff.png"),
     xBtn: loadImage("./assets/images/x-btn.png"),
     howToPlayKeys: loadImage("./assets/images/howtoplay-keys.png"),
     upArrow: loadImage("assets/images/up-arrow.png"),
     enemy: loadImage("./assets/images/enemy.png"),
+    enemyBoss: loadImage("./assets/images/boss.png"),
     platform: loadImage("./assets/images/platform.png"),
     bumpy: loadImage("./assets/images/bumpy.png"),
     bumpySad: loadImage("./assets/images/bumpy-sad.png"),
     talkingBubble: loadImage("./assets/images/bumpy-bubble.png"),
+    bubbleglow: loadImage("./assets/images/bubbleglow.png"),
+    bumpyBalloons_gif: loadImage("./assets/gif/bumpyballoonscropped.gif"),
+    bumpyBlink_gif: loadImage("./assets/gif/bumpyblinking.gif"),
+    bumpyBlinkCry_gif: loadImage("./assets/gif/bumpyblinkcry.gif"),
+    bumpyFall_gif: loadImage("./assets/gif/bumpyfall.gif"),
+    bumpyRocket_gif: loadImage("./assets/gif/bumpyrocketcropped.gif"),
+    bumpyStar_gif: loadImage("./assets/gif/bumpystarcropped.gif"),
   };
 
   sounds = {
     bulletSound: loadSound("./assets/sounds/bullet.mp3"),
-    song: loadSound("./assets/music/bumpy.mp3"),
+    song: loadSound("./assets/music/bumpy-theme1v2.mp3"),
     jumpSound: loadSound("./assets/sounds/jump.wav"),
     enemyDeath: loadSound("./assets/sounds/enemy-death.wav"),
+    starBoostSound: loadSound("./assets/sounds/starBoost.mp3"),
+    rocketSound: loadSound("./assets/sounds/rocketSound.mp3"),
+    balloonSound: loadSound("./assets/sounds/balloonSound.mp3"),
   };
 }
 
@@ -102,15 +126,26 @@ function setup() {
   sounds.bulletSound.setVolume(0.1);
   sounds.jumpSound.setVolume(0.1);
   sounds.jumpSound = loadSound("./assets/sounds/jump.wav");
-  sounds.song = loadSound("./assets/music/bumpy.mp3");
+
+  // sounds.song = loadSound("./assets/music/bumpy.mp3");
   sounds.enemyDeath.setVolume(0.1);
+  sounds.song.setVolume(0.2);
 
-  sounds.song.setVolume(0.05);
-  // song.loop();
+  // Sounds for power-ups
+  sounds.starBoostSound = loadSound("./assets/sounds/starBoost.mp3");
+  sounds.starBoostSound.setVolume(0.4);
+  sounds.rocketSound = loadSound("./assets/sounds/rocketSound.mp3");
+  sounds.rocketSound.setVolume(0.4);
+  sounds.balloonSound = loadSound("./assets/sounds/balloonSound.mp3");
+  sounds.balloonSound.setVolume(0.4);
+
+  //sounds.song.loop();
   createCanvas(550, 720);
-  // heightOnBg = 0;
+  // Adjusts screen if windowheight is less than 720px
+  if (windowHeight < 720) {
+    createCanvas(550, windowHeight);
+  }
   frameRate(60);
-
   game = new Game();
 }
 
@@ -120,18 +155,6 @@ function setup() {
  * you created in the setup function above
  */
 function draw() {
-  //  heightOnBg++;
-  //  if (heightOnBg < 200) {
-  //    image(bg, 0, 0);
-  //  } else {
-  //   image(bg2, 0, 0);
-  //  }
-
-  // push()
-  // textFont(fonts.monsterFont);
-  // text("hello world", 0, 0);
-  // pop()
-
   game.update();
   game.draw();
 }
