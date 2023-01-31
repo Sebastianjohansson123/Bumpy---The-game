@@ -70,7 +70,7 @@ class StartMenu {
   }
 
   /**
-   * Draws the start menu with images and buttons on the canvas
+   * Draws the start menu with images, buttons and title on the canvas
    */
   public draw() {
     image(images.bg, 0, 0);
@@ -88,7 +88,7 @@ class StartMenu {
   }
 
   /**
-   * Draws the title of the game on the canvas
+   * Draws the title of the game
    */
   private drawTitle() {
     push();

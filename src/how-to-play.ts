@@ -2,11 +2,13 @@ class HowToPlay {
   private btnExit: Button;
 
   constructor() {
+    // Exit button
     this.btnExit = new Button(
       images.xBtn,
       new p5.Vector(376, 173),
       new p5.Vector(15, 15)
     );
+    
     this.btnExit.onClickCallback = () => {
       game.activeScene = "start";
     };
@@ -16,6 +18,9 @@ class HowToPlay {
     this.btnExit.update();
   }
 
+  /**
+   * Draws the images, exit button, title and how to play instructions on the canvas
+   */
   public draw() {
     image(images.bg, 0, 0);
     image(images.talkingBubble, 150, 150, 249, 350);
@@ -26,6 +31,9 @@ class HowToPlay {
     image(images.bumpyBlink_gif, 50, 450, 152, 193);
   }
 
+  /**
+   * Draws the title of the game and how to play instructions
+   */
   private drawTitle() {
     push();
     fill("#3A1458");
