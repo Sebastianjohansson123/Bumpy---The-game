@@ -68,12 +68,12 @@ function preload() {
     bumpy: loadImage("./assets/images/bumpy.png"),
     bumpySad: loadImage("./assets/images/bumpy-sad.png"),
     talkingBubble: loadImage("./assets/images/bumpy-bubble.png"),
-    bumpyBalloons_gif: loadImage("./assets/gif/bumpyballoons.gif"),
+    bumpyBalloons_gif: loadImage("./assets/gif/bumpyballoonscropped.gif"),
     bumpyBlink_gif: loadImage("./assets/gif/bumpyblinking.gif"),
     bumpyBlinkCry_gif: loadImage("./assets/gif/bumpyblinkcry.gif"),
     bumpyFall_gif: loadImage("./assets/gif/bumpyfall.gif"),
-    bumpyRocket_gif: loadImage("./assets/gif/bumpyrocket.gif"),
-    bumpyStar_gif: loadImage("./assets/gif/bumpystar.gif"),
+    bumpyRocket_gif: loadImage("./assets/gif/bumpyrocketcropped.gif"),
+    bumpyStar_gif: loadImage("./assets/gif/bumpystarcropped.gif"),
   };
 
   sounds = {
