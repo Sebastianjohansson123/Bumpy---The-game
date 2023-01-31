@@ -10,6 +10,7 @@ class StartMenu {
     this.soundOn = true;
     const centerX = width * 0.5;
 
+    // Draws the buttons on the canvas
     this.btnPlayGame = new Button(
       "Play Game",
       new p5.Vector(centerX, 230),
@@ -36,6 +37,7 @@ class StartMenu {
       new p5.Vector(50, 50)
     );
 
+    // Toggles sound on and off 
     this.btnSoundOn.onClickCallback = () => {
       this.soundOn = !this.soundOn;
       if (this.soundOn) {
@@ -49,6 +51,7 @@ class StartMenu {
       }
     };
 
+    // Callback functions for click events on buttons
     this.btnPlayGame.onClickCallback = () => {
       game.activeScene = "play";
       game.resetGameBoard();
@@ -66,6 +69,9 @@ class StartMenu {
     this.btnSoundOff.update();
   }
 
+  /**
+   * Draws the start menu with images and buttons on the canvas
+   */
   public draw() {
     image(images.bg, 0, 0);
     image(images.talkingBubble, 150, 150, 249, 350);
@@ -81,6 +87,9 @@ class StartMenu {
     }
   }
 
+  /**
+   * Draws the title of the game on the canvas
+   */
   private drawTitle() {
     push();
     fill("#3A1458");
