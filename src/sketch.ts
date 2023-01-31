@@ -21,6 +21,7 @@ interface Images {
   soundOn: p5.Image;
   soundOff: p5.Image;
   upArrow: p5.Image;
+  bubbleglow: p5.Image;
   bumpyBalloons_gif: p5.Image;
   bumpyBlink_gif: p5.Image;
   bumpyBlinkCry_gif: p5.Image;
@@ -68,6 +69,7 @@ function preload() {
     bumpy: loadImage("./assets/images/bumpy.png"),
     bumpySad: loadImage("./assets/images/bumpy-sad.png"),
     talkingBubble: loadImage("./assets/images/bumpy-bubble.png"),
+    bubbleglow: loadImage("./assets/images/bubbleglow.png"),
     bumpyBalloons_gif: loadImage("./assets/gif/bumpyballoonscropped.gif"),
     bumpyBlink_gif: loadImage("./assets/gif/bumpyblinking.gif"),
     bumpyBlinkCry_gif: loadImage("./assets/gif/bumpyblinkcry.gif"),
