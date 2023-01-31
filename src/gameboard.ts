@@ -425,7 +425,7 @@ class GameBoard {
           this.canGenerateRocketBoost = true;
           // this.canGenerateBalloonBoost = true;
         }
-        if (this.scoreMultiplier === 20 && this.bossAlreadyGenerated === false) {
+        if (this.scoreMultiplier === 2 && this.bossAlreadyGenerated === false) {
           this.canGenerateEnemyBoss = true;
         }
       }
@@ -496,9 +496,11 @@ class GameBoard {
 
     if (this.canMoveEnemy === true) {
       this.enemies.forEach((enemy) => (enemy.getPosition().x -= 1));
+      this.enemyBoss.forEach((enemyBoss) => (enemyBoss.getPosition().x -= 3));
       setTimeout(() => (this.canMoveEnemy = false), 2000);
     } else {
       this.enemies.forEach((enemy) => (enemy.getPosition().x += 1));
+      this.enemyBoss.forEach((enemyBoss) => (enemyBoss.getPosition().x += 3));
       setTimeout(() => (this.canMoveEnemy = true), 2000);
     }
   }
