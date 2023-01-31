@@ -5,7 +5,7 @@ class RocketBoost extends Entity {
       position,
       createVector(0, 0),
       createVector(0, 0),
-      createVector(50, 90),
+      createVector(70, 110),
       images.rocket
     );
   }
