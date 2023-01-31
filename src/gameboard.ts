@@ -10,13 +10,14 @@ class GameBoard {
   private canGenerateBalloonBoost: boolean | undefined;
   private canGenerateRocketBoost: boolean | undefined;
   private currentBackgroundIndex: number = 0;
-  private backgroundChangeScoreIncrement: number = 8;
+  private backgroundChangeScoreIncrement: number = 30;
   private canMoveEnemy: boolean = false;
   private canMoveBalloonBoost: boolean = false;
   private balloonBoosts: BalloonBoost[];
   private rocketBoosts: RocketBoost[];
   private isRocketBoostActive: boolean;
   private isBalloonBoostActive: boolean;
+  private canChangeBackgroundImg: boolean;
 
   constructor() {
     this.mainCharacter = new MainCharacter();
@@ -32,6 +33,7 @@ class GameBoard {
     this.canGenerateRocketBoost = false;
     this.isRocketBoostActive = false;
     this.isBalloonBoostActive = false;
+    this.canChangeBackgroundImg = true;
   }
   public update() {
     this.mainCharacter.update();
@@ -61,10 +63,14 @@ class GameBoard {
   // a new background image. Can be expanded with additional
   // bgimages and added transition effects
   private drawBackground() {
-    if (this.score >= this.backgroundChangeScoreIncrement) {
-      this.currentBackgroundIndex =
-        (this.currentBackgroundIndex + 1) % images.backgrounds.length;
-      this.backgroundChangeScoreIncrement += 50;
+    if (this.timeSinceLastMultiplierIncrease === this.backgroundChangeScoreIncrement
+      && this.canChangeBackgroundImg === true) {
+      this.currentBackgroundIndex += 1;
+      this.canChangeBackgroundImg = false;
+      // this.backgroundChangeScoreIncrement += 20;
+    }
+    if (this.timeSinceLastMultiplierIncrease === 15) {
+      this.canChangeBackgroundImg = true;
     }
     images.backgrounds[this.currentBackgroundIndex];
     let repeatCount =
@@ -320,7 +326,7 @@ class GameBoard {
         this.score += 1 * this.scoreMultiplier;
         this.timeSinceLastMultiplierIncrease += 1;
         console.log(this.timeSinceLastMultiplierIncrease);
-        if (this.timeSinceLastMultiplierIncrease === 20) {
+        if (this.timeSinceLastMultiplierIncrease === 30) {
           this.canGenerateBalloonBoost = true;
           this.scoreMultiplier += 1;
           this.timeSinceLastMultiplierIncrease = 0;
