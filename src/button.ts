@@ -19,6 +19,9 @@ class Button {
     this.onClickCallback = () => {};
   }
 
+  /**
+   * Implementation for button click handling
+   */
   public update() {
     if (this.onClickCallback) {
       if (
@@ -36,28 +39,33 @@ class Button {
     }
   }
 
+  /**
+   * @param cb 
+   * Callback function for button click event
+   */
   public onClick(cb: () => void) {
     this.onClickCallback = cb;
   }
 
+  /**
+   * Draws the shape of the button with color and content
+   */
   public draw() {
     push();
     noStroke();
-    // draws the rect for the button shape with hover effect
+    // creates hover effect on button
+    // if mouse is within the area of the rect, change fill color
     if (
       mouseX > this.position.x - this.size.x / 2 &&
       mouseX < this.position.x + this.size.x / 2 &&
       mouseY > this.position.y - this.size.y / 2 &&
       mouseY < this.position.y + this.size.y / 2
     ) {
-      // if mouse is within the area of the rect, change fill color
       fill("#FFFFFF"); // hover color
     } else {
       fill("#DFADD0"); // original color
     }
-
     noStroke();
-    // fill("#DFADD0");
     rectMode(CENTER);
     rect(
       this.position.x,
