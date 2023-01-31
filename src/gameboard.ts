@@ -523,17 +523,14 @@ class GameBoard {
       let powerUpsNumber:number = Math.random()
       if (powerUpsNumber < 0.40) {
         this.canGenerateBalloonBoost = true;
-        console.log("0-40")
         this.powerUpAlreadyGenerated = true;
       }
       if (powerUpsNumber < 0.70 && powerUpsNumber > 0.40) {
         this.canGenerateRocketBoost = true;
-        console.log("40-70")
         this.powerUpAlreadyGenerated = true;
       }
       if (powerUpsNumber > 0.70) {
         this.canGenerateStarBoost = true;
-        console.log("70-100")
         this.powerUpAlreadyGenerated = true;
       }
     }
