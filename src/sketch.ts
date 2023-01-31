@@ -83,12 +83,12 @@ function preload() {
 
   sounds = {
     bulletSound: loadSound("./assets/sounds/bullet.mp3"),
-    song: loadSound("./assets/music/bumpy.mp3"),
+    song: loadSound("./assets/music/bumpy-theme1v2.mp3"),
     jumpSound: loadSound("./assets/sounds/jump.wav"),
     enemyDeath: loadSound("./assets/sounds/enemy-death.wav"),
     starBoostSound: loadSound("./assets/sounds/starBoost.mp3"),
     rocketSound: loadSound("./assets/sounds/rocketSound.mp3"),
-    balloonSound: loadSound("./assets/sounds/balloonSound.mp3")
+    balloonSound: loadSound("./assets/sounds/balloonSound.mp3"),
   };
 }
 
@@ -103,10 +103,10 @@ function setup() {
   sounds.bulletSound.setVolume(0.1);
   sounds.jumpSound.setVolume(0.1);
   sounds.jumpSound = loadSound("./assets/sounds/jump.wav");
-  
+
   // sounds.song = loadSound("./assets/music/bumpy.mp3");
   sounds.enemyDeath.setVolume(0.1);
-  sounds.song.setVolume(0.02);
+  sounds.song.setVolume(0.2);
 
   // Sounds for power-ups
   sounds.starBoostSound = loadSound("./assets/sounds/starBoost.mp3");
