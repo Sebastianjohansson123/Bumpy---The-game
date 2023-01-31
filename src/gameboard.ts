@@ -195,6 +195,8 @@ class GameBoard implements IBoard {
     }
   }
 
+  private generateEntities() {}
+
   private generateEnemy() {
     if (this.canGenerateEnemy === true) {
       let x = random(0, width - 220);
