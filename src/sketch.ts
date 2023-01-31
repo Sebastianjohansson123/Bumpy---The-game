@@ -99,7 +99,9 @@ function setup() {
   sounds.song.setVolume(0.05);
   // song.loop();
   createCanvas(550, 720);
-  // heightOnBg = 0;
+  if (windowHeight < 720) {
+    createCanvas(550, windowHeight);
+  }
   frameRate(60);
   game = new Game();
 }
