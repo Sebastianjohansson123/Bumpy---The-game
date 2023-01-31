@@ -425,7 +425,7 @@ class GameBoard {
           this.canGenerateRocketBoost = true;
           // this.canGenerateBalloonBoost = true;
         }
-        if (this.scoreMultiplier === 2 && this.bossAlreadyGenerated === false) {
+        if (this.scoreMultiplier === 20 && this.bossAlreadyGenerated === false) {
           this.canGenerateEnemyBoss = true;
         }
       }
