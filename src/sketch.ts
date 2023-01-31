@@ -17,6 +17,7 @@ interface Images {
   talkingBubble: p5.Image;
   rocket: p5.Image;
   enemy: p5.Image;
+  enemyBoss: p5.Image;
   soundOn: p5.Image;
   soundOff: p5.Image;
   upArrow: p5.Image;
@@ -62,6 +63,7 @@ function preload() {
     howToPlayKeys: loadImage("./assets/images/howtoplay-keys.png"),
     upArrow: loadImage("assets/images/up-arrow.png"),
     enemy: loadImage("./assets/images/enemy.png"),
+    enemyBoss: loadImage("./assets/images/boss.png"),
     platform: loadImage("./assets/images/platform.png"),
     bumpy: loadImage("./assets/images/bumpy.png"),
     bumpySad: loadImage("./assets/images/bumpy-sad.png"),
@@ -93,11 +95,11 @@ function setup() {
   sounds.bulletSound.setVolume(0.1);
   sounds.jumpSound.setVolume(0.1);
   sounds.jumpSound = loadSound("./assets/sounds/jump.wav");
-  sounds.song = loadSound("./assets/music/bumpy.mp3");
+  // sounds.song = loadSound("./assets/music/bumpy.mp3");
   sounds.enemyDeath.setVolume(0.1);
 
-  sounds.song.setVolume(0.05);
-  // song.loop();
+  sounds.song.setVolume(0.02);
+  //sounds.song.loop();
   createCanvas(550, 720);
   // heightOnBg = 0;
   frameRate(60);
