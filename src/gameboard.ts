@@ -119,7 +119,9 @@ class GameBoard implements IBoard {
         ) {
           if (this.entitiesOverlap(entity, otherEntity)) {
             // todo: lägg till koll för hastighet
-            this.mainCharacter.jump();
+            if (otherEntity.getVelocity().y > +2) {
+              this.mainCharacter.jump();
+            }
           }
         }
 
