@@ -7,6 +7,7 @@ class Game {
   public activeScene: "start" | "howtoplay" | "scoreboard" | "play" | "end";
   private _highscores: number[];
 
+
   constructor() {
     this.gameBoard = new GameBoard();
     this.startMenu = new StartMenu();
@@ -39,6 +40,15 @@ class Game {
       this.endMenu.update();
       this.updateHighscores();
     }
+
+    if (this.activeScene === "play") {
+      if (!sounds.song.pause) {
+        sounds.song.play();
+      }
+    } else if (this.activeScene === "end" || this.activeScene === "howtoplay" || this.activeScene === "start" || this.activeScene === "score") {
+      sounds.song.pause();
+    }
+
   }
 
   public draw() {
