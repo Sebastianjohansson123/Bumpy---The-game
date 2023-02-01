@@ -32,10 +32,10 @@ class Button {
         mouseY > this.position.y - this.size.y / 2 &&
         mouseY < this.position.y + this.size.y / 2
       ) { 
-        if (mouseIsPressed && !this.isActive) {
+        if (mouseIsPressed && !this.isActive && !this.mousePressed) {
           this.onClickCallback();
           this.isActive = true;
-
+          this.mousePressed = true;
         }
         if (!mouseIsPressed) this.isActive = false;
       }
