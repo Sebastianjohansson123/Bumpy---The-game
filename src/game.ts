@@ -45,7 +45,7 @@ class Game {
       if (!sounds.song.pause) {
         sounds.song.play();
       }
-    } else if (this.activeScene === "end" || this.activeScene === "howtoplay" || this.activeScene === "start" || this.activeScene === "score") {
+    } else if (this.activeScene === "end" || this.activeScene === "howtoplay" || this.activeScene === "start" || this.activeScene === "scoreboard") {
       sounds.song.pause();
     }
 
