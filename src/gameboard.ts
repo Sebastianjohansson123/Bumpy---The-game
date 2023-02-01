@@ -12,7 +12,6 @@ class GameBoard {
   private canGenerateBalloonBoost: boolean | undefined;
   private canGenerateRocketBoost: boolean | undefined;
   private currentBackgroundIndex: number = 0;
-  private backgroundChangeScoreIncrement: number = 30;
   private canMoveEnemy: boolean = false;
   private canMoveBalloonBoost: boolean = false;
   private balloonBoosts: BalloonBoost[];
@@ -50,7 +49,6 @@ class GameBoard {
     this.isBalloonBoostActive = false;
     this.currentBackgroundIndex = 0;
     this.nextBackgroundIndex = 0;
-    this.backgroundChangeScoreIncrement = 50;
     this.transitionStartTime = 0;
     this.transitionDuration = 0;
     sounds.song.loop();
@@ -95,10 +93,9 @@ class GameBoard {
   // a new background image. Can be expanded with additional
   // bgimages and added transition effects
   private drawBackground() {
-    if (this.score >= this.backgroundChangeScoreIncrement) {
+    if (this.timeSinceLastMultiplierIncrease === 28) {
       this.nextBackgroundIndex =
         (this.currentBackgroundIndex + 1) % images.backgrounds.length;
-      this.backgroundChangeScoreIncrement += 50;
       this.transitionStartTime = millis();
       this.transitionDuration = 1000; // transition lasts 1 second
     }
