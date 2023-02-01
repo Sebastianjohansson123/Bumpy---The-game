@@ -317,7 +317,6 @@ class GameBoard {
         distance < this.mainCharacter.getSize().y + rocketBoost.getSize().y - 70
       ) {
         this.rocketBoosts.splice(this.rocketBoosts.indexOf(rocketBoost), 1);
-        // this.score += 100;
         this.isRocketBoostActive = true;
         sounds.rocketSound.play();
       }
@@ -381,7 +380,6 @@ class GameBoard {
           this.enemyBoss.push(newEnemyBoss);
           this.canGenerateEnemyBoss = false;
           this.bossAlreadyGenerated = true;
-          console.log("BOSS TIME")
         } else {
           return;
         }
@@ -530,7 +528,6 @@ class GameBoard {
         this.platforms.push(newPlatform);
         this.score += 1 * this.scoreMultiplier;
         this.timeSinceLastMultiplierIncrease += 1;
-        console.log(this.timeSinceLastMultiplierIncrease);
 
         if (this.timeSinceLastMultiplierIncrease === 30) {
           this.scoreMultiplier += 1;
