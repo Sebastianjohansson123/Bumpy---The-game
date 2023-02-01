@@ -327,7 +327,7 @@ class GameBoard {
   private generateEnemy() {
     if (this.canGenerateEnemy === true) {
       let x = random(0, width - 220);
-      let y = height;
+      let y = (height - 920);
       let position = createVector(x, y);
       let enemy = new Enemy(position);
       this.enemies.push(enemy);
@@ -358,11 +358,12 @@ class GameBoard {
   private generateEnemyBoss() {
     if (this.canGenerateEnemyBoss === true) {
       let x = random(0, width - 220);
-      let y = height;
+      let y = (height - 990);
       let position = createVector(x, y);
       let enemyBoss = new EnemyBoss(position);
       this.enemyBoss.push(enemyBoss);
       this.canGenerateEnemyBoss = false;
+      this.bossAlreadyGenerated = true;
     } else {
       return;
     }
