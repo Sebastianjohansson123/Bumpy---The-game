@@ -23,6 +23,7 @@ class GameBoard implements IBoard {
   private starBoosts: StarBoost[];
   private canGenerateStarBoost: boolean | undefined;
   private starBoostIsActive: boolean;
+  private canGenerateEntity: boolean;
 
   constructor() {
     this.mainCharacter = new MainCharacter(this);
@@ -41,6 +42,7 @@ class GameBoard implements IBoard {
     this.balloonBoostIsActive = false;
     this.canGenerateStarBoost = false;
     this.starBoostIsActive = false;
+    this.canGenerateEntity = false;
   }
   public update() {
     this.mainCharacter.update();
@@ -56,6 +58,7 @@ class GameBoard implements IBoard {
     this.detectImgChange();
     this.updateStarBoosts();
     this.generateStarBoost();
+    this.generateEntities("RocketBoost");
   }
 
   public draw() {
@@ -70,6 +73,7 @@ class GameBoard implements IBoard {
 
   public addBullet(bullet: Shoot) {
     this.entities.push(bullet);
+    this.canGenerateEntity = true;
   }
 
   // checks if the score is above a certain threshold
@@ -197,7 +201,39 @@ class GameBoard implements IBoard {
     }
   }
 
-  private generateEntities() {}
+  private generateEntities(
+    type: "Enemy" | "Platform" | "RocketBoost" | "BalloonBoost" | "StarBoost"
+  ) {
+    if (this.canGenerateEntity === true) {
+      console.log(this.entities);
+      let x = random(0, width - 220);
+      // let y = type === "RocketBoost" ? -150 : height;
+      let y = 300;
+      let position = createVector(x, y);
+      let entity: Entity;
+      switch (type) {
+        case "Enemy":
+          entity = new Enemy(position);
+          break;
+        case "Platform":
+          entity = new Platform(position);
+          break;
+        case "RocketBoost":
+          entity = new RocketBoost(position);
+          break;
+        case "BalloonBoost":
+          entity = new BalloonBoost(position);
+          break;
+        case "StarBoost":
+          entity = new StarBoost(position);
+          break;
+      }
+      this.entities.push(entity);
+      this.canGenerateEntity = false;
+    } else {
+      return;
+    }
+  }
 
   private generateEnemy() {
     if (this.canGenerateEnemy === true) {
