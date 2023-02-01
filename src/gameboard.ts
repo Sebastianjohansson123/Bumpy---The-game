@@ -27,6 +27,7 @@ class GameBoard {
   private starBoosts: StarBoost[];
   private canGenerateStarBoost: boolean | undefined;
   private starBoostIsActive: boolean;
+  private powerUpAlreadyGenerated: boolean;
 
   constructor() {
     this.mainCharacter = new MainCharacter();
@@ -55,6 +56,7 @@ class GameBoard {
     sounds.song.loop();
     this.canGenerateStarBoost = false;
     this.starBoostIsActive = false;
+    this.powerUpAlreadyGenerated = false;
   }
 
   public update() {
@@ -73,6 +75,7 @@ class GameBoard {
     this.detectImgChange();
     this.updateStarBoosts();
     this.generateStarBoost();
+    this.filterPowerUps();
   }
 
   public draw() {
@@ -336,6 +339,24 @@ class GameBoard {
     }
   }
 
+  private updateEnemies() {
+    if (this.canGenerateEnemy === true) {
+      for (let i = 0; i < this.enemies.length; i++) {
+        let enemy = this.enemies[i];
+        if (enemy.getPosition().y > height) {
+          this.enemies.splice(i, 1);
+          let x = random(0, width - 220);
+          let position = createVector(x, 0);
+          let newEnemy = new Enemy(position);
+          this.enemies.push(newEnemy);
+          this.canGenerateEnemy = false;
+        } else {
+          return;
+        }
+      }
+    }
+  }
+
   private generateEnemyBoss() {
     if (this.canGenerateEnemyBoss === true) {
       let x = random(0, width - 220);
@@ -349,6 +370,26 @@ class GameBoard {
     }
   }
 
+  private updateEnemyBoss() {
+    if (this.canGenerateEnemyBoss === true) {
+      for (let i = 0; i < this.enemyBoss.length; i++) {
+        let enemyBoss = this.enemyBoss[i];
+        if (enemyBoss.getPosition().y > height) {
+          this.enemyBoss.splice(i, 1);
+          let x = random(0, width - 220);
+          let position = createVector(x, 0);
+          let newEnemyBoss = new EnemyBoss(position);
+          this.enemyBoss.push(newEnemyBoss);
+          this.canGenerateEnemyBoss = false;
+          this.bossAlreadyGenerated = true;
+          console.log("BOSS TIME")
+        } else {
+          return;
+        }
+      }
+    }
+  }
+
   private generateBalloonBoost() {
     if (this.canGenerateBalloonBoost === true) {
       let x = random(0, width - 220);
@@ -359,6 +400,24 @@ class GameBoard {
       this.canGenerateBalloonBoost = false;
     } else {
       return;
+    }
+  }
+
+  private updateBalloonBoosts() {
+    if (this.canGenerateBalloonBoost === true) {
+      for (let i = 0; i < this.balloonBoosts.length; i++) {
+        let balloonBoost = this.balloonBoosts[i];
+        if (balloonBoost.getPosition().y < height) {
+          this.balloonBoosts.splice(i, 1);
+          let x = random(0, width - 220);
+          let position = createVector(x, 720);
+          let newBalloonBoost = new BalloonBoost(position);
+          this.balloonBoosts.push(newBalloonBoost);
+          this.canGenerateBalloonBoost = false;
+        } else {
+          return;
+        }
+      }
     }
   }
 
@@ -405,70 +464,8 @@ class GameBoard {
       return;
     }
   }
-  private updateEnemies() {
-    if (this.canGenerateEnemy === true) {
-      for (let i = 0; i < this.enemies.length; i++) {
-        let enemy = this.enemies[i];
-        if (enemy.getPosition().y > height) {
-          this.enemies.splice(i, 1);
-          let x = random(0, width - 220);
-          let position = createVector(x, 0);
-          let newEnemy = new Enemy(position);
-          this.enemies.push(newEnemy);
-          this.canGenerateEnemy = false;
-        } else {
-          return;
-        }
-      }
-    }
-  }
-
-  private updateEnemyBoss() {
-    if (this.canGenerateEnemyBoss === true) {
-      for (let i = 0; i < this.enemyBoss.length; i++) {
-        let enemyBoss = this.enemyBoss[i];
-        if (enemyBoss.getPosition().y > height) {
-          this.enemyBoss.splice(i, 1);
-          let x = random(0, width - 220);
-          let position = createVector(x, 0);
-          let newEnemyBoss = new EnemyBoss(position);
-          this.enemyBoss.push(newEnemyBoss);
-          this.canGenerateEnemyBoss = false;
-          this.bossAlreadyGenerated = true;
-          console.log("BOSS TIME");
-        } else {
-          return;
-        }
-      }
-    }
-  }
-
-  // creates a platform at the start of the game that spawns below Bumpy
-  private generateBottomPlatform() {
-    let y = height;
-    let position = createVector(200, y - 150);
-    let platform = new Platform(position);
-    this.platforms.push(platform);
-  }
-
-  private updateBalloonBoosts() {
-    if (this.canGenerateBalloonBoost === true) {
-      for (let i = 0; i < this.balloonBoosts.length; i++) {
-        let balloonBoost = this.balloonBoosts[i];
-        if (balloonBoost.getPosition().y < height) {
-          this.balloonBoosts.splice(i, 1);
-          let x = random(0, width - 220);
-          let position = createVector(x, 720);
-          let newBalloonBoost = new BalloonBoost(position);
-          this.balloonBoosts.push(newBalloonBoost);
-          this.canGenerateBalloonBoost = false;
-        } else {
-          return;
-        }
-      }
-    }
-  }
-
+  
+  
   private updateRocketBoosts() {
     if (this.canGenerateRocketBoost === true) {
       for (let i = 0; i < this.rocketBoosts.length; i++) {
@@ -486,6 +483,24 @@ class GameBoard {
       }
     }
   }
+
+
+
+  // creates a platform at the start of the game that spawns below Bumpy
+  private generateBottomPlatform() {
+    let y = height;
+    let position = createVector(200, y - 150);
+    let platform = new Platform(position);
+    this.platforms.push(platform);
+  }
+
+
+
+
+  // creates a platform at the start of the game that spawns below Bumpy
+
+
+
 
   // randomly creates the X position for the platform but makes sure that there is always a 120 px gap
   // between the height of each platform
@@ -517,38 +532,43 @@ class GameBoard {
         this.score += 1 * this.scoreMultiplier;
         this.timeSinceLastMultiplierIncrease += 1;
         console.log(this.timeSinceLastMultiplierIncrease);
-        if (this.timeSinceLastMultiplierIncrease === 30) {
-          this.canGenerateBalloonBoost = true;
-          this.scoreMultiplier += 1;
-          this.timeSinceLastMultiplierIncrease = 0;
-        }
 
-        if (this.timeSinceLastMultiplierIncrease === 20) {
+        if (this.timeSinceLastMultiplierIncrease === 30) {
           this.scoreMultiplier += 1;
           this.timeSinceLastMultiplierIncrease = 0;
         }
         if (this.timeSinceLastMultiplierIncrease === 10) {
           this.canGenerateEnemy = true;
         }
-        if (this.timeSinceLastMultiplierIncrease === 5) {
-          this.canGenerateStarBoost = true;
+        if (this.timeSinceLastMultiplierIncrease === 2) {
+          this.powerUpAlreadyGenerated = false;
         }
         if (this.timeSinceLastMultiplierIncrease === 15 && this.score > 8000) {
           this.bossAlreadyGenerated = false;
         }
-        if (this.timeSinceLastMultiplierIncrease === 19 && this.score > 8000) {
+        if (this.timeSinceLastMultiplierIncrease === 25 && this.score > 8000) {
           this.canGenerateEnemyBoss = true;
         }
-        if (this.timeSinceLastMultiplierIncrease === 1) {
-          this.canGenerateRocketBoost = true;
-          // this.canGenerateBalloonBoost = true;
-        }
-        if (
-          this.scoreMultiplier === 20 &&
-          this.bossAlreadyGenerated === false
-        ) {
+        if (this.scoreMultiplier === 10 && this.bossAlreadyGenerated === false) {
           this.canGenerateEnemyBoss = true;
         }
+      }
+    }
+  }
+  private filterPowerUps() {
+    if (this.timeSinceLastMultiplierIncrease === 15 && this.powerUpAlreadyGenerated === false) {
+      let powerUpsNumber:number = Math.random()
+      if (powerUpsNumber < 0.40) {
+        this.canGenerateBalloonBoost = true;
+        this.powerUpAlreadyGenerated = true;
+      }
+      if (powerUpsNumber < 0.70 && powerUpsNumber > 0.40) {
+        this.canGenerateRocketBoost = true;
+        this.powerUpAlreadyGenerated = true;
+      }
+      if (powerUpsNumber > 0.70) {
+        this.canGenerateStarBoost = true;
+        this.powerUpAlreadyGenerated = true;
       }
     }
   }
