@@ -1,21 +1,21 @@
 class HowToPlay {
-  private btnExit: Button;
+  private btnExitHowToPlay: Button;
 
   constructor() {
     // Creates the exit button
-    this.btnExit = new Button(
+    this.btnExitHowToPlay = new Button(
       images.xBtn,
       new p5.Vector(376, 173),
       new p5.Vector(15, 15)
     );
     // Callback function for click event on button
-    this.btnExit.onClickCallback = () => {
+    this.btnExitHowToPlay.onClickCallback = () => {
       game.activeScene = "start";
     };
   }
 
   public update() {
-    this.btnExit.update();
+    this.btnExitHowToPlay.update();
   }
 
   /**
@@ -25,7 +25,7 @@ class HowToPlay {
     image(images.bg, 0, 0);
     image(images.talkingBubble, 150, 150, 249, 350);
     this.drawTitle();
-    this.btnExit.draw();
+    this.btnExitHowToPlay.draw();
     images.xBtn.resize(11, 11);
     image(images.howToPlayKeys, 162, 355, 130, 70);
     image(images.bumpyBlink_gif, 50, 450, 152, 193);
@@ -66,6 +66,7 @@ class HowToPlay {
     pop();
     push();
     fill("#3A1458");
+    textAlign(LEFT, CENTER);
     textSize(15);
     textFont(Fonts.Gaegu);
     text("Use the keys on the keyboard to", 160, 215);
@@ -79,10 +80,11 @@ class HowToPlay {
     push();
     fill("#3A1458");
     textSize(13);
+    textAlign(CENTER, CENTER);
     textFont(Fonts.Gaegu);
-    text("Shoot", 262, 373);
-    text("Move to the right", 295, 402);
-    text("Move to the left", 214, 428);
+    text("Shoot", 275, 370);
+    text("Move to the right", 342, 399);
+    text("Move to the left", 257, 425);
     pop();
   }
 }
