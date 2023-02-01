@@ -3,8 +3,9 @@ class Game {
   private startMenu: StartMenu;
   private howToPlay: HowToPlay;
   private endMenu: EndMenu;
-  public activeScene: "start" | "howtoplay" | "play" | "end";
-  private _highscore: number;
+  private scoreboard: Scoreboard;
+  public activeScene: "start" | "howtoplay" | "scoreboard" | "play" | "end";
+  private _highscores: number[];
 
 
   constructor() {
@@ -12,12 +13,18 @@ class Game {
     this.startMenu = new StartMenu();
     this.howToPlay = new HowToPlay();
     this.endMenu = new EndMenu();
+    this.scoreboard = new Scoreboard();
     this.activeScene = "start";
-    this._highscore = Number(localStorage.getItem("highscore")) || 0;
+    let highscoresString = localStorage.getItem("highscores");
+    if (highscoresString) {
+      this._highscores = JSON.parse(highscoresString);
+    } else {
+      this._highscores = [0, 0, 0];
+    }
   }
 
-  public get highscore(): number {
-    return this._highscore;
+  public get highscores(): number[] {
+    return this._highscores;
   }
 
   public update() {
@@ -25,15 +32,13 @@ class Game {
       this.startMenu.update();
     } else if (this.activeScene === "howtoplay") {
       this.howToPlay.update();
+    } else if (this.activeScene === "scoreboard") {
+      this.scoreboard.update();
     } else if (this.activeScene === "play") {
       this.gameBoard.update();
     } else if (this.activeScene === "end") {
       this.endMenu.update();
-    }
-
-    if (this.gameBoard.getScore() > this.highscore) {
-      this._highscore = this.gameBoard.getScore();
-      localStorage.setItem("highscore", this.highscore.toString());
+      this.updateHighscores();
     }
 
     if (this.activeScene === "play") {
@@ -51,6 +56,8 @@ class Game {
       this.startMenu.draw();
     } else if (this.activeScene === "howtoplay") {
       this.howToPlay.draw();
+    } else if (this.activeScene === "scoreboard") {
+      this.scoreboard.draw();
     } else if (this.activeScene === "play") {
       this.gameBoard.draw();
     } else if (this.activeScene === "end") {
@@ -58,11 +65,41 @@ class Game {
     }
   }
 
+  private updateHighscores() {
+    let currentScore = this.gameBoard.getScore();
+    if (this._highscores.indexOf(currentScore) === -1) {
+      if (currentScore > this.highscores[2]) {
+        this._highscores.pop();
+        this._highscores.unshift(currentScore);
+        this._highscores.sort(function (a, b) {
+          return b - a;
+        });
+        localStorage.setItem("highscores", JSON.stringify(this._highscores));
+      }
+    }
+    let filteredScore = this._highscores.filter((s) => s !== currentScore);
+    if (filteredScore.length < 3) {
+      filteredScore.unshift(currentScore);
+      filteredScore.sort(function (a, b) {
+        return b - a;
+      });
+      this._highscores = filteredScore;
+      localStorage.setItem("highscores", JSON.stringify(this._highscores));
+    }
+  }
+
   public setEndMenuScore() {
     return this.gameBoard.getScore();
   }
-  public getHighscore(): number {
-    return this.highscore;
+
+  public getTopHighscore(): number {
+    return this._highscores[0];
+  }
+  public getSecondHighscore(): number {
+    return this._highscores[1];
+  }
+  public getThirdHighscore(): number {
+    return this._highscores[2];
   }
   public resetGameBoard() {
     this.gameBoard = new GameBoard();

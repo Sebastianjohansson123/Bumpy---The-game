@@ -4,6 +4,7 @@ class Button {
   private size: p5.Vector;
   private radius: number;
   private isClicked: boolean;
+  private mousePressed: boolean;
   public onClickCallback: () => void;
 
   constructor(
@@ -16,6 +17,7 @@ class Button {
     this.size = size;
     this.radius = size.x * 0.3;
     this.isClicked = false;
+    this.mousePressed = false;
     this.onClickCallback = () => {};
   }
 
@@ -30,18 +32,15 @@ class Button {
         mouseY > this.position.y - this.size.y / 2 &&
         mouseY < this.position.y + this.size.y / 2
       ) {
-        if (mouseIsPressed && !this.isClicked) {
+        if (mouseIsPressed && !this.isClicked && !this.mousePressed) {
           this.onClickCallback();
           this.isClicked = true;
+          this.mousePressed = true;
         }
         if (!mouseIsPressed) this.isClicked = false;
       }
     }
-  }
-
-  // Används inte - ta ev bort! 
-  public onClick(cb: () => void) {
-    this.onClickCallback = cb;
+    this.mousePressed = mouseIsPressed;
   }
 
   /**
