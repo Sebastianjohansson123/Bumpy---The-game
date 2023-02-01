@@ -23,6 +23,7 @@ interface Images {
   upArrow: p5.Image;
   crown: p5.Image;
   bubbleglow: p5.Image;
+  purplecursor: p5.Image;
   bumpyBalloons_gif: p5.Image;
   bumpyBlink_gif: p5.Image;
   bumpyBlinkCry_gif: p5.Image;
@@ -98,6 +99,7 @@ function preload() {
     talkingBubble: loadImage("./assets/images/bumpy-bubble.png"),
     crown: loadImage("./assets/images/crown.png"),
     bubbleglow: loadImage("./assets/images/bubbleglow.png"),
+    purplecursor: loadImage("./assets/images/cursor.png"),
     bumpyBalloons_gif: loadImage("./assets/gif/bumpyballoonscropped.gif"),
     bumpyBlink_gif: loadImage("./assets/gif/bumpyblinking.gif"),
     bumpyBlinkCry_gif: loadImage("./assets/gif/bumpyblinkcry.gif"),
@@ -149,6 +151,8 @@ function setup() {
   }
   frameRate(60);
   game = new Game();
+
+  cursor("./assets/images/smallcursor.png");
 }
 
 /**
