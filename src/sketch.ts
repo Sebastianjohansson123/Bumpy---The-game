@@ -99,7 +99,7 @@ function preload() {
     talkingBubble: loadImage("./assets/images/bumpy-bubble.png"),
     crown: loadImage("./assets/images/crown.png"),
     bubbleglow: loadImage("./assets/images/bubbleglow.png"),
-    purplecursor: loadImage("./assets/images/cursor.png"),
+    purplecursor: loadImage("./assets/images/smallcursor.png"),
     bumpyBalloons_gif: loadImage("./assets/gif/bumpyballoonscropped.gif"),
     bumpyBlink_gif: loadImage("./assets/gif/bumpyblinking.gif"),
     bumpyBlinkCry_gif: loadImage("./assets/gif/bumpyblinkcry.gif"),
