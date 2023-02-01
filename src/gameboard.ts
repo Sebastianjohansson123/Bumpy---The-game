@@ -541,10 +541,10 @@ class GameBoard {
         if (this.timeSinceLastMultiplierIncrease === 2) {
           this.powerUpAlreadyGenerated = false;
         }
-        if (this.timeSinceLastMultiplierIncrease === 15 && this.score > 3000) {
+        if (this.timeSinceLastMultiplierIncrease === 15 && this.score > 8000) {
           this.bossAlreadyGenerated = false;
         }
-        if (this.timeSinceLastMultiplierIncrease === 25 && this.score > 3000) {
+        if (this.timeSinceLastMultiplierIncrease === 25 && this.score > 8000) {
           this.canGenerateEnemyBoss = true;
         }
         if (this.scoreMultiplier === 10 && this.bossAlreadyGenerated === false) {
