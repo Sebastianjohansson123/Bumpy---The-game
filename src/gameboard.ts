@@ -201,7 +201,7 @@ class GameBoard {
           bubble.getPosition().y + bubble.getSize().y >
             enemyBoss.getPosition().y
         ) {
-          sounds.enemyDeath.play();
+          sounds.bossDeathSound.play();
 
           this.mainCharacter.bubbles.splice(
             this.mainCharacter.bubbles.indexOf(bubble),
