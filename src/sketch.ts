@@ -33,7 +33,7 @@ interface Images {
 }
 
 interface Sounds {
-  bulletSound: p5.SoundFile;
+  bubbleSound: p5.SoundFile;
   song: p5.SoundFile;
   jumpSound: p5.SoundFile;
   enemyDeath: p5.SoundFile;
@@ -109,7 +109,7 @@ function preload() {
   };
 
   sounds = {
-    bulletSound: loadSound("./assets/sounds/bullet.mp3"),
+    bubbleSound: loadSound("./assets/sounds/bullet.mp3"),
     song: loadSound("./assets/music/bumpy-theme1v2.mp3"),
     jumpSound: loadSound("./assets/sounds/jump.wav"),
     enemyDeath: loadSound("./assets/sounds/enemy-death.wav"),
@@ -126,14 +126,13 @@ function preload() {
  * in the draw function below
  */
 function setup() {
-  sounds.bulletSound = loadSound("./assets/sounds/bullet.mp3");
-  sounds.bulletSound.setVolume(0.1);
-  sounds.jumpSound.setVolume(0.1);
+  sounds.bubbleSound = loadSound("./assets/sounds/bullet.mp3");
+  sounds.bubbleSound.setVolume(0.09);
   sounds.jumpSound = loadSound("./assets/sounds/jump.wav");
-
-  // sounds.song = loadSound("./assets/music/bumpy.mp3");
+  sounds.jumpSound.setVolume(0.1);
+  sounds.enemyDeath = loadSound("./assets/sounds/enemy-death.wav");
   sounds.enemyDeath.setVolume(0.1);
-  sounds.song.setVolume(0.2);
+  sounds.song.setVolume(0.1);
 
   // Sounds for power-ups
   sounds.starBoostSound = loadSound("./assets/sounds/starBoost.mp3");
@@ -143,16 +142,16 @@ function setup() {
   sounds.balloonSound = loadSound("./assets/sounds/balloonSound.mp3");
   sounds.balloonSound.setVolume(0.4);
 
-  //sounds.song.loop();
-  createCanvas(550, 720);
   // Adjusts screen if windowheight is less than 720px
   if (windowHeight < 720) {
     createCanvas(550, windowHeight);
   }
-  frameRate(60);
-  game = new Game();
 
+  createCanvas(550, 720);
+  frameRate(60);
   cursor("./assets/images/smallcursor.png");
+  
+  game = new Game();
 }
 
 /**

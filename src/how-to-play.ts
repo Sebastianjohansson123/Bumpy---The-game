@@ -33,7 +33,6 @@ class HowToPlay {
     image(images.bumpyBlink_gif, 50, 450, 152, 193);
   }
 
-
   /**
    * Draws the title and how to play instructions
    */

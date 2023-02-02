@@ -4,7 +4,7 @@ class MainCharacter extends Entity {
   public isFalling: boolean;
   private isJumping: boolean;
   private speed: number;
-  public bullets: Bubble[];
+  public bubbles: Bubble[];
   private canShoot: boolean | undefined;
   constructor() {
     super(
@@ -17,12 +17,12 @@ class MainCharacter extends Entity {
     this.isFalling = false;
     this.isJumping = true;
     this.speed = 5;
-    this.bullets = [];
+    this.bubbles = [];
     this.canShoot = true;
   }
 
   public update() {
-    this.bullets.forEach((bullet) => bullet.update());
+    this.bubbles.forEach((bubble) => bubble.update());
     if (this.isJumping) {
       this.velocity.add(this.gravity);
       this.position.add(this.velocity);
@@ -51,28 +51,26 @@ class MainCharacter extends Entity {
 
     // Checks if half of the size of the shape is outside of either side of the screen
     // and positions the shape on corresponding side if conditions are met
-
     this.position.x += this.velocity.x;
     if (this.position.x < 0 - this.size.x * 0.5) {
       this.position.x = width - this.size.x * 0.5;
     } else if (this.position.x > width - this.size.x * 0.5) {
       this.position.x = 0 - this.size.x * 0.5;
-    } // TODO: separate to own function and reduce repetition
+    }
   }
 
   public draw() {
-    this.bullets.forEach((bullet) => bullet.draw());
+    this.bubbles.forEach((bubble) => bubble.draw());
     image(this.img, this.position.x, this.position.y, this.size.x, this.size.y);
   }
 
   public shoot() {
     if (this.canShoot === true) {
-      sounds.bulletSound.play();
-      let bullet = new Bubble(
+      sounds.bubbleSound.play();
+      let bubble = new Bubble(
         createVector(this.position.x + 25, this.position.y)
       );
-      // let bullet = new Bullet(this.position.x, this.position.y);
-      this.bullets.push(bullet);
+      this.bubbles.push(bubble);
     } else {
       return;
     }
@@ -86,15 +84,15 @@ class MainCharacter extends Entity {
     this.isJumping = true;
   }
 
-  public getVelocity() {
+  public getVelocity(): p5.Vector {
     return this.velocity;
   }
 
-  public getPosition() {
+  public getPosition(): p5.Vector {
     return this.position;
   }
 
-  public getSize() {
+  public getSize(): p5.Vector {
     return this.size;
   }
 

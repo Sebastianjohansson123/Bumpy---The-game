@@ -43,11 +43,11 @@ class StartMenu {
     this.btnSoundOn.onClickCallback = () => {
       this.soundOn = !this.soundOn;
       if (this.soundOn) {
-        sounds.bulletSound.setVolume(0.1);
+        sounds.bubbleSound.setVolume(0.1);
         sounds.jumpSound.setVolume(0.1);
         sounds.song.setVolume(0.05);
       } else {
-        sounds.bulletSound.setVolume(0.0);
+        sounds.bubbleSound.setVolume(0.0);
         sounds.jumpSound.setVolume(0.0);
         sounds.song.setVolume(0.0);
       }
@@ -67,11 +67,6 @@ class StartMenu {
       this.game.activeScene = "scoreboard";
     };
   }
-
-  // private playGame = () => {
-  //   game.activeScene = "play";
-  //   game.resetGameBoard();
-  // }
 
   public update() {
     this.btnPlayGame.update();

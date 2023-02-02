@@ -1,5 +1,4 @@
 abstract class Entity {
-  // private images: p5.Image[];
   protected position: p5.Vector;
   protected velocity: p5.Vector;
   protected gravity: p5.Vector;
@@ -19,8 +18,6 @@ abstract class Entity {
     this.size = size;
     this.img = img;
   }
-
-  public update() {}
 
   public draw() {
     image(this.img, this.position.x, this.position.y, this.size.x, this.size.y);
