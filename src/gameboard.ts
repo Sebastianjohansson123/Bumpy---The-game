@@ -301,6 +301,9 @@ class GameBoard implements IGameBoard {
         this.score += 500;
       }
     }
+    if (this.isStarBoostActive === true) {
+      setTimeout(() => {this.isStarBoostActive = false}, 25000);
+    }
 
     //Checks if mainCharacter collides with balloonBoost
     for (let balloonBoost of this.balloonBoosts) {
