@@ -502,7 +502,7 @@ class GameBoard {
       let position = createVector(x, y);
       let platform = new Platform(position);
       this.platforms.push(platform);
-      y -= 120;
+      y -= random(90, 135);
     }
   }
 
