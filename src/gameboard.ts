@@ -1,8 +1,12 @@
-class GameBoard {
+interface IGameBoard {
+score:number;
+}
+
+class GameBoard implements IGameBoard {
   private game: IGame;
   private mainCharacter: MainCharacter;
   private platforms: Platform[];
-  private score: number;
+  public score: number;
   private scoreMultiplier: number = 1;
   private timeSinceLastMultiplierIncrease: number = 0;
   private enemies: Enemy[];
@@ -32,7 +36,7 @@ class GameBoard {
 
   constructor(game: IGame) {
     this.game = game;
-    this.mainCharacter = new MainCharacter();
+    this.mainCharacter = new MainCharacter(this);
     this.platforms = [];
     this.enemyBoss = [];
     this.enemies = [];

@@ -6,7 +6,8 @@ class MainCharacter extends Entity {
   private speed: number;
   public bubbles: Bubble[];
   private canShoot: boolean | undefined;
-  constructor() {
+  private iGameBoard: IGameBoard;
+  constructor(iGameBoard: IGameBoard) {
     super(
       createVector(width * 0.4, height * 0.29),
       createVector(0, 0),
@@ -19,6 +20,7 @@ class MainCharacter extends Entity {
     this.speed = 5;
     this.bubbles = [];
     this.canShoot = true;
+    this.iGameBoard = iGameBoard;
   }
 
   public update() {
@@ -71,6 +73,10 @@ class MainCharacter extends Entity {
         createVector(this.position.x + 25, this.position.y)
       );
       this.bubbles.push(bubble);
+      this.iGameBoard.score -= 10;
+      if (this.iGameBoard.score < 0) {
+        this.iGameBoard.score = 0;
+      }
     } else {
       return;
     }
