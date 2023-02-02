@@ -30,7 +30,7 @@ class HowToPlay {
     this.btnExitHowToPlay.draw();
     images.xBtn.resize(11, 11);
     image(images.howToPlayKeys, 162, 355, 130, 70);
-    image(images.bumpyBlink_gif, 50, 450, 152, 193);
+    image(images.bumpyPoint_gif, -35, 360, 368, 349);
   }
 
   /**
