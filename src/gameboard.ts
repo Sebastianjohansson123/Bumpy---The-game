@@ -28,6 +28,7 @@ class GameBoard {
   private powerUpAlreadyGenerated: boolean;
   private gameOver: boolean;
   private gameOverAnimationTimeout: number;
+  private soundAlreadyPlaying: boolean;
 
   constructor(game: IGame) {
     this.game = game;
@@ -49,6 +50,7 @@ class GameBoard {
     this.canGenerateRocketBoost = false;
     this.isRocketBoostActive = false;
     this.isBalloonBoostActive = false;
+    this.soundAlreadyPlaying = false;
     this.currentBackgroundIndex = 0;
     this.nextBackgroundIndex = 0;
     this.transitionStartTime = 0;
@@ -680,6 +682,10 @@ class GameBoard {
 
       if (this.gameOverAnimationTimeout < 0) {
         this.game.activeScene = "end";
+      }
+      if (this.soundAlreadyPlaying === false) {
+        sounds.fallSound.play();
+        this.soundAlreadyPlaying = true;
       }
     }
   }
