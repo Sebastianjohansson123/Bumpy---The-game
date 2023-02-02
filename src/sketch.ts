@@ -41,6 +41,7 @@ interface Sounds {
   starBoostSound: p5.SoundFile;
   rocketSound: p5.SoundFile;
   balloonSound: p5.SoundFile;
+  fallSound: p5.SoundFile;
   bossDeathSound: p5.SoundFile;
 }
 
@@ -115,6 +116,7 @@ function preload() {
     bubbleSound: loadSound("./assets/sounds/bullet.mp3"),
     song: loadSound("./assets/music/bumpy-theme1v2.mp3"),
     jumpSound: loadSound("./assets/sounds/jump.wav"),
+    fallSound: loadSound("./assets/sounds/falling.mp3"),
     enemyDeath: loadSound("./assets/sounds/enemy-death.wav"),
     starBoostSound: loadSound("./assets/sounds/starBoost.mp3"),
     rocketSound: loadSound("./assets/sounds/rocketSound.mp3"),

@@ -1,11 +1,15 @@
-class GameBoard {
+interface IGameBoard {
+score:number;
+}
+
+class GameBoard implements IGameBoard {
   private game: IGame;
   private mainCharacter: MainCharacter;
   private platforms: Platform[];
-  private score: number;
+  public score: number;
   private scoreMultiplier: number = 1;
   private timeSinceLastMultiplierIncrease: number = 0;
-  private enemies: Enemy[]; 
+  private enemies: Enemy[];
   private enemyBoss: EnemyBoss[];
   private canGenerateEnemy: boolean;
   private canGenerateEnemyBoss: boolean;
@@ -28,10 +32,11 @@ class GameBoard {
   private powerUpAlreadyGenerated: boolean;
   private gameOver: boolean;
   private gameOverAnimationTimeout: number;
+  private soundAlreadyPlaying: boolean;
 
   constructor(game: IGame) {
     this.game = game;
-    this.mainCharacter = new MainCharacter();
+    this.mainCharacter = new MainCharacter(this);
     this.platforms = [];
     this.enemyBoss = [];
     this.enemies = [];
@@ -49,6 +54,7 @@ class GameBoard {
     this.canGenerateRocketBoost = false;
     this.isRocketBoostActive = false;
     this.isBalloonBoostActive = false;
+    this.soundAlreadyPlaying = false;
     this.currentBackgroundIndex = 0;
     this.nextBackgroundIndex = 0;
     this.transitionStartTime = 0;
@@ -58,7 +64,7 @@ class GameBoard {
     this.isStarBoostActive = false;
     this.powerUpAlreadyGenerated = false;
     this.gameOver = false;
-    this.gameOverAnimationTimeout = 1000;
+    this.gameOverAnimationTimeout = 2000;
   }
 
   public update() {
@@ -122,7 +128,7 @@ class GameBoard {
       tint(255, newBackgroundOpacity);
       image(images.backgrounds[this.nextBackgroundIndex], 0, 0, width, height);
       pop();
-      
+
       if (elapsedTime >= this.transitionDuration) {
         this.currentBackgroundIndex = this.nextBackgroundIndex;
       }
@@ -243,7 +249,7 @@ class GameBoard {
         sounds.enemyDeath.play();
         this.enemies.splice(this.enemies.indexOf(enemy), 1);
         this.score += 100;
-        this.isStarBoostIsActive = false;
+        this.isStarBoostActive = false;
       }
     }
 
@@ -276,14 +282,14 @@ class GameBoard {
         enemyBoss.getPosition().y
       );
       if (
-        this.starBoostIsActive === false &&
+        this.isStarBoostActive === false &&
         distance <
           this.mainCharacter.getSize().x + enemyBoss.getSize().x - 140 &&
         distance < this.mainCharacter.getSize().y + enemyBoss.getSize().y - 120
       ) {
         this.game.activeScene = "end";
       } else if (
-        this.isStarBoostIsActive === true &&
+        this.isStarBoostActive === true &&
         distance <
           this.mainCharacter.getSize().x + enemyBoss.getSize().x - 140 &&
         distance < this.mainCharacter.getSize().y + enemyBoss.getSize().y - 120
@@ -291,7 +297,7 @@ class GameBoard {
         sounds.enemyDeath.play();
         this.enemyBoss.splice(this.enemyBoss.indexOf(enemyBoss), 1);
         this.score += 100;
-        this.isStarBoostIsActive = false;
+        this.isStarBoostActive = false;
         this.score += 500;
       }
     }
@@ -476,7 +482,6 @@ class GameBoard {
     }
   }
 
-
   private updateRocketBoosts() {
     if (this.canGenerateRocketBoost === true) {
       for (let i = 0; i < this.rocketBoosts.length; i++) {
@@ -495,7 +500,7 @@ class GameBoard {
     }
   }
 
-  // Creates a platform at the start of the game that spawns below Bumpy
+  // creates a platform at the start of the game that spawns below Bumpy
   private generateBottomPlatform() {
     let y = height;
     let position = createVector(200, y - 150);
@@ -503,8 +508,10 @@ class GameBoard {
     this.platforms.push(platform);
   }
 
-  // Randomly creates the X position for the platform but makes sure that there is always a 120 px gap
-  // Between the height of each platform
+  // creates a platform at the start of the game that spawns below Bumpy
+
+  // randomly creates the X position for the platform but makes sure that there is always a 120 px gap
+  // between the height of each platform
   private generatePlatforms() {
     let y = height;
     while (y > 0) {
@@ -513,7 +520,7 @@ class GameBoard {
       let position = createVector(x, y);
       let platform = new Platform(position);
       this.platforms.push(platform);
-      y -= 120;
+      y -= random(90, 135);
     }
   }
 
@@ -558,7 +565,7 @@ class GameBoard {
       }
     }
   }
-  
+
   private filterPowerUps() {
     if (
       this.timeSinceLastMultiplierIncrease === 15 &&
@@ -666,6 +673,11 @@ class GameBoard {
     } else if (this.isStarBoostActive === true) {
       this.mainCharacter.setImg(images.bumpyStar_gif);
       this.mainCharacter.setSize(new p5.Vector(70, 80));
+    } else if (this.gameOver === true) {
+      this.mainCharacter.setImg(images.bumpyFall_gif);
+      this.mainCharacter.setSize(new p5.Vector(240, 210));
+      this.mainCharacter.getPosition().x =
+        this.mainCharacter.getPosition().x + 2.8;
     } else {
       this.mainCharacter.setImg(images.bumpy);
       this.mainCharacter.setSize(new p5.Vector(70, 80));
@@ -678,7 +690,7 @@ class GameBoard {
       for (let platform of this.platforms) {
         this.mainCharacter.getVelocity().y = -4.9;
         platform.getPosition().y -= 17;
-        this.mainCharacter.getPosition().y += 1.62;
+        this.mainCharacter.getPosition().y -= 1;
       }
       for (let rocketBoost of this.rocketBoosts) {
         rocketBoost.getPosition().y -= 17;
@@ -686,6 +698,10 @@ class GameBoard {
 
       if (this.gameOverAnimationTimeout < 0) {
         this.game.activeScene = "end";
+      }
+      if (this.soundAlreadyPlaying === false) {
+        sounds.fallSound.play();
+        this.soundAlreadyPlaying = true;
       }
     }
   }
