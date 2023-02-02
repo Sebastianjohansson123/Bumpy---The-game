@@ -40,6 +40,7 @@ interface Sounds {
   starBoostSound: p5.SoundFile;
   rocketSound: p5.SoundFile;
   balloonSound: p5.SoundFile;
+  bossDeathSound: p5.SoundFile;
 }
 
 const Fonts = {
@@ -116,6 +117,7 @@ function preload() {
     starBoostSound: loadSound("./assets/sounds/starBoost.mp3"),
     rocketSound: loadSound("./assets/sounds/rocketSound.mp3"),
     balloonSound: loadSound("./assets/sounds/balloonSound.mp3"),
+    bossDeathSound: loadSound("./assets/sounds/boss-death.mp3"),
   };
 }
 
@@ -133,6 +135,8 @@ function setup() {
   sounds.enemyDeath = loadSound("./assets/sounds/enemy-death.wav");
   sounds.enemyDeath.setVolume(0.1);
   sounds.song.setVolume(0.1);
+  sounds.bossDeathSound = loadSound("./assets/sounds/boss-death.mp3");
+  sounds.bossDeathSound.setVolume(0.3);
 
   // Sounds for power-ups
   sounds.starBoostSound = loadSound("./assets/sounds/starBoost.mp3");
