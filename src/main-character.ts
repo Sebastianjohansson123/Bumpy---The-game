@@ -67,7 +67,8 @@ class MainCharacter extends Entity {
   }
 
   public shoot() {
-    if (this.canShoot === true) {
+    if (this.canShoot === true && this.iGameBoard.isRocketBoostActive === false
+      &&this.iGameBoard.isBalloonBoostActive === false) {
       sounds.bubbleSound.play();
       let bubble = new Bubble(
         createVector(this.position.x + 25, this.position.y)
