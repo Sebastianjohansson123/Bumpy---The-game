@@ -302,7 +302,7 @@ class GameBoard implements IGameBoard {
       }
     }
     if (this.isStarBoostActive === true) {
-      setTimeout(() => {this.isStarBoostActive = false}, 12000);
+      setTimeout(() => {this.isStarBoostActive = false}, 25000);
     }
 
     //Checks if mainCharacter collides with balloonBoost
