@@ -30,6 +30,7 @@ interface Images {
   bumpyFall_gif: p5.Image;
   bumpyRocket_gif: p5.Image;
   bumpyStar_gif: p5.Image;
+  bumpyParty_gif: p5.Image;
 }
 
 interface Sounds {
@@ -41,6 +42,7 @@ interface Sounds {
   rocketSound: p5.SoundFile;
   balloonSound: p5.SoundFile;
   fallSound: p5.SoundFile;
+  bossDeathSound: p5.SoundFile;
 }
 
 const Fonts = {
@@ -107,6 +109,7 @@ function preload() {
     bumpyFall_gif: loadImage("./assets/gif/bumpyfall.gif"),
     bumpyRocket_gif: loadImage("./assets/gif/bumpyrocketcropped.gif"),
     bumpyStar_gif: loadImage("./assets/gif/bumpystarcropped.gif"),
+    bumpyParty_gif: loadImage("./assets/gif/bumpyparty.gif")
   };
 
   sounds = {
@@ -118,6 +121,7 @@ function preload() {
     starBoostSound: loadSound("./assets/sounds/starBoost.mp3"),
     rocketSound: loadSound("./assets/sounds/rocketSound.mp3"),
     balloonSound: loadSound("./assets/sounds/balloonSound.mp3"),
+    bossDeathSound: loadSound("./assets/sounds/boss-death.mp3"),
   };
 }
 
@@ -135,6 +139,8 @@ function setup() {
   sounds.enemyDeath = loadSound("./assets/sounds/enemy-death.wav");
   sounds.enemyDeath.setVolume(0.1);
   sounds.song.setVolume(0.1);
+  sounds.bossDeathSound = loadSound("./assets/sounds/boss-death.mp3");
+  sounds.bossDeathSound.setVolume(0.3);
 
   // Sounds for power-ups
   sounds.starBoostSound = loadSound("./assets/sounds/starBoost.mp3");
@@ -144,12 +150,11 @@ function setup() {
   sounds.balloonSound = loadSound("./assets/sounds/balloonSound.mp3");
   sounds.balloonSound.setVolume(0.4);
 
+  createCanvas(550, 720);
   // Adjusts screen if windowheight is less than 720px
   if (windowHeight < 720) {
     createCanvas(550, windowHeight);
   }
-
-  createCanvas(550, 720);
   frameRate(60);
   cursor("./assets/images/smallcursor.png");
   
