@@ -106,7 +106,13 @@ class GameBoard {
       let newBackgroundOpacity = t * 255;
       push();
       tint(255, oldBackgroundOpacity);
-      image(images.backgrounds[this.currentBackgroundIndex],0,0,width,height);
+      image(
+        images.backgrounds[this.currentBackgroundIndex],
+        0,
+        0,
+        width,
+        height
+      );
       pop();
       push();
       tint(255, newBackgroundOpacity);
@@ -156,16 +162,17 @@ class GameBoard {
       this.mainCharacter.getPosition().y + this.mainCharacter.getSize().y >=
       height
     ) {
-      // for (let platform of this.platforms) {
-      //   this.mainCharacter.getVelocity().y = -4.9;
-      //   platform.getPosition().y -= 17;
-      //   this.mainCharacter.getPosition().y += 1.62;
-      //   setTimeout(() => (game.activeScene = "end"), 700);
-      // }
-      // for (let rocketBoost of this.rocketBoosts) {
-      //   rocketBoost.getPosition().y -= 17;
-      // }
-      game.activeScene = "end";
+      this.mainCharacter.isFalling = true;
+      for (let platform of this.platforms) {
+        this.mainCharacter.getVelocity().y = +4.9;
+        platform.getPosition().y -= 17;
+        this.mainCharacter.getPosition().y =
+          height - this.mainCharacter.getSize().y;
+      }
+      for (let rocketBoost of this.rocketBoosts) {
+        rocketBoost.getPosition().y -= 17;
+      }
+      setTimeout(() => (game.activeScene = "end"), 700);
     }
 
     // Checks if bullet collides with an enemy
@@ -326,7 +333,7 @@ class GameBoard {
   private generateEnemy() {
     if (this.canGenerateEnemy === true) {
       let x = random(0, width - 220);
-      let y = (height - 920);
+      let y = height - 920;
       let position = createVector(x, y);
       let enemy = new Enemy(position);
       this.enemies.push(enemy);
@@ -357,7 +364,7 @@ class GameBoard {
   private generateEnemyBoss() {
     if (this.canGenerateEnemyBoss === true) {
       let x = random(0, width - 220);
-      let y = (height - 990);
+      let y = height - 990;
       let position = createVector(x, y);
       let enemyBoss = new EnemyBoss(position);
       this.enemyBoss.push(enemyBoss);
@@ -461,8 +468,7 @@ class GameBoard {
       return;
     }
   }
-  
-  
+
   private updateRocketBoosts() {
     if (this.canGenerateRocketBoost === true) {
       for (let i = 0; i < this.rocketBoosts.length; i++) {
@@ -481,8 +487,6 @@ class GameBoard {
     }
   }
 
-
-
   // creates a platform at the start of the game that spawns below Bumpy
   private generateBottomPlatform() {
     let y = height;
@@ -491,13 +495,7 @@ class GameBoard {
     this.platforms.push(platform);
   }
 
-
-
-
   // creates a platform at the start of the game that spawns below Bumpy
-
-
-
 
   // randomly creates the X position for the platform but makes sure that there is always a 120 px gap
   // between the height of each platform
@@ -545,24 +543,30 @@ class GameBoard {
         if (this.timeSinceLastMultiplierIncrease === 25 && this.score > 3000) {
           this.canGenerateEnemyBoss = true;
         }
-        if (this.scoreMultiplier === 10 && this.bossAlreadyGenerated === false) {
+        if (
+          this.scoreMultiplier === 10 &&
+          this.bossAlreadyGenerated === false
+        ) {
           this.canGenerateEnemyBoss = true;
         }
       }
     }
   }
   private filterPowerUps() {
-    if (this.timeSinceLastMultiplierIncrease === 15 && this.powerUpAlreadyGenerated === false) {
-      let powerUpsNumber:number = Math.random()
-      if (powerUpsNumber < 0.40) {
+    if (
+      this.timeSinceLastMultiplierIncrease === 15 &&
+      this.powerUpAlreadyGenerated === false
+    ) {
+      let powerUpsNumber: number = Math.random();
+      if (powerUpsNumber < 0.4) {
         this.canGenerateBalloonBoost = true;
         this.powerUpAlreadyGenerated = true;
       }
-      if (powerUpsNumber < 0.70 && powerUpsNumber > 0.40) {
+      if (powerUpsNumber < 0.7 && powerUpsNumber > 0.4) {
         this.canGenerateRocketBoost = true;
         this.powerUpAlreadyGenerated = true;
       }
-      if (powerUpsNumber > 0.70) {
+      if (powerUpsNumber > 0.7) {
         this.canGenerateStarBoost = true;
         this.powerUpAlreadyGenerated = true;
       }
@@ -656,6 +660,9 @@ class GameBoard {
     } else if (this.starBoostIsActive === true) {
       this.mainCharacter.setImg(images.bumpyStar_gif);
       this.mainCharacter.setSize(new p5.Vector(70, 80));
+    } else if (this.mainCharacter.isFalling === true) {
+      this.mainCharacter.setImg(images.bumpyFall_gif);
+      this.mainCharacter.setSize(new p5.Vector(170, 210));
     } else {
       this.mainCharacter.setImg(images.bumpy);
       this.mainCharacter.setSize(new p5.Vector(70, 80));

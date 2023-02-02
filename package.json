@@ -4,7 +4,6 @@
   "description": "Project to quickly get something working in p5.js and typescript",
   "scripts": {
     "dev": "run-p build serve",
-    "build": "tsc --watch",
     "serve": "vite --port=5500 --open"
   },
   "devDependencies": {

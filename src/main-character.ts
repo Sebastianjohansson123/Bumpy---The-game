@@ -1,11 +1,11 @@
 /// <reference path="entity.ts"  />
 class MainCharacter extends Entity {
   // private isFalling: boolean;
+  public isFalling: boolean;
   private isJumping: boolean;
   private speed: number;
   public bullets: Bubble[];
   private canShoot: boolean | undefined;
-
   constructor() {
     super(
       createVector(width * 0.4, height * 0.29),
@@ -14,9 +14,7 @@ class MainCharacter extends Entity {
       createVector(70, 80),
       images.bumpy
     );
-    //private handleCollisions()
-    //private jump()
-    //private shoot()
+    this.isFalling = false;
     this.isJumping = true;
     this.speed = 5;
     this.bullets = [];
