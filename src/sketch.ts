@@ -142,12 +142,11 @@ function setup() {
   sounds.balloonSound = loadSound("./assets/sounds/balloonSound.mp3");
   sounds.balloonSound.setVolume(0.4);
 
+  createCanvas(550, 720);
   // Adjusts screen if windowheight is less than 720px
   if (windowHeight < 720) {
     createCanvas(550, windowHeight);
   }
-
-  createCanvas(550, 720);
   frameRate(60);
   cursor("./assets/images/smallcursor.png");
   
