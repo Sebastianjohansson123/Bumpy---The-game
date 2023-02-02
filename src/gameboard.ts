@@ -2,7 +2,6 @@ interface IGameBoard {
 score:number;
 isBalloonBoostActive:boolean;
 isRocketBoostActive:boolean;
-isStarBoostActive:boolean;
 }
 
 class GameBoard implements IGameBoard {
