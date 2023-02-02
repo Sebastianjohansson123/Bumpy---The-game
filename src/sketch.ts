@@ -31,6 +31,7 @@ interface Images {
   bumpyRocket_gif: p5.Image;
   bumpyStar_gif: p5.Image;
   bumpyParty_gif: p5.Image;
+  bumpyPoint_gif: p5.Image;
 }
 
 interface Sounds {
@@ -109,7 +110,8 @@ function preload() {
     bumpyFall_gif: loadImage("./assets/gif/bumpyfall.gif"),
     bumpyRocket_gif: loadImage("./assets/gif/bumpyrocketcropped.gif"),
     bumpyStar_gif: loadImage("./assets/gif/bumpystarcropped.gif"),
-    bumpyParty_gif: loadImage("./assets/gif/bumpyparty.gif")
+    bumpyParty_gif: loadImage("./assets/gif/bumpyparty.gif"),
+    bumpyPoint_gif: loadImage("./assets/gif/bumpypoint.gif")
   };
 
   sounds = {
