@@ -37,7 +37,7 @@ class Scoreboard {
       new p5.Vector(275, 300),
     ];
     let texts = ["01", "02", "03"];
-    let scores:number[] = [ // RE-TYPE THIS??
+    let scores:number[] = [ 
       this.game.getTopHighscore(),
       this.game.getSecondHighscore(),
       this.game.getThirdHighscore(),

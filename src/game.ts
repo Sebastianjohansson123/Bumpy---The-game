@@ -5,7 +5,6 @@ interface IGame {
   getSecondHighscore: () => number;
   getThirdHighscore: () => number;
   setEndMenuScore: () => number;
-  
 }
 
 class Game implements IGame {
@@ -16,7 +15,6 @@ class Game implements IGame {
   private scoreboard: Scoreboard;
   public activeScene: "start" | "howtoplay" | "scoreboard" | "play" | "end";
   private _highscores: number[];
-
 
   constructor() {
     this.gameBoard = new GameBoard(this);

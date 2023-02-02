@@ -2,7 +2,7 @@
 
 class Enemy extends Entity {
   constructor(
-    position: p5.Vector // x: number, // y: number, // width: number, // height: number, // img: p5.Image
+    position: p5.Vector 
   ) {
     super(
       position,
@@ -11,9 +11,6 @@ class Enemy extends Entity {
       createVector(80, 80),
       images.enemy
     );
-    // this.position = createVector(x, y);
-    // this.size = createVector(width * 0.5, height);
-    // this.img = img;
   }
 
   public getPosition(): p5.Vector {
