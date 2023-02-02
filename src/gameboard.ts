@@ -110,7 +110,13 @@ class GameBoard {
       let newBackgroundOpacity = t * 255;
       push();
       tint(255, oldBackgroundOpacity);
-      image(images.backgrounds[this.currentBackgroundIndex],0,0,width,height);
+      image(
+        images.backgrounds[this.currentBackgroundIndex],
+        0,
+        0,
+        width,
+        height
+      );
       pop();
       push();
       tint(255, newBackgroundOpacity);
@@ -237,7 +243,7 @@ class GameBoard {
         sounds.enemyDeath.play();
         this.enemies.splice(this.enemies.indexOf(enemy), 1);
         this.score += 100;
-        setTimeout(() => (this.isStarBoostActive = false), 10000);
+        this.isStarBoostIsActive = false;
       }
     }
 
@@ -270,11 +276,23 @@ class GameBoard {
         enemyBoss.getPosition().y
       );
       if (
+        this.starBoostIsActive === false &&
         distance <
           this.mainCharacter.getSize().x + enemyBoss.getSize().x - 140 &&
         distance < this.mainCharacter.getSize().y + enemyBoss.getSize().y - 120
       ) {
         this.game.activeScene = "end";
+      } else if (
+        this.isStarBoostIsActive === true &&
+        distance <
+          this.mainCharacter.getSize().x + enemyBoss.getSize().x - 140 &&
+        distance < this.mainCharacter.getSize().y + enemyBoss.getSize().y - 120
+      ) {
+        sounds.enemyDeath.play();
+        this.enemyBoss.splice(this.enemyBoss.indexOf(enemyBoss), 1);
+        this.score += 100;
+        this.isStarBoostIsActive = false;
+        this.score += 500;
       }
     }
 
@@ -322,7 +340,7 @@ class GameBoard {
   private generateEnemy() {
     if (this.canGenerateEnemy === true) {
       let x = random(0, width - 220);
-      let y = (height - 920);
+      let y = height - 920;
       let position = createVector(x, y);
       let enemy = new Enemy(position);
       this.enemies.push(enemy);
@@ -353,7 +371,7 @@ class GameBoard {
   private generateEnemyBoss() {
     if (this.canGenerateEnemyBoss === true) {
       let x = random(0, width - 220);
-      let y = (height - 990);
+      let y = height - 990;
       let position = createVector(x, y);
       let enemyBoss = new EnemyBoss(position);
       this.enemyBoss.push(enemyBoss);
@@ -457,7 +475,8 @@ class GameBoard {
       return;
     }
   }
-  
+
+
   private updateRocketBoosts() {
     if (this.canGenerateRocketBoost === true) {
       for (let i = 0; i < this.rocketBoosts.length; i++) {
@@ -530,7 +549,10 @@ class GameBoard {
         if (this.timeSinceLastMultiplierIncrease === 25 && this.score > 3000) {
           this.canGenerateEnemyBoss = true;
         }
-        if (this.scoreMultiplier === 10 && this.bossAlreadyGenerated === false) {
+        if (
+          this.scoreMultiplier === 10 &&
+          this.bossAlreadyGenerated === false
+        ) {
           this.canGenerateEnemyBoss = true;
         }
       }
@@ -538,17 +560,20 @@ class GameBoard {
   }
   
   private filterPowerUps() {
-    if (this.timeSinceLastMultiplierIncrease === 15 && this.powerUpAlreadyGenerated === false) {
-      let powerUpsNumber:number = Math.random()
-      if (powerUpsNumber < 0.40) {
+    if (
+      this.timeSinceLastMultiplierIncrease === 15 &&
+      this.powerUpAlreadyGenerated === false
+    ) {
+      let powerUpsNumber: number = Math.random();
+      if (powerUpsNumber < 0.4) {
         this.canGenerateBalloonBoost = true;
         this.powerUpAlreadyGenerated = true;
       }
-      if (powerUpsNumber < 0.70 && powerUpsNumber > 0.40) {
+      if (powerUpsNumber < 0.7 && powerUpsNumber > 0.4) {
         this.canGenerateRocketBoost = true;
         this.powerUpAlreadyGenerated = true;
       }
-      if (powerUpsNumber > 0.70) {
+      if (powerUpsNumber > 0.7) {
         this.canGenerateStarBoost = true;
         this.powerUpAlreadyGenerated = true;
       }
