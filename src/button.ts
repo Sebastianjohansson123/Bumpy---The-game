@@ -49,21 +49,20 @@ class Button {
   public draw() {
     push();
     noStroke();
-    // creates hover effect on button
-    // checks if mouse is within the area of the rect
+    // Creates hover effect on button and checks if mouse is within the area of the rect
     if (
       mouseX > this.position.x - this.size.x / 2 &&
       mouseX < this.position.x + this.size.x / 2 &&
       mouseY > this.position.y - this.size.y / 2 &&
       mouseY < this.position.y + this.size.y / 2
     ) {
-    // changes fill color
-      fill("#FFFFFF"); // hover color
+    // Changes fill color
+      fill("#FFFFFF"); // Hover color
     } else {
-      fill("#DFADD0"); // original color
+      fill("#DFADD0"); // Original color
     }
 
-    // draws button shape (rect) 
+    // Draws button shape (rect) 
     noStroke();
     rectMode(CENTER);
     rect(
@@ -74,12 +73,12 @@ class Button {
       this.radius
     );
 
-    // draws text
+    // Draws text
     fill("#3A1458");
     textSize(22);
     textFont(Fonts.TitanOne);
 
-    // checks if content is string or image
+    // Checks if content is string or image
     if (typeof this.content === "string") {
       textAlign(CENTER, CENTER);
       text(this.content, this.position.x, this.position.y);

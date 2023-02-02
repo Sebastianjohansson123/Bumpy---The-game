@@ -1,14 +1,16 @@
 class Scoreboard {
   private btnExitScoreBoard: Button;
+  private game: IGame;
 
-  constructor() {
+  constructor(game: IGame) {
+    this.game = game;
     this.btnExitScoreBoard = new Button(
       images.xBtn,
       new p5.Vector(376, 173),
       new p5.Vector(15, 15)
     );
     this.btnExitScoreBoard.onClickCallback = () => {
-      game.activeScene = "start";
+      this.game.activeScene = "start";
     };
   }
 
@@ -23,7 +25,7 @@ class Scoreboard {
     this.btnExitScoreBoard.draw();
     images.xBtn, 376, 173, 11, 11;
     this.drawRects();
-    image(images.bumpyBlink_gif, 50, 450, 152, 193);
+    image(images.bumpyParty_gif, -50, 315, 400, 380);
     image(images.crown, 164, 182, 40, 40);
   }
 
@@ -35,10 +37,10 @@ class Scoreboard {
       new p5.Vector(275, 300),
     ];
     let texts = ["01", "02", "03"];
-    let scores = [
-      game.getTopHighscore(),
-      game.getSecondHighscore(),
-      game.getThirdHighscore(),
+    let scores:number[] = [ 
+      this.game.getTopHighscore(),
+      this.game.getSecondHighscore(),
+      this.game.getThirdHighscore(),
     ];
     for (let i = 0; i < positions.length; i++) {
       let pos = positions[i];

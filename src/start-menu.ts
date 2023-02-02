@@ -5,8 +5,10 @@ class StartMenu {
   private btnSoundOn: Button;
   private btnSoundOff: Button;
   private soundOn: boolean;
+  private game: IGame;
 
-  constructor() {
+  constructor(game: IGame) {
+    this.game = game;
     this.soundOn = true;
     const centerX = width * 0.5;
 
@@ -41,11 +43,11 @@ class StartMenu {
     this.btnSoundOn.onClickCallback = () => {
       this.soundOn = !this.soundOn;
       if (this.soundOn) {
-        sounds.bulletSound.setVolume(0.1);
+        sounds.bubbleSound.setVolume(0.1);
         sounds.jumpSound.setVolume(0.1);
         sounds.song.setVolume(0.05);
       } else {
-        sounds.bulletSound.setVolume(0.0);
+        sounds.bubbleSound.setVolume(0.0);
         sounds.jumpSound.setVolume(0.0);
         sounds.song.setVolume(0.0);
       }
@@ -53,16 +55,16 @@ class StartMenu {
 
     // Callback functions for click events on buttons
     this.btnPlayGame.onClickCallback = () => {
-      game.activeScene = "play";
-      game.resetGameBoard();
+      this.game.activeScene = "play";
+      this.game.resetGameBoard();
     };
 
     this.btnHowToPlay.onClickCallback = () => {
-      game.activeScene = "howtoplay";
+      this.game.activeScene = "howtoplay";
     };
 
     this.btnScores.onClickCallback = () => {
-      game.activeScene = "scoreboard";
+      this.game.activeScene = "scoreboard";
     };
   }
 

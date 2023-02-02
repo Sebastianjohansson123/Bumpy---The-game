@@ -1,34 +1,36 @@
 class GameBoard {
-  // private backgrounds: Background[];
+  private game: IGame;
   private mainCharacter: MainCharacter;
   private platforms: Platform[];
   private score: number;
   private scoreMultiplier: number = 1;
   private timeSinceLastMultiplierIncrease: number = 0;
-  private enemies: Enemy[];
+  private enemies: Enemy[]; 
   private enemyBoss: EnemyBoss[];
-  private canGenerateEnemy: boolean | undefined;
-  private canGenerateEnemyBoss: boolean | undefined;
-  private canGenerateBalloonBoost: boolean | undefined;
-  private canGenerateRocketBoost: boolean | undefined;
+  private canGenerateEnemy: boolean;
+  private canGenerateEnemyBoss: boolean;
+  private canGenerateBalloonBoost: boolean;
+  private canGenerateRocketBoost: boolean;
+  private canGenerateStarBoost: boolean;
   private currentBackgroundIndex: number = 0;
+  private nextBackgroundIndex: number;
   private canMoveEnemy: boolean = false;
   private canMoveBalloonBoost: boolean = false;
   private balloonBoosts: BalloonBoost[];
   private rocketBoosts: RocketBoost[];
-  private isRocketBoostActive: boolean;
+  private starBoosts: StarBoost[];
   private isBalloonBoostActive: boolean;
-
-  private nextBackgroundIndex: number;
+  private isRocketBoostActive: boolean;
+  private isStarBoostActive: boolean;
   private transitionStartTime: number;
   private transitionDuration: number;
   private bossAlreadyGenerated: boolean;
-  private starBoosts: StarBoost[];
-  private canGenerateStarBoost: boolean | undefined;
-  private starBoostIsActive: boolean;
   private powerUpAlreadyGenerated: boolean;
+  private gameOver: boolean;
+  private gameOverAnimationTimeout: number;
 
-  constructor() {
+  constructor(game: IGame) {
+    this.game = game;
     this.mainCharacter = new MainCharacter();
     this.platforms = [];
     this.enemyBoss = [];
@@ -53,8 +55,10 @@ class GameBoard {
     this.transitionDuration = 0;
     sounds.song.loop();
     this.canGenerateStarBoost = false;
-    this.starBoostIsActive = false;
+    this.isStarBoostActive = false;
     this.powerUpAlreadyGenerated = false;
+    this.gameOver = false;
+    this.gameOverAnimationTimeout = 1000;
   }
 
   public update() {
@@ -74,6 +78,7 @@ class GameBoard {
     this.updateStarBoosts();
     this.generateStarBoost();
     this.filterPowerUps();
+    this.runGameOverAnimation();
   }
 
   public draw() {
@@ -85,13 +90,11 @@ class GameBoard {
     this.rocketBoosts.forEach((rocketBoost) => rocketBoost.draw());
     this.starBoosts.forEach((starBoost) => starBoost.draw());
     this.mainCharacter.draw();
-    this.DisplayScore();
+    this.displayScore();
   }
 
-  // checks if the score is above a certain threshold
-  // then increases the backgroundindex which draws
-  // a new background image. Can be expanded with additional
-  // bgimages and added transition effects
+  // Checks if the score is above a certain threshold, then increases the backgroundindex which draws
+  // a new background image. Can be expanded with additional bgimages and added transition effects
   private drawBackground() {
     if (this.timeSinceLastMultiplierIncrease === 28) {
       this.nextBackgroundIndex =
@@ -99,6 +102,7 @@ class GameBoard {
       this.transitionStartTime = millis();
       this.transitionDuration = 1000; // transition lasts 1 second
     }
+
     if (this.nextBackgroundIndex !== this.currentBackgroundIndex) {
       let elapsedTime = millis() - this.transitionStartTime;
       let t = constrain(elapsedTime / this.transitionDuration, 0, 1);
@@ -118,6 +122,7 @@ class GameBoard {
       tint(255, newBackgroundOpacity);
       image(images.backgrounds[this.nextBackgroundIndex], 0, 0, width, height);
       pop();
+      
       if (elapsedTime >= this.transitionDuration) {
         this.currentBackgroundIndex = this.nextBackgroundIndex;
       }
@@ -136,7 +141,7 @@ class GameBoard {
 
   // Detects collisions between entities on the GameBoard
   private detectCollision() {
-    // checks if the MainCharacters gets in contact with the platform
+    // Checks if the MainCharacters gets in contact with the platform
     // when it is falling and triggers an automatic jump if it is
     for (let platform of this.platforms) {
       if (
@@ -157,39 +162,30 @@ class GameBoard {
       }
     }
 
-    // check if MainCharacter collides with the bottom of the canvas
+    // Check if MainCharacter collides with the bottom of the canvas
     if (
       this.mainCharacter.getPosition().y + this.mainCharacter.getSize().y >=
       height
     ) {
-      // for (let platform of this.platforms) {
-      //   this.mainCharacter.getVelocity().y = -4.9;
-      //   platform.getPosition().y -= 17;
-      //   this.mainCharacter.getPosition().y += 1.62;
-      //   setTimeout(() => (game.activeScene = "end"), 700);
-      // }
-      // for (let rocketBoost of this.rocketBoosts) {
-      //   rocketBoost.getPosition().y -= 17;
-      // }
-      game.activeScene = "end";
+      this.gameOver = true;
     }
 
-    // Checks if bullet collides with an enemy
-    // If they collide, enemy and bullet dissappears and 100 is added to the score
+    // Checks if bubble collides with an enemy
+    // If they collide, enemy and bubble dissappears and 100 is added to the score
     for (let enemy of this.enemies) {
-      for (let bullet of this.mainCharacter.bullets) {
+      for (let bubble of this.mainCharacter.bubbles) {
         if (
-          bullet.getPosition().x <
+          bubble.getPosition().x <
             enemy.getPosition().x + enemy.getSize().x - 20 &&
-          bullet.getPosition().x + bullet.getSize().x > enemy.getPosition().x &&
-          bullet.getPosition().y <
+          bubble.getPosition().x + bubble.getSize().x > enemy.getPosition().x &&
+          bubble.getPosition().y <
             enemy.getPosition().y + enemy.getSize().y - 20 &&
-          bullet.getPosition().y + bullet.getSize().y > enemy.getPosition().y
+          bubble.getPosition().y + bubble.getSize().y > enemy.getPosition().y
         ) {
           sounds.enemyDeath.play();
 
-          this.mainCharacter.bullets.splice(
-            this.mainCharacter.bullets.indexOf(bullet),
+          this.mainCharacter.bubbles.splice(
+            this.mainCharacter.bubbles.indexOf(bubble),
             1
           );
           this.enemies.splice(this.enemies.indexOf(enemy), 1);
@@ -197,24 +193,24 @@ class GameBoard {
         }
       }
     }
-    // Checks if bullet collides with enemyBoss
-    // If they collide, enemy and bullet dissappears and 500 is added to the score
+    // Checks if bubble collides with enemyBoss
+    // If they collide, enemy and bubble dissappears and 500 is added to the score
     for (let enemyBoss of this.enemyBoss) {
-      for (let bullet of this.mainCharacter.bullets) {
+      for (let bubble of this.mainCharacter.bubbles) {
         if (
-          bullet.getPosition().x <
+          bubble.getPosition().x <
             enemyBoss.getPosition().x + enemyBoss.getSize().x - 20 &&
-          bullet.getPosition().x + bullet.getSize().x >
+          bubble.getPosition().x + bubble.getSize().x >
             enemyBoss.getPosition().x &&
-          bullet.getPosition().y <
+          bubble.getPosition().y <
             enemyBoss.getPosition().y + enemyBoss.getSize().y - 20 &&
-          bullet.getPosition().y + bullet.getSize().y >
+          bubble.getPosition().y + bubble.getSize().y >
             enemyBoss.getPosition().y
         ) {
-          sounds.enemyDeath.play();
+          sounds.bossDeathSound.play();
 
-          this.mainCharacter.bullets.splice(
-            this.mainCharacter.bullets.indexOf(bullet),
+          this.mainCharacter.bubbles.splice(
+            this.mainCharacter.bubbles.indexOf(bubble),
             1
           );
           this.enemyBoss.splice(this.enemyBoss.indexOf(enemyBoss), 1);
@@ -224,8 +220,8 @@ class GameBoard {
     }
 
     // Checks if an enemy collides with mainCharacter
-    // If starBoostIsActive = false and they collide: active scene is set to "end"
-    // If starBoostIsActive = true the enemy dies
+    // If isStarBoostActive = false and they collide: active scene is set to "end"
+    // If isStarBoostActive = true the enemy dies
     for (let enemy of this.enemies) {
       let distance = dist(
         this.mainCharacter.getPosition().x,
@@ -234,20 +230,20 @@ class GameBoard {
         enemy.getPosition().y
       );
       if (
-        this.starBoostIsActive === false &&
+        this.isStarBoostActive === false &&
         distance < this.mainCharacter.getSize().x + enemy.getSize().x - 80 &&
         distance < this.mainCharacter.getSize().y + enemy.getSize().y - 70
       ) {
-        game.activeScene = "end";
+        this.game.activeScene = "end";
       } else if (
-        this.starBoostIsActive === true &&
+        this.isStarBoostActive === true &&
         distance < this.mainCharacter.getSize().x + enemy.getSize().x - 80 &&
         distance < this.mainCharacter.getSize().y + enemy.getSize().y - 70
       ) {
         sounds.enemyDeath.play();
         this.enemies.splice(this.enemies.indexOf(enemy), 1);
         this.score += 100;
-        this.starBoostIsActive = false;
+        this.isStarBoostIsActive = false;
       }
     }
 
@@ -264,7 +260,7 @@ class GameBoard {
           this.mainCharacter.getSize().x + starBoost.getSize().x - 70 &&
         distance < this.mainCharacter.getSize().y + starBoost.getSize().y - 70
       ) {
-        this.starBoostIsActive = true;
+        this.isStarBoostActive = true;
         sounds.starBoostSound.play();
         this.starBoosts.splice(this.starBoosts.indexOf(starBoost), 1);
       }
@@ -285,9 +281,9 @@ class GameBoard {
           this.mainCharacter.getSize().x + enemyBoss.getSize().x - 140 &&
         distance < this.mainCharacter.getSize().y + enemyBoss.getSize().y - 120
       ) {
-        game.activeScene = "end";
+        this.game.activeScene = "end";
       } else if (
-        this.starBoostIsActive === true &&
+        this.isStarBoostIsActive === true &&
         distance <
           this.mainCharacter.getSize().x + enemyBoss.getSize().x - 140 &&
         distance < this.mainCharacter.getSize().y + enemyBoss.getSize().y - 120
@@ -295,7 +291,7 @@ class GameBoard {
         sounds.enemyDeath.play();
         this.enemyBoss.splice(this.enemyBoss.indexOf(enemyBoss), 1);
         this.score += 100;
-        this.starBoostIsActive = false;
+        this.isStarBoostIsActive = false;
         this.score += 500;
       }
     }
@@ -480,6 +476,7 @@ class GameBoard {
     }
   }
 
+
   private updateRocketBoosts() {
     if (this.canGenerateRocketBoost === true) {
       for (let i = 0; i < this.rocketBoosts.length; i++) {
@@ -498,7 +495,7 @@ class GameBoard {
     }
   }
 
-  // creates a platform at the start of the game that spawns below Bumpy
+  // Creates a platform at the start of the game that spawns below Bumpy
   private generateBottomPlatform() {
     let y = height;
     let position = createVector(200, y - 150);
@@ -506,14 +503,12 @@ class GameBoard {
     this.platforms.push(platform);
   }
 
-  // creates a platform at the start of the game that spawns below Bumpy
-
-  // randomly creates the X position for the platform but makes sure that there is always a 120 px gap
-  // between the height of each platform
+  // Randomly creates the X position for the platform but makes sure that there is always a 120 px gap
+  // Between the height of each platform
   private generatePlatforms() {
     let y = height;
     while (y > 0) {
-      // prevents the platforms from being spawned partially "out of bounds"
+      // Prevents the platforms from being spawned partially "out of bounds"
       let x = random(0, width - 220);
       let position = createVector(x, y);
       let platform = new Platform(position);
@@ -523,7 +518,7 @@ class GameBoard {
   }
 
   private updatePlatforms() {
-    // a for each loop that removes a platform if y is lower than 0 and pushes a new one
+    // A for each loop that removes a platform if y is lower than 0 and pushes a new one
     // and keeps track of the score by increasing it for each platform that reaches the bottom
     // and gets removed plus adds a multiplier for the score that makes the platform award
     // a higher score the further that the player gets in the game
@@ -563,6 +558,7 @@ class GameBoard {
       }
     }
   }
+  
   private filterPowerUps() {
     if (
       this.timeSinceLastMultiplierIncrease === 15 &&
@@ -615,7 +611,6 @@ class GameBoard {
       }
     }
     // Adjusting position/speed of Bumpy and platforms when triggered by RocketBoost-entity
-    // TODO: remove enemies and other boosts from spawning during duration of boost
     if (this.isRocketBoostActive === true) {
       for (let platform of this.platforms) {
         this.mainCharacter.getVelocity().y = -4.9;
@@ -668,7 +663,7 @@ class GameBoard {
     } else if (this.isBalloonBoostActive === true) {
       this.mainCharacter.setImg(images.bumpyBalloons_gif);
       this.mainCharacter.setSize(new p5.Vector(140, 160));
-    } else if (this.starBoostIsActive === true) {
+    } else if (this.isStarBoostActive === true) {
       this.mainCharacter.setImg(images.bumpyStar_gif);
       this.mainCharacter.setSize(new p5.Vector(70, 80));
     } else {
@@ -677,8 +672,26 @@ class GameBoard {
     }
   }
 
+  private runGameOverAnimation() {
+    if (this.gameOver) {
+      this.gameOverAnimationTimeout -= deltaTime;
+      for (let platform of this.platforms) {
+        this.mainCharacter.getVelocity().y = -4.9;
+        platform.getPosition().y -= 17;
+        this.mainCharacter.getPosition().y += 1.62;
+      }
+      for (let rocketBoost of this.rocketBoosts) {
+        rocketBoost.getPosition().y -= 17;
+      }
+
+      if (this.gameOverAnimationTimeout < 0) {
+        this.game.activeScene = "end";
+      }
+    }
+  }
+
   // Function to track the score of the current game and display it in the top-left corner
-  public DisplayScore() {
+  public displayScore() {
     fill("#FFFFFF");
     textAlign(LEFT);
     textFont(Fonts.TitanOne);

@@ -1,8 +1,10 @@
 class HowToPlay {
   private btnExitHowToPlay: Button;
+  private game: IGame;
 
-  constructor() {
+  constructor(game: IGame) {
     // Creates the exit button
+    this.game = game;
     this.btnExitHowToPlay = new Button(
       images.xBtn,
       new p5.Vector(376, 173),
@@ -10,7 +12,7 @@ class HowToPlay {
     );
     // Callback function for click event on button
     this.btnExitHowToPlay.onClickCallback = () => {
-      game.activeScene = "start";
+      this.game.activeScene = "start";
     };
   }
 
@@ -30,7 +32,6 @@ class HowToPlay {
     image(images.howToPlayKeys, 162, 355, 130, 70);
     image(images.bumpyBlink_gif, 50, 450, 152, 193);
   }
-
 
   /**
    * Draws the title and how to play instructions
@@ -75,7 +76,7 @@ class HowToPlay {
     text("the monster to the right, and the", 160, 275);
     text("LEFT arrow key to move the monster", 160, 295);
     text("to the left.", 160, 315);
-    text("Use the UP key to shoot.", 160, 335);
+    text("Use the UP key or SPACE to shoot.", 160, 335);
     pop();
     push();
     fill("#3A1458");
