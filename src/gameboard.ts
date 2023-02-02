@@ -317,7 +317,6 @@ class GameBoard {
         distance < this.mainCharacter.getSize().y + rocketBoost.getSize().y - 70
       ) {
         this.rocketBoosts.splice(this.rocketBoosts.indexOf(rocketBoost), 1);
-        // this.score += 100;
         this.isRocketBoostActive = true;
         sounds.rocketSound.play();
       }
@@ -327,7 +326,7 @@ class GameBoard {
   private generateEnemy() {
     if (this.canGenerateEnemy === true) {
       let x = random(0, width - 220);
-      let y = height;
+      let y = (height - 920);
       let position = createVector(x, y);
       let enemy = new Enemy(position);
       this.enemies.push(enemy);
@@ -358,11 +357,12 @@ class GameBoard {
   private generateEnemyBoss() {
     if (this.canGenerateEnemyBoss === true) {
       let x = random(0, width - 220);
-      let y = height;
+      let y = (height - 990);
       let position = createVector(x, y);
       let enemyBoss = new EnemyBoss(position);
       this.enemyBoss.push(enemyBoss);
       this.canGenerateEnemyBoss = false;
+      this.bossAlreadyGenerated = true;
     } else {
       return;
     }
@@ -380,7 +380,6 @@ class GameBoard {
           this.enemyBoss.push(newEnemyBoss);
           this.canGenerateEnemyBoss = false;
           this.bossAlreadyGenerated = true;
-          console.log("BOSS TIME")
         } else {
           return;
         }
@@ -529,7 +528,6 @@ class GameBoard {
         this.platforms.push(newPlatform);
         this.score += 1 * this.scoreMultiplier;
         this.timeSinceLastMultiplierIncrease += 1;
-        console.log(this.timeSinceLastMultiplierIncrease);
 
         if (this.timeSinceLastMultiplierIncrease === 30) {
           this.scoreMultiplier += 1;
@@ -541,10 +539,10 @@ class GameBoard {
         if (this.timeSinceLastMultiplierIncrease === 2) {
           this.powerUpAlreadyGenerated = false;
         }
-        if (this.timeSinceLastMultiplierIncrease === 15 && this.score > 8000) {
+        if (this.timeSinceLastMultiplierIncrease === 15 && this.score > 3000) {
           this.bossAlreadyGenerated = false;
         }
-        if (this.timeSinceLastMultiplierIncrease === 25 && this.score > 8000) {
+        if (this.timeSinceLastMultiplierIncrease === 25 && this.score > 3000) {
           this.canGenerateEnemyBoss = true;
         }
         if (this.scoreMultiplier === 10 && this.bossAlreadyGenerated === false) {
