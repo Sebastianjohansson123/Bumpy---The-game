@@ -58,7 +58,7 @@ class GameBoard {
     this.isStarBoostActive = false;
     this.powerUpAlreadyGenerated = false;
     this.gameOver = false;
-    this.gameOverAnimationTimeout = 1000;
+    this.gameOverAnimationTimeout = 2000;
   }
 
   public update() {
@@ -655,9 +655,11 @@ class GameBoard {
     } else if (this.isStarBoostActive === true) {
       this.mainCharacter.setImg(images.bumpyStar_gif);
       this.mainCharacter.setSize(new p5.Vector(70, 80));
-    } else if (this.mainCharacter.isFalling === true) {
+    } else if (this.gameOver === true) {
       this.mainCharacter.setImg(images.bumpyFall_gif);
-      this.mainCharacter.setSize(new p5.Vector(170, 210));
+      this.mainCharacter.setSize(new p5.Vector(240, 210));
+      this.mainCharacter.getPosition().x =
+        this.mainCharacter.getPosition().x + 2.8;
     } else {
       this.mainCharacter.setImg(images.bumpy);
       this.mainCharacter.setSize(new p5.Vector(70, 80));
@@ -670,7 +672,7 @@ class GameBoard {
       for (let platform of this.platforms) {
         this.mainCharacter.getVelocity().y = -4.9;
         platform.getPosition().y -= 17;
-        this.mainCharacter.getPosition().y += 1.62;
+        this.mainCharacter.getPosition().y -= 1;
       }
       for (let rocketBoost of this.rocketBoosts) {
         rocketBoost.getPosition().y -= 17;
