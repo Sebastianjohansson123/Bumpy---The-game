@@ -1,5 +1,7 @@
 interface IGameBoard {
 score:number;
+isBalloonBoostActive:boolean;
+isRocketBoostActive:boolean;
 }
 
 class GameBoard implements IGameBoard {
@@ -23,9 +25,9 @@ class GameBoard implements IGameBoard {
   private balloonBoosts: BalloonBoost[];
   private rocketBoosts: RocketBoost[];
   private starBoosts: StarBoost[];
-  private isBalloonBoostActive: boolean;
-  private isRocketBoostActive: boolean;
-  private isStarBoostActive: boolean;
+  public isBalloonBoostActive: boolean;
+  public isRocketBoostActive: boolean;
+  public isStarBoostActive: boolean;
   private transitionStartTime: number;
   private transitionDuration: number;
   private bossAlreadyGenerated: boolean;

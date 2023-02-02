@@ -43,13 +43,25 @@ class StartMenu {
     this.btnSoundOn.onClickCallback = () => {
       this.soundOn = !this.soundOn;
       if (this.soundOn) {
-        sounds.bubbleSound.setVolume(0.1);
+        sounds.bubbleSound.setVolume(0.09);
         sounds.jumpSound.setVolume(0.1);
         sounds.song.setVolume(0.05);
+        sounds.fallSound.setVolume(0.5);
+        sounds.bossDeathSound.setVolume(0.3);
+        sounds.enemyDeath.setVolume(0.1);
+        sounds.balloonSound.setVolume(0.4);
+        sounds.rocketSound.setVolume(0.4);
+        sounds.starBoostSound.setVolume(0.4);
       } else {
         sounds.bubbleSound.setVolume(0.0);
         sounds.jumpSound.setVolume(0.0);
         sounds.song.setVolume(0.0);
+        sounds.fallSound.setVolume(0.0);
+        sounds.bossDeathSound.setVolume(0.0);
+        sounds.enemyDeath.setVolume(0.0);
+        sounds.balloonSound.setVolume(0.0);
+        sounds.rocketSound.setVolume(0.0);
+        sounds.starBoostSound.setVolume(0.0);
       }
     };
 

@@ -3,8 +3,9 @@
   "version": "2.0.1",
   "description": "Project to quickly get something working in p5.js and typescript",
   "scripts": {
-    "dev": "run-p build serve",
-    "build": "tsc --watch",
+    "dev": "run-p build:watch serve",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
     "serve": "vite --port=5500 --open"
   },
   "devDependencies": {
