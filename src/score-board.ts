@@ -1,14 +1,16 @@
 class Scoreboard {
   private btnExitScoreBoard: Button;
+  private game: IGame;
 
-  constructor() {
+  constructor(game: IGame) {
+    this.game = game;
     this.btnExitScoreBoard = new Button(
       images.xBtn,
       new p5.Vector(376, 173),
       new p5.Vector(15, 15)
     );
     this.btnExitScoreBoard.onClickCallback = () => {
-      game.activeScene = "start";
+      this.game.activeScene = "start";
     };
   }
 
@@ -35,10 +37,10 @@ class Scoreboard {
       new p5.Vector(275, 300),
     ];
     let texts = ["01", "02", "03"];
-    let scores = [
-      game.getTopHighscore(),
-      game.getSecondHighscore(),
-      game.getThirdHighscore(),
+    let scores:number[] = [ // RE-TYPE THIS??
+      this.game.getTopHighscore(),
+      this.game.getSecondHighscore(),
+      this.game.getThirdHighscore(),
     ];
     for (let i = 0; i < positions.length; i++) {
       let pos = positions[i];

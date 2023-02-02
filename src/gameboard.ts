@@ -1,5 +1,6 @@
 class GameBoard {
   // private backgrounds: Background[];
+  private game: IGame;
   private mainCharacter: MainCharacter;
   private platforms: Platform[];
   private score: number;
@@ -18,7 +19,6 @@ class GameBoard {
   private rocketBoosts: RocketBoost[];
   private isRocketBoostActive: boolean;
   private isBalloonBoostActive: boolean;
-
   private nextBackgroundIndex: number;
   private transitionStartTime: number;
   private transitionDuration: number;
@@ -27,8 +27,11 @@ class GameBoard {
   private canGenerateStarBoost: boolean | undefined;
   private starBoostIsActive: boolean;
   private powerUpAlreadyGenerated: boolean;
+  private gameOver: boolean;
+  private gameOverAnimationTimeout: number;
 
-  constructor() {
+  constructor(game: IGame) {
+    this.game = game;
     this.mainCharacter = new MainCharacter();
     this.platforms = [];
     this.enemyBoss = [];
@@ -55,6 +58,8 @@ class GameBoard {
     this.canGenerateStarBoost = false;
     this.starBoostIsActive = false;
     this.powerUpAlreadyGenerated = false;
+    this.gameOver = false;
+    this.gameOverAnimationTimeout = 1000;
   }
 
   public update() {
@@ -74,6 +79,7 @@ class GameBoard {
     this.updateStarBoosts();
     this.generateStarBoost();
     this.filterPowerUps();
+    this.runGameOverAnimation();
   }
 
   public draw() {
@@ -86,6 +92,24 @@ class GameBoard {
     this.starBoosts.forEach((starBoost) => starBoost.draw());
     this.mainCharacter.draw();
     this.DisplayScore();
+  }
+
+  private runGameOverAnimation() {
+    if (this.gameOver) {
+      this.gameOverAnimationTimeout -= deltaTime;
+      for (let platform of this.platforms) {
+        this.mainCharacter.getVelocity().y = -4.9;
+        platform.getPosition().y -= 17;
+        this.mainCharacter.getPosition().y += 1.62;
+      }
+      for (let rocketBoost of this.rocketBoosts) {
+        rocketBoost.getPosition().y -= 17;
+      }
+
+      if (this.gameOverAnimationTimeout < 0) {
+        this.game.activeScene = "end";
+      }
+    }
   }
 
   // checks if the score is above a certain threshold
@@ -162,17 +186,16 @@ class GameBoard {
       this.mainCharacter.getPosition().y + this.mainCharacter.getSize().y >=
       height
     ) {
-      this.mainCharacter.isFalling = true;
-      for (let platform of this.platforms) {
-        this.mainCharacter.getVelocity().y = +4.9;
-        platform.getPosition().y -= 17;
-        this.mainCharacter.getPosition().y =
-          height - this.mainCharacter.getSize().y;
-      }
-      for (let rocketBoost of this.rocketBoosts) {
-        rocketBoost.getPosition().y -= 17;
-      }
-      setTimeout(() => (game.activeScene = "end"), 700);
+      // for (let platform of this.platforms) {
+      //   this.mainCharacter.getVelocity().y = -4.9;
+      //   platform.getPosition().y -= 17;
+      //   this.mainCharacter.getPosition().y += 1.62;
+      //   setTimeout(() => (game.activeScene = "end"), 700);
+      // }
+      // for (let rocketBoost of this.rocketBoosts) {
+      //   rocketBoost.getPosition().y -= 17;
+      // }
+      game.activeScene = "end";
     }
 
     // Checks if bullet collides with an enemy
@@ -239,7 +262,7 @@ class GameBoard {
         distance < this.mainCharacter.getSize().x + enemy.getSize().x - 80 &&
         distance < this.mainCharacter.getSize().y + enemy.getSize().y - 70
       ) {
-        game.activeScene = "end";
+        this.game.activeScene = "end";
       } else if (
         this.starBoostIsActive === true &&
         distance < this.mainCharacter.getSize().x + enemy.getSize().x - 80 &&
@@ -285,7 +308,7 @@ class GameBoard {
           this.mainCharacter.getSize().x + enemyBoss.getSize().x - 140 &&
         distance < this.mainCharacter.getSize().y + enemyBoss.getSize().y - 120
       ) {
-        game.activeScene = "end";
+        this.game.activeScene = "end";
       }
     }
 

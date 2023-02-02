@@ -1,8 +1,10 @@
 class EndMenu {
+  private game: IGame;
   private btnPlayAgain: Button;
   private btnMenu: Button;
 
-  constructor() {
+  constructor(game: IGame) {
+    this.game = game;
     // Adds the button in the position center x of canvas
     const centerX = width * 0.5;
 
@@ -20,11 +22,11 @@ class EndMenu {
 
     // Callback functions for click events on buttons
     this.btnPlayAgain.onClickCallback = () => {
-      game.resetGameBoard();
-      game.activeScene = "play";
+      this.game.resetGameBoard();
+      this.game.activeScene = "play";
     };
     this.btnMenu.onClickCallback = () => {
-      game.activeScene = "start";
+      this.game.activeScene = "start";
     };
   }
 
@@ -53,14 +55,14 @@ class EndMenu {
     textSize(20);
     textAlign(CENTER, CENTER);
     textFont(Fonts.TitanOne);
-    text("Your score:" + " " + game.setEndMenuScore(), 278, 190);
+    text("Your score:" + " " + this.game.setEndMenuScore(), 278, 190);
     pop();
     push();
     fill("#FFFFFF");
     textSize(20);
     textAlign(CENTER, CENTER);
     textFont(Fonts.TitanOne);
-    text("Highscore:" + " " + game.getTopHighscore(), 278, 220);
+    text("Highscore:" + " " + this.game.getTopHighscore(), 278, 220);
     pop();
     push();
     fill("#000000");
