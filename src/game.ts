@@ -1,6 +1,11 @@
 interface IGame {
   activeScene: "start" | "howtoplay" | "scoreboard" | "play" | "end";
   resetGameBoard: () => void;
+  getTopHighscore: () => number;
+  getSecondHighscore: () => number;
+  getThirdHighscore: () => number;
+  setEndMenuScore: () => number;
+  
 }
 
 class Game implements IGame {
@@ -14,11 +19,11 @@ class Game implements IGame {
 
 
   constructor() {
-    this.gameBoard = new GameBoard();
+    this.gameBoard = new GameBoard(this);
     this.startMenu = new StartMenu(this);
-    this.howToPlay = new HowToPlay();
-    this.endMenu = new EndMenu();
-    this.scoreboard = new Scoreboard();
+    this.howToPlay = new HowToPlay(this);
+    this.endMenu = new EndMenu(this);
+    this.scoreboard = new Scoreboard(this);
     this.activeScene = "start";
     let highscoresString = localStorage.getItem("highscores");
     if (highscoresString) {
@@ -107,6 +112,6 @@ class Game implements IGame {
     return this._highscores[2];
   }
   public resetGameBoard() {
-    this.gameBoard = new GameBoard();
+    this.gameBoard = new GameBoard(this);
   }
 }

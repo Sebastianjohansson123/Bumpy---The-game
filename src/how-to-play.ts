@@ -1,8 +1,10 @@
 class HowToPlay {
   private btnExitHowToPlay: Button;
+  private game: IGame;
 
-  constructor() {
+  constructor(game: IGame) {
     // Creates the exit button
+    this.game = game;
     this.btnExitHowToPlay = new Button(
       images.xBtn,
       new p5.Vector(376, 173),
@@ -10,7 +12,7 @@ class HowToPlay {
     );
     // Callback function for click event on button
     this.btnExitHowToPlay.onClickCallback = () => {
-      game.activeScene = "start";
+      this.game.activeScene = "start";
     };
   }
 
