@@ -1,4 +1,9 @@
-class Game {
+interface IGame {
+  activeScene: "start" | "howtoplay" | "scoreboard" | "play" | "end";
+  resetGameBoard: () => void;
+}
+
+class Game implements IGame {
   private gameBoard: GameBoard;
   private startMenu: StartMenu;
   private howToPlay: HowToPlay;
@@ -10,7 +15,7 @@ class Game {
 
   constructor() {
     this.gameBoard = new GameBoard();
-    this.startMenu = new StartMenu();
+    this.startMenu = new StartMenu(this);
     this.howToPlay = new HowToPlay();
     this.endMenu = new EndMenu();
     this.scoreboard = new Scoreboard();

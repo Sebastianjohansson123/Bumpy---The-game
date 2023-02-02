@@ -27,6 +27,8 @@ class GameBoard {
   private canGenerateStarBoost: boolean | undefined;
   private starBoostIsActive: boolean;
   private powerUpAlreadyGenerated: boolean;
+  private gameOver: boolean;
+  private gameOverAnimationTimeout: number;
 
   constructor() {
     this.mainCharacter = new MainCharacter();
@@ -55,6 +57,8 @@ class GameBoard {
     this.canGenerateStarBoost = false;
     this.starBoostIsActive = false;
     this.powerUpAlreadyGenerated = false;
+    this.gameOver = false;
+    this.gameOverAnimationTimeout = 1000;
   }
 
   public update() {
@@ -74,6 +78,7 @@ class GameBoard {
     this.updateStarBoosts();
     this.generateStarBoost();
     this.filterPowerUps();
+    this.runGameOverAnimation();
   }
 
   public draw() {
@@ -86,6 +91,24 @@ class GameBoard {
     this.starBoosts.forEach((starBoost) => starBoost.draw());
     this.mainCharacter.draw();
     this.DisplayScore();
+  }
+
+  private runGameOverAnimation() {
+    if (this.gameOver) {
+      this.gameOverAnimationTimeout -= deltaTime;
+      for (let platform of this.platforms) {
+        this.mainCharacter.getVelocity().y = -4.9;
+        platform.getPosition().y -= 17;
+        this.mainCharacter.getPosition().y += 1.62;
+      }
+      for (let rocketBoost of this.rocketBoosts) {
+        rocketBoost.getPosition().y -= 17;
+      }
+
+      if (this.gameOverAnimationTimeout < 0) {
+        game.activeScene = "end";
+      }
+    }
   }
 
   // checks if the score is above a certain threshold
@@ -156,16 +179,7 @@ class GameBoard {
       this.mainCharacter.getPosition().y + this.mainCharacter.getSize().y >=
       height
     ) {
-      // for (let platform of this.platforms) {
-      //   this.mainCharacter.getVelocity().y = -4.9;
-      //   platform.getPosition().y -= 17;
-      //   this.mainCharacter.getPosition().y += 1.62;
-      //   setTimeout(() => (game.activeScene = "end"), 700);
-      // }
-      // for (let rocketBoost of this.rocketBoosts) {
-      //   rocketBoost.getPosition().y -= 17;
-      // }
-      game.activeScene = "end";
+      this.gameOver = true;
     }
 
     // Checks if bullet collides with an enemy
