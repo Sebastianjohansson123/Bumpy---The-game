@@ -76,7 +76,7 @@ class HowToPlay {
     text("the monster to the right, and the", 160, 275);
     text("LEFT arrow key to move the monster", 160, 295);
     text("to the left.", 160, 315);
-    text("Use the UP key to shoot.", 160, 335);
+    text("Use the UP key or SPACE to shoot.", 160, 335);
     pop();
     push();
     fill("#3A1458");
