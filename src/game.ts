@@ -43,10 +43,12 @@ class Game implements IGame {
     } else if (this.activeScene === "scoreboard") {
       this.scoreboard.update();
     } else if (this.activeScene === "play") {
+      noCursor();
       this.gameBoard.update();
     } else if (this.activeScene === "end") {
       this.endMenu.update();
       this.updateHighscores();
+      cursor("./assets/images/smallcursor.png");
     }
 
     if (this.activeScene === "play") {
