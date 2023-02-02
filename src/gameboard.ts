@@ -245,8 +245,7 @@ class GameBoard {
         sounds.enemyDeath.play();
         this.enemies.splice(this.enemies.indexOf(enemy), 1);
         this.score += 100;
-        this.starBoostIsActive = false;
-
+        this.isStarBoostActive = false;
       }
     }
 
@@ -279,15 +278,14 @@ class GameBoard {
         enemyBoss.getPosition().y
       );
       if (
-        this.starBoostIsActive === false &&
+        this.isStarBoostActive === false &&
         distance <
           this.mainCharacter.getSize().x + enemyBoss.getSize().x - 140 &&
         distance < this.mainCharacter.getSize().y + enemyBoss.getSize().y - 120
       ) {
-
         this.game.activeScene = "end";
       } else if (
-        this.starBoostIsActive === true &&
+        this.isStarBoostActive === true &&
         distance <
           this.mainCharacter.getSize().x + enemyBoss.getSize().x - 140 &&
         distance < this.mainCharacter.getSize().y + enemyBoss.getSize().y - 120
@@ -295,7 +293,7 @@ class GameBoard {
         sounds.enemyDeath.play();
         this.enemyBoss.splice(this.enemyBoss.indexOf(enemyBoss), 1);
         this.score += 100;
-        this.starBoostIsActive = false;
+        this.isStarBoostActive = false;
         this.score += 500;
       }
     }
