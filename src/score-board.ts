@@ -84,7 +84,7 @@ class Scoreboard {
     textSize(27);
     textAlign(CENTER, CENTER);
     textFont(Fonts.TitanOne);
-    text("Score", 274, 180);
+    text("Scores", 274, 180);
     pop();
     push();
     fill("#FFFFFF");
