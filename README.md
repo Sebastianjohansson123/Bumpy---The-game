@@ -1,42 +1,14 @@
-# Slutprojektet
+# Bumpy Monster
+We have created a game called "Bumpy Monster." It consists of the character Bumpy - a purple monster who jumps upward in a game level with the help of platforms. The game is an endless game where you collect points as you go higher up the level. It costs 10 points to shoot. On the way up, there are power ups and enemies in the form of other monsters. If you hit an enemy, you get 100 points and if you hit the "Boss," you get 500 points. If Bumpy misses a jump to the next platform or crashes into an enemy, it falls down and the game is over. Bumpy can shoot enemies with bubbles from its head. Bumpy can also move horizontally across the screen. Depending on whether Bumpy gets a power up, it moves either faster upward in the level and becomes invincible, or becomes invincible and kills enemies on collision for a certain time interval. The background in the game changes during the game. If Bumpy dies, "Game Over" is displayed and the score obtained from the current game and the high score are also displayed. 
 
-Välkommen till den förinställda kodbasen för slutprojektet.
-Se filen [Sketch](./src/sketch.ts) och [Game](./src/game.ts) filerna för hur ni bör börja skriva er kod!
+Give it a go! [Try the game here 🥳](https://bumpythegame.netlify.app/)
 
-Kom ihåg att använda git!
+Members of team Bumpy
+* [Sebastian Johansson](https://github.com/Sebastianjohansson123)
+* [Emil Helgesson](https://github.com/Emil-Helge)
+* [Nathalie Gustafsson](https://github.com/nathaliegustafsson)
+* [Lisa Marie Andersson](https://github.com/lisamarieandersson)
+* [Gabriel Lugo Méndez](https://github.com/gabriel-lugo)
+* [Moa Hedendahl](https://github.com/moamoa07)
 
-## Dokument & Artifakter
 
-All dokument skall finnas i projektet som faktiska filer vid inlämningen. Det finns en mapp `./documents` som alla dokumenten skall sparas i. [Läs vidare här](./documents/README.md)!
-
-## Utveckling
-
-### Installation
-
-Först behöver ni köra kommandot `npm install` för att installera nödvändiga moduler (p5, typescript, etc).
-
-### Starta projektet
-
-Kör kommandot `npm run dev` för att starta projektet och se det live i din webbläsare!
-
-### Debugger
-
-Det är starkt rekomenderat att ni använder debug-verktyget i VSCode för att hitta och lösa problem. Metoden vi primärt har använt tidigare är att skriva `console.log` men vi kan bli mer effektiva!
-
-Debuggern låter er stanna programmet och stega rad för rad samtidigt som ni kan titta på vad variablerna innehåller. Det är speciellt användbart när ni arbetar med funktioner som anropas 60 gånger per sekund - console overload otherwise... 🤯
-
-#### Starta Debuggern
-
-För att starta debuggern tycker du på `F5` eller via play-knappen i "ActionBaren", se dock till att du har startat projektet innan (`npm run dev`). Ett nytt fönster kommer att öppnas som behöver användas för att få koden att stanna vid utsatta debugg-punkter.
-
-### Potentiella problem
-
-Versionen av p5.js är 1.5.0 medan senaste version av p5 typerna endast är uppdaterad till 1.4.3. Detta skulle kunna orsaka problem och det kan vara så att ni hittar något i p5's dokumention som inte finns tillgängligt i detta projektet - dock osannolikt.
-
-Typings för de globala variablerna relaterat till p5.sound fungerar tyvärr inte - exempel finns för hur ni kan kringå detta. Se [loadSound funktionen](global.d.ts) för hur det kan göras.
-
-## TODO
-
-Lägg till ytterliggare information som är specifikt för ert projekt!
-
-**LYCKA TILL!**
